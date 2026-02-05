@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠팡플레이 </title>
+    <link rel="shortcut icon" href="https://assets.coupangplay.com/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../Css/video.css">
+
+</head>
+
+<body>
+    <div class="video-header">
+        <button class="back-btn" onclick="history.back()">←</button>
+        <div class="video-title" id="header-title">로딩 중...</div>
+    </div>
+
+    <div class="main-container">
+        <div class="video-section">
+            <div class="video-player">
+                <img id="video-poster" class="video-placeholder" src="" alt="포스터">
+                <div class="play-overlay" onclick="alert('실제 영상 재생 기능은 구현되지 않았습니다.')">
+                    <div class="play-icon"></div>
+                </div>
+            </div>
+
+            <!-- 비디오 정보 -->
+            <div class="video-info">
+                <h1 id="show-title">로딩 중...</h1>
+                <div class="video-meta" id="show-meta">
+                    <span class="rating">⭐ 0.0</span>
+                    <span>0000</span>
+                    <span>0분</span>
+                </div>
+                <div class="video-description" id="show-description">
+                    설명을 불러오는 중...
+                </div>
+                <div class="video-details">
+                    <div class="detail-row">
+                        <span class="detail-label">출연진:</span>
+                        <span class="detail-value" id="show-cast">로딩 중...</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">제작자:</span>
+                        <span class="detail-value" id="show-creators">로딩 중...</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">장르:</span>
+                        <span class="detail-value" id="show-genres">로딩 중...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 오른쪽: 에피소드 목록 -->
+        <div class="episode-section">
+            <div class="episode-header">
+                <h2>에피소드</h2>
+                <select class="season-selector" id="season-select">
+                    <option>시즌 선택</option>
+                </select>
+            </div>
+            <div class="episode-list">
+                <ul class="list-group" id="episode-list">
+                    <li class="loading">에피소드를 불러오는 중...</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZjliNTBhYTY0NTE2ZmU3MTYxZGU4MGU4M2U4OWE0NSIsIm5iZiI6MTc2ODQ1NzEwNC45MzcsInN1YiI6IjY5Njg4MzkwMTM1OWNmNzAxY2Y0MDhiYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Z3WWHuczoqdcg2W96oUfJQTTuYe8ImaMYUomoCXBQJA";
+        const IMG_BASE = "https://image.tmdb.org/t/p/original";
+        const BASE_URL = "https://api.themoviedb.org/3";
+
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${API_KEY}`
+            }
+        };
+
+        // URL에서 TV 시리즈 ID 가져오기 (예시로 93405 사용 - 오징어 게임)
+        const urlParams = new URLSearchParams(window.location.search);
+        const tvId = urlParams.get('id') || 93405;
+        const currentEpisode = parseInt(urlParams.get('episode')) || 1;
+        const currentSeason = parseInt(urlParams.get('season')) || 1;
+
+        // 페이지 로드
+        async function loadPage() {
+            try {
+                // TV 시리즈 상세 정보
+                const [detailRes, creditsRes] = await Promise.all([
+                    fetch(`${BASE_URL}/tv/${tvId}?language=ko-KR`, options),
+                    fetch(`${BASE_URL}/tv/${tvId}/credits?language=ko-KR`, options)
+                ]);
+
+                const detail = await detailRes.json();
+                const credits = await creditsRes.json();
+
+                // 헤더 제목
+                document.getElementById('header-title').textContent = detail.name;
+
+                // 포스터 이미지
+                document.getElementById('video-poster').src = IMG_BASE + detail.backdrop_path;
+
+                // 제목
+                document.getElementById('show-title').textContent =
+                    `${detail.name} - 시즌 ${currentSeason} ${currentEpisode}화`;
+
+                // 메타 정보
+                const year = detail.first_air_date ? detail.first_air_date.split('-')[0] : '';
+                const runtime = detail.episode_run_time && detail.episode_run_time[0]
+                    ? `${detail.episode_run_time[0]}분`
+                    : '';
+
+                document.getElementById('show-meta').innerHTML = `
+                    <span class="rating">⭐ ${detail.vote_average.toFixed(1)}</span>
+                    <span>${year}</span>
+                    ${runtime ? `<span>${runtime}</span>` : ''}
+                `;
+
+                // 설명
+                document.getElementById('show-description').textContent =
+                    detail.overview || '정보가 없습니다.';
+
+                // 출연진
+                const cast = credits.cast.slice(0, 5).map(c => c.name).join(', ');
+                document.getElementById('show-cast').textContent = cast || '정보 없음';
+
+                // 제작자
+                const creators = detail.created_by?.map(c => c.name).join(', ');
+                document.getElementById('show-creators').textContent = creators || '정보 없음';
+
+                // 장르
+                const genres = detail.genres.map(g => g.name).join(', ');
+                document.getElementById('show-genres').textContent = genres || '정보 없음';
+
+                // 시즌 셀렉터 생성
+                const seasonSelect = document.getElementById('season-select');
+                seasonSelect.innerHTML = '';
+                for (let i = 1; i <= detail.number_of_seasons; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = `시즌 ${i}`;
+                    if (i === currentSeason) option.selected = true;
+                    seasonSelect.appendChild(option);
+                }
+
+                // 시즌 변경 이벤트
+                seasonSelect.addEventListener('change', (e) => {
+                    loadEpisodes(tvId, parseInt(e.target.value));
+                });
+
+                // 에피소드 로드
+                await loadEpisodes(tvId, currentSeason);
+
+                tvarr = ["tv", tvId, IMG_BASE + detail.backdrop_path];
+                let log = localStorage.getItem("log");
+                let logArray = log ? JSON.parse(log) : [];
+                logArray = logArray.filter(item => !(item[0] === "tv" && item[1] === tvId));
+                logArray.push(tvarr);
+                localStorage.setItem("log", JSON.stringify(logArray));
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('정보를 불러오는데 실패했습니다.');
+            }
+        }
+
+        // 에피소드 목록 로드
+        async function loadEpisodes(tvId, seasonNumber) {
+            const episodeList = document.getElementById('episode-list');
+            episodeList.innerHTML = '<li class="loading">에피소드를 불러오는 중...</li>';
+
+            try {
+                const season = await fetch(
+                    `${BASE_URL}/tv/${tvId}/season/${seasonNumber}?language=ko-KR`,
+                    options
+                ).then(r => r.json());
+
+                episodeList.innerHTML = '';
+
+                season.episodes.forEach(ep => {
+                    const isActive = ep.episode_number === currentEpisode && seasonNumber === currentSeason;
+
+                    const li = document.createElement('li');
+                    li.className = `list-group-item ${isActive ? 'active' : ''}`;
+                    li.innerHTML = `
+                        <div class="episode-number">${ep.episode_number}화</div>
+                        <div class="episode-name">${ep.name || '제목 없음'}</div>
+                        <div class="episode-duration">${ep.runtime || '?'}분 | ⭐ ${ep.vote_average.toFixed(1)}</div>
+                    `;
+
+                    li.onclick = () => {
+                        window.location.href = `?id=${tvId}&season=${seasonNumber}&episode=${ep.episode_number}`;
+                    };
+
+                    episodeList.appendChild(li);
+                });
+
+            } catch (error) {
+                console.error('Episode loading error:', error);
+                episodeList.innerHTML = '<li class="loading">에피소드를 불러올 수 없습니다.</li>';
+            }
+        }
+
+        // 페이지 로드 시 실행
+        loadPage();
+    </script>
+</body>
+
+</html>
