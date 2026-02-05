@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로필</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <link rel="shortcut icon" href="https://assets.coupangplay.com/favicon.ico" type="image/x-icon">
+    <style>
+        /* [기본 스타일] */
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; background-color: #000; color: #fff; 
+            font-family: "Pretendard Variable", sans-serif; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh; position: relative; overflow-x: hidden; /* 가로 스크롤 방지 */
+        }
+        input, button { font-family: inherit; outline: none; }
+
+        /* [헤더] */
+        .header { position: absolute; top: 0; left: 0; width: 100%; padding: 30px 40px; display: flex; justify-content: center; z-index: 10; }
+        .header-logo { width: 140px; filter: brightness(0) invert(1); }
+       
+
+        /*  프로필 선택 리스트 */
+        #profile-select-wrap { display: flex; flex-direction: column; align-items: center; width: 100%; z-index: 20; }
+        h1#main-title { font-size: 32px; font-weight: 700; margin-bottom: 60px; text-align: center; }
+
+        .profile-list { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; margin-bottom: 60px; }
+        .profile-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; position: relative; }
+        
+        .img-wrapper { position: relative; width: 130px; height: 130px; }
+        .profile-img {
+            width: 100%; height: 100%; border-radius: 50%;
+            background-color: #333; display: flex; justify-content: center; align-items: center;
+            font-size: 46px; font-weight: 700; color: #fff;
+            border: 3px solid transparent; transition: 0.2s;
+        }
+        .profile-item:hover .profile-img { border-color: #fff; transform: scale(1.05); }
+        .profile-name { margin-top: 15px; font-size: 18px; color: #ccc; font-weight: 500; text-align: center; }
+        .profile-item:hover .profile-name { color: #fff; }
+
+        /* 연필 오버레이 (수정 모드일때) */
+        .edit-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6); border-radius: 50%;
+            display: none; justify-content: center; align-items: center;
+            border: 2px solid #fff;
+        }
+        .edit-overlay svg { width: 32px; height: 32px; fill: #fff; }
+
+        /* 메인 하단 버튼 (프로필 수정하기/취소) */
+        .main-action-btn {
+            padding: 12px 30px; background-color: #252525; color: #fff;
+            font-size: 16px; font-weight: 600; border-radius: 6px; border: none;
+            display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s;
+        }
+        .main-action-btn:hover { background-color: #444; }
+
+
+        /* 프로필 수정 화면 */
+        #profile-edit-wrap { 
+            display: none;
+            flex-direction: column; align-items: center; 
+            width: 100%; max-width: 440px; 
+            padding-bottom: 50px; 
+            z-index: 20;
+            margin-top: 80px; 
+        }
+        
+        /* 타이틀 스타일: 마진 조정 */
+        .edit-title-text { font-size: 28px; font-weight: 700; margin-bottom: 40px; text-align: center; }
+        
+        .edit-img-box {
+            width: 120px; height: 120px; border-radius: 50%; background-color: #333;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 40px; font-weight: 700; color: #fff; margin-bottom: 40px;
+            position: relative; opacity: 0.8;
+        }
+        .edit-pencil-badge {
+            position: absolute; bottom: 0; right: 0;
+            width: 36px; height: 36px; border-radius: 50%; background-color: #333;
+            display: flex; justify-content: center; align-items: center; border: 1px solid #555;
+        }
+
+        /* 입력 폼 스타일 */
+        .form-group { width: 100%; margin-bottom: 12px; position: relative; }
+        .cp-input {
+            width: 100%; padding: 16px; background-color: #1a1b1d;
+            border: 1px solid #333; border-radius: 6px; color: #fff; font-size: 16px; cursor: pointer;
+        }
+        .cp-input:focus { border-color: #fff; outline: none; }
+        .cp-input[readonly] { cursor: pointer; background-color: #1a1b1d; } /* readonly 배경색 명시 */
+        
+        /* 드롭다운 스타일 */
+        .dropdown-list {
+            position: absolute; top: 100%; left: 0; width: 100%; max-height: 250px; overflow-y: auto;
+            background: #252525; border: 1px solid #333; border-radius: 6px;
+            z-index: 100; display: none; 
+        }
+        .dropdown-item { padding: 15px; cursor: pointer; font-size: 15px; border-bottom: 1px solid #333; }
+        .dropdown-item:hover { background-color: #0074E9; }
+
+        .info-text { width: 100%; text-align: left; font-size: 12px; color: #888; margin: 10px 0 30px; line-height: 1.5; }
+
+        .menu-btn {
+            width: 100%; padding: 18px 20px; background-color: #1a1b1d;
+            border: 1px solid #333; border-radius: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; margin-bottom: 40px;
+        }
+        
+        /* 하단 버튼 그룹 */
+        .btn-group { width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .save-btn { width: 100%; padding: 16px; background: #252525; color: #666; font-weight: bold; font-size: 16px; border-radius: 6px; border: none; cursor: not-allowed; margin-bottom: 15px; }
+        .save-btn.active { background: #0074E9; color: #fff; cursor: pointer; }
+        
+        .cancel-text-btn { background: none; border: none; color: #ccc; font-weight: 600; cursor: pointer; font-size: 15px; padding: 10px; }
+        
+        /* 구분선 및 삭제 버튼 스타일 */
+        .divider-line { width: 100%; height: 1px; background-color: #333; margin: 15px 0 25px; }
+        .delete-text-btn { color: #E52528; text-decoration: underline; cursor: pointer; font-size: 15px; font-weight: 600; padding: 10px; }
+
+        /* 비밀번호 팝업 */
+        #pw-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8); z-index: 3000;
+            display: none; justify-content: center; align-items: center;
+        }
+        .pw-box { width: 360px; background: #222; padding: 40px 30px; border-radius: 12px; text-align: center; position: relative; }
+        .pw-close { position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 20px; color: #fff; }
+        .pw-input { 
+            width: 100%; padding: 14px; background: #333; border: 1px solid #444; color: #fff; 
+            border-radius: 4px; margin-bottom: 20px; font-size: 18px; text-align: center; letter-spacing: 5px;
+        }
+        .pw-btn { width: 100%; padding: 14px; background: #444; color: #777; border-radius: 4px; font-weight: bold; border: none; cursor: not-allowed; }
+        .pw-btn.active { background: #0074E9; color: #fff; cursor: pointer; }
+
+    </style>
+</head>
+<body>
+
+    <div id="profile-select-wrap">
+        <h1 id="main-title">시청할 프로필을 선택해 주세요</h1>
+        <div class="profile-list" id="profile-list-area"></div>
+        <button class="main-action-btn" id="edit-toggle-btn" onclick="toggleEditMode()">
+            <svg id="pencil-icon" viewBox="0 0 24 24" width="18" height="18" fill="white" style="margin-right:5px;"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            <span id="btn-text">프로필 수정하기</span>
+        </button>
+    </div>
+
+    <div id="profile-edit-wrap">
+        <div class="edit-title-text">프로필 수정</div>
+        
+        <div class="edit-img-box" id="edit-img-box">
+            <span id="edit-initial">?</span>
+            <div class="edit-pencil-badge">
+                <svg width="18" height="18" fill="white" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="edit-name" class="cp-input" placeholder="이름" autocomplete="off" oninput="checkSaveBtn()">
+        </div>
+        
+        <div class="form-group">
+            <input type="text" id="edit-gender" class="cp-input" placeholder="(선택) 성별 입력" readonly onclick="toggleDropdown('drop-gender')">
+            <div id="drop-gender" class="dropdown-list">
+                <div class="dropdown-item" onclick="selectValue('edit-gender', '남성')">남성</div>
+                <div class="dropdown-item" onclick="selectValue('edit-gender', '여성')">여성</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="text" id="edit-birth" class="cp-input" placeholder="(선택) 출생년도 입력" readonly onclick="toggleDropdown('drop-birth')">
+            <div id="drop-birth" class="dropdown-list"></div>
+        </div>
+
+        <div class="info-text">
+            성별과 출생년도는 선택 입력 사항이며... (생략)<br>
+            <span style="text-decoration:underline; cursor:pointer;">전문 보기 ></span>
+        </div>
+
+        <div class="menu-btn" onclick="openPwModal()">
+            <div style="font-weight:600; display:flex; align-items:center; gap:8px;">🔒 시청 연령 설정</div>
+            <div style="color:#888; font-size:14px;">19세 이상 관람가 ›</div>
+        </div>
+
+        <div class="btn-group">
+            <button class="save-btn" id="save-btn" onclick="saveProfile()">저장하기</button>
+            <button class="cancel-text-btn" onclick="exitEditScene()">취소</button>
+            
+            <div class="divider-line"></div>
+            <div class="delete-text-btn" onclick="deleteProfile()">프로필 삭제하기</div>
+        </div>
+    </div>
+
+    <div id="pw-modal">
+        <div class="pw-box">
+            <div class="pw-close" onclick="closePwModal()">✕</div>
+            <h2 style="margin-bottom:10px; font-size:20px;">비밀번호 입력</h2>
+            <p style="color:#aaa; font-size:14px; margin-bottom:25px; line-height:1.4;">시청 연령 설정을 위해<br>계정 비밀번호를 입력해 주세요.</p>
+            <input type="password" id="modal-pw" class="pw-input" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="●●●●" oninput="checkPwInput(this)">
+            <button id="modal-confirm" class="pw-btn" onclick="confirmPassword()">확인</button>
+            <div style="margin-top:20px; font-size:13px; color:#888; text-decoration:underline; cursor:pointer;">비밀번호를 잊었나요</div>
+        </div>
+    </div>
+
+    <script>
+        var profiles = []; 
+        var isEditMode = false;
+        var editingProfileId = null; 
+
+        function init() {
+            // localStorage에서 데이터 불러오기
+            var stored = localStorage.getItem('coupangProfiles');
+            if (stored) {
+                profiles = JSON.parse(stored);
+            } else {
+                // 데이터 없을 경우 기본값 (테스트용)
+                profiles = [{ id: 1, name: "테스트", color: "#1E88E5", isKid: false }];
+                localStorage.setItem('coupangProfiles', JSON.stringify(profiles));
+            }
+            
+            renderList(); 
+            initYearDropdown();
+        }
+        init();
+
+        // 저장소 업데이트 함수
+        function saveProfilesToStorage() {
+            localStorage.setItem('coupangProfiles', JSON.stringify(profiles));
+        }
+
+        // 리스트 렌더링
+        function renderList() {
+            var list = document.getElementById('profile-list-area');
+            list.innerHTML = "";
+            
+            profiles.forEach((p) => {
+                var item = document.createElement('div');
+                item.className = 'profile-item';
+                
+                // 클릭 이벤트: 수정 모드면 수정 화면으로, 아니면 마이페이지로
+                item.onclick = function() {
+                    if(isEditMode) {
+                        openEditScene(p.id); 
+                    } else {
+                        localStorage.setItem('coupangActiveProfileId', p.id);
+                        location.href = "Layout.html";
+                    }
+                };
+
+                var overlayStyle = isEditMode ? 'display:flex;' : 'display:none;';
+                var initial = p.isKid ? "키즈" : p.name.substring(0, 1);
+                var fontSize = p.isKid ? "20px" : "46px";
+
+                item.innerHTML = `
+                    <div class="img-wrapper">
+                        <div class="profile-img" style="background-color:${p.color}; font-size:${fontSize};">${initial}</div>
+                        <div class="edit-overlay" style="${overlayStyle}">
+                            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                        </div>
+                    </div>
+                    <div class="profile-name">${p.name}</div>
+                `;
+                list.appendChild(item);
+            });
+
+            // 추가 버튼 (수정 모드가 아닐 때만 표시)
+            if(!isEditMode) {
+                var addBtn = document.createElement('div');
+                addBtn.className = 'profile-item';
+                addBtn.innerHTML = `
+                    <div class="img-wrapper">
+                        <div class="profile-img" style="background-color:#222; color:#555; font-weight:300; font-size:50px;">+</div>
+                    </div>
+                    <div class="profile-name">프로필 추가</div>
+                `;
+                addBtn.onclick = function() { location.href = "coupang-onboarding.html"; };
+                list.appendChild(addBtn);
+            }
+        }
+
+        // 수정 모드 토글 버튼
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            var title = document.getElementById('main-title');
+            var btnText = document.getElementById('btn-text');
+            var icon = document.getElementById('pencil-icon');
+
+            if(isEditMode) {
+                title.innerText = "수정할 프로필을 선택해 주세요";
+                btnText.innerText = "취소";
+                icon.style.display = 'none';
+            } else {
+                title.innerText = "시청할 프로필을 선택해 주세요";
+                btnText.innerText = "프로필 수정하기";
+                icon.style.display = 'block';
+            }
+            renderList();
+        }
+
+        // 수정 화면 열기
+        function openEditScene(id) {
+            editingProfileId = id;
+            var p = profiles.find(p => p.id === id);
+
+            // 화면 전환
+            document.getElementById('profile-select-wrap').style.display = 'none';
+            document.getElementById('profile-edit-wrap').style.display = 'flex';
+            
+            // 데이터 채우기
+            var imgBox = document.getElementById('edit-img-box');
+            imgBox.style.backgroundColor = p.color;
+            document.getElementById('edit-initial').innerText = p.isKid ? "키즈" : p.name.substring(0, 1);
+            document.getElementById('edit-initial').style.fontSize = p.isKid ? "18px" : "40px";
+
+            document.getElementById('edit-name').value = p.name;
+            document.getElementById('edit-gender').value = p.gender || "";
+            document.getElementById('edit-birth').value = p.birthYear || "";
+
+            checkSaveBtn();
+            closeAllDropdowns();
+        }
+
+        // 수정 화면 닫기 (취소)
+        function exitEditScene() {
+            document.getElementById('profile-edit-wrap').style.display = 'none';
+            document.getElementById('profile-select-wrap').style.display = 'flex';
+            editingProfileId = null;
+            // 수정 모드 해제 (선택 사항, UX에 따라 결정)
+            if(isEditMode) toggleEditMode();
+        }
+
+        // 저장 버튼 활성화 체크
+        function checkSaveBtn() {
+            var val = document.getElementById('edit-name').value;
+            var btn = document.getElementById('save-btn');
+            if(val && val.trim().length > 0) btn.classList.add('active');
+            else btn.classList.remove('active');
+        }
+
+        // 프로필 저장
+        function saveProfile() {
+            var newName = document.getElementById('edit-name').value;
+            var newGender = document.getElementById('edit-gender').value;
+            var newBirth = document.getElementById('edit-birth').value;
+
+            if(newName && newName.trim().length > 0 && editingProfileId !== null) {
+                var targetIdx = profiles.findIndex(p => p.id === editingProfileId);
+                if (targetIdx !== -1) {
+                    profiles[targetIdx].name = newName;
+                    profiles[targetIdx].gender = newGender;
+                    profiles[targetIdx].birthYear = newBirth;
+                    
+                    saveProfilesToStorage();
+                    renderList();
+                    exitEditScene();
+                }
+            }
+        }
+        
+        // 프로필 삭제 기능
+        function deleteProfile() {
+            if(confirm("정말 이 프로필을 삭제하시겠습니까?")) {
+                profiles = profiles.filter(p => p.id !== editingProfileId);
+                saveProfilesToStorage();
+                renderList();
+                exitEditScene();
+            }
+        }
+
+        // 드롭다운 관련 함수
+        function initYearDropdown() {
+            var html = "";
+            var currentYear = new Date().getFullYear();
+            for (var y = currentYear; y >= 1950; y--) {
+                html += `<div class="dropdown-item" onclick="selectValue('edit-birth', '${y}')">${y}</div>`;
+            }
+            document.getElementById('drop-birth').innerHTML = html;
+        }
+        function toggleDropdown(dropId) {
+            var drop = document.getElementById(dropId);
+            var isVisible = drop.style.display === 'block';
+            closeAllDropdowns();
+            if (!isVisible) drop.style.display = 'block';
+        }
+        function selectValue(inputId, value) {
+            document.getElementById(inputId).value = value;
+            closeAllDropdowns();
+            checkSaveBtn();
+        }
+        function closeAllDropdowns() {
+            document.querySelectorAll('.dropdown-list').forEach(d => d.style.display = 'none');
+        }
+        // 외부 클릭 시 드롭다운 닫기   
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.form-group')) closeAllDropdowns();
+        });
+
+        // 비밀번호 모달 관련 함수
+        function openPwModal() { 
+            document.getElementById('pw-modal').style.display = 'flex'; 
+            document.getElementById('modal-pw').value = "";
+            checkPwInput(document.getElementById('modal-pw'));
+        }
+        function closePwModal() { document.getElementById('pw-modal').style.display = 'none'; }
+        
+        function checkPwInput(el) {
+            el.value = el.value.replace(/[^0-9]/g, ''); // 숫자만 입력
+            var btn = document.getElementById('modal-confirm');
+            if(el.value.length === 4) btn.classList.add('active');
+            else btn.classList.remove('active');
+        }
+        
+        function confirmPassword() {
+            // 실제 비밀번호 검증 로직은 서버가 필요하므로 여기선 알림만 표시
+            alert("비밀번호 확인이 완료되었습니다. (데모)"); 
+            closePwModal();
+        }
+    </script>
+</body>
+</html>
