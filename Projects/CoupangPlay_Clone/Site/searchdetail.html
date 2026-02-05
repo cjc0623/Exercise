@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠팡플레이</title>
+    <link rel="icon" type="image/png" href="https://assets.coupangplay.com/favicon.ico">
+    <!--bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../Css/ott.css">
+    <link rel="stylesheet" href="../Css/modal.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+        a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: inherit;
+
+        }
+
+        :root {
+            --footer-white: #d6d6d6;
+            --link-blue: #3c9ceb;
+        }
+
+        /* ==========================================================================
+    2. 헤더 (GNB: Global Navigation Bar)
+    ========================================================================== */
+        /* [2. 헤더 스타일] */
+        #main-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4%;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+            transition: background 0.3s ease;
+        }
+
+        #main-header.scrolled {
+            background: #000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+        }
+
+        .MainMenu_logo {
+            height: 29px;
+            margin-right: 30px;
+        }
+
+
+        .nav-menu {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-menu a {
+            color: #ccc;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            position: relative;
+            transition: 0.2s;
+            display: inline-block;
+        }
+
+        .nav-menu a:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-menu a.active {
+            color: #fff;
+        }
+
+        .nav-menu a.active::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 15%;
+            width: 70%;
+            height: 3px;
+            background-color: #fff;
+            pointer-events: none;
+        }
+
+
+        /* 헤더 우측 섹션 */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .category-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #eee;
+            padding: 12px 10px;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+
+        .category-wrapper {
+            position: relative;
+            font-size: 30px;
+            font-weight: bold;
+            display: flex;
+        }
+
+        .category-wrapper:hover .dropdown-menu {
+            display: grid;
+
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 45px;
+            right: -50px;
+            background-color: #1a1b1d;
+            border-radius: 8px;
+            padding: 25px;
+            width: 520px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            z-index: 2000;
+            font-size: 30px;
+        }
+
+        .dropdown-menu.show {
+            display: grid;
+        }
+
+        .dropdown-menu a {
+            color: #bbb;
+            font-size: 14px;
+            padding: 10px 15px;
+            display: inline-block;
+            width: 100%;
+            border-radius: 8px;
+            transition: 0.1s;
+        }
+
+        .dropdown-menu a:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.15);
+
+        }
+
+        /* [1. 기본 스타일 리셋] */
+        body,
+        html {
+            background: #000;
+            padding: 0;
+            margin: 0;
+            color: #fff;
+            font-family: Pretendard, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        /* [3. 본문 레이아웃 및 간격 조정] */
+        .main-body {
+            padding: 100px 2% 0;
+        }
+
+        .title {
+            margin-bottom: 12px;
+        }
+
+        .title span {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 42px;
+        }
+
+        .category a span {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* [4. 드롭다운 카테고리 설정] */
+        .category-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* 추천순 메뉴를 감싸는 부모 */
+        .category-main {
+            position: relative;
+            /* 자식인 list-container의 기준점이 됨 */
+            display: inline-block;
+            padding-bottom: 15px;
+            /* 이미지와의 간격 */
+        }
+
+        .category-main>a {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            color: #fff;
+            padding: 5px 0;
+        }
+
+        /* 드롭다운 박스: 이미지 위에 뜨게 설정 */
+        .list-container {
+            display: none;
+            /* 기본 숨김 */
+            position: absolute;
+            top: 25px;
+            /* '추천순' 글자 바로 아래 */
+            left: 0;
+            background: #282c34;
+            /* 쿠팡플레이 특유의 어두운 회색 */
+            padding: 10px 6px;
+            border-radius: 12px;
+            z-index: 100;
+            /* 이미지보다 위에 뜨도록 함 */
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 호버 시 메뉴 보이기 */
+        .category-main:hover .list-container {
+            display: block;
+        }
+
+        .list-container:hover .list-container {
+            display: block;
+        }
+
+        .lists {
+            padding: 10px 50px 10px 20px;
+            font-size: 18px;
+            transition: background 0.2s;
+            border-radius: 12px;
+        }
+
+        .lists:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .lists a {
+            color: #eee;
+            width: 100%;
+            display: block;
+        }
+
+        /* [5. 콘텐츠 그리드] */
+        .content {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            width: 100%;
+        }
+
+        .content-container {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 6px;
+            transition: transform 0.3s ease;
+        }
+
+        .content-container:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .content-container img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            display: block;
+        }
+
+        .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .detail-title {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .detail-content {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .genre-tag {
+            display: inline-block;
+            background: #333;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-right: 5px;
+            font-size: 13px;
+        }
+
+        /* 필터 버튼 전체 감싸는 영역 */
+        .filter-container {
+            display: flex;
+            gap: 20px;
+            /* 버튼 사이 간격 */
+            margin: 20px 0;
+            /* 위아래 여백 */
+            flex-wrap: wrap;
+            /* 화면 좁아지면 줄바꿈 */
+        }
+
+        /* 개별 버튼 스타일 */
+        .filter-item {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 12px;
+            /* 둥근 캡슐 모양 */
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* 어두운 테두리 */
+            transition: all 0.2s ease;
+        }
+
+        /* 마우스 올렸을 때 */
+        .filter-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        /* 활성화된 버튼 (이미지의 '전체' 스타일) */
+        .filter-item.active {
+            background-color: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        /* 검색창 컨테이너 */
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 5px 10px;
+            transition: background 0.3s;
+        }
+
+        .search-wrapper:focus-within {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 입력창 스타일 */
+        #header-search-input {
+            background: none;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 14px;
+            width: 200px;
+            /* 원하는 너비로 조절 */
+            padding: 5px;
+        }
+
+        #header-search-input::placeholder {
+            color: #aaa;
+        }
+
+        /* 돋보기 버튼 스타일 */
+        .search-wrapper button {
+            display: flex;
+            align-items: center;
+            padding: 0;
+            margin-left: 5px;
+        }
+
+        /* 검색창 컨테이너: 둥근 캡슐 모양 */
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: #1a1c21;
+            /* 아주 어두운 회색 배경 */
+            border: 1px solid #333;
+            /* 얇은 테두리 */
+            border-radius: 12px;
+            /* 완전 둥글게 */
+            padding: 4px 15px;
+            width: 300px;
+            /* 이미지와 비슷한 적당한 너비 */
+            height: 38px;
+            transition: all 0.3s;
+        }
+
+        /* 포커스 되었을 때 테두리 강조 */
+        .search-wrapper:focus-within {
+            border-color: #666;
+            background: #252830;
+        }
+
+        /* 입력창 스타일 */
+        #header-search-input {
+            background: none;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 15px;
+            width: 100%;
+            padding: 5px 0;
+            caret-color: #007aff;
+        }
+
+        /* 플레이스홀더 색상 */
+        #header-search-input::placeholder {
+            color: #777;
+        }
+
+        /* 돋보기 버튼 위치 조정 */
+        .search-wrapper button {
+            display: flex;
+            align-items: center;
+            background: none;
+            padding: 0;
+            margin-left: 10px;
+            opacity: 0.7;
+        }
+
+        .search-wrapper button:hover {
+            opacity: 1;
+        }
+
+        /* 돋보기 아이콘 크기 */
+        .search-wrapper svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ==========================================================================
+   반응형 레이아웃 설정 (모바일 퍼스트)
+   ========================================================================== */
+
+        /* 1. 기본 스타일 (모바일 - 가장 작은 화면) */
+        .search-wrapper {
+            width: 140px;
+            /* 검색창 최소 너비 */
+            height: 34px;
+            padding: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        #header-search-input {
+            font-size: 13px;
+        }
+
+        .MainMenu_logo {
+            height: 20px;
+            /* 로고 크기 축소 */
+            margin-right: 15px;
+        }
+
+        .nav-menu {
+            gap: 0;
+            /* 메뉴 간격 축소 */
+        }
+         /* 2. 작은 모바일 (368px 이상) */
+        @media (max-width: 0px) {
+            .content {
+                grid-template-columns: repeat(1, 1fr);
+                /* 2열로 변경 */
+            }
+
+            .nav-menu a {
+                white-space: nowrap;
+            }
+
+            .search-wrapper {
+                width: 80px;
+            }
+
+            .nav-menu a {
+                font-size: 12px;
+                padding: 6px 6px;
+            }
+            .header-right {
+                gap: 10px;
+            }
+        }
+
+        /* 2. 작은 모바일 (368px 이상) */
+        @media (min-width: 368px) {
+            .content {
+                grid-template-columns: repeat(2, 1fr);
+                /* 2열로 변경 */
+            }
+
+            .nav-menu a {
+                white-space: nowrap;
+            }
+
+            .search-wrapper {
+                width: 80px;
+            }
+
+            .nav-menu a {
+                font-size: 12px;
+                padding: 6px 6px;
+            }
+        }
+
+        /* 3. 일반 스마트폰 (520px 이상) */
+        @media (min-width: 520px) {
+            .search-wrapper {
+                width: 180px;
+            }
+
+            .MainMenu_logo {
+                height: 24px;
+            }
+        }
+
+        /* 4. 태블릿 (768px 이상) */
+        @media (min-width: 768px) {
+            .content {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+
+            .search-wrapper {
+                width: 250px;
+            }
+
+            .MainMenu_logo {
+                height: 29px;
+                margin-right: 30px;
+            }
+
+            .nav-menu {
+                gap: 8px;
+            }
+            .nav-menu a {
+            color: #ccc;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            position: relative;
+            transition: 0.2s;
+            display: inline-block;
+            }
+            .header-right {
+                gap: 30px;
+            }
+        }
+
+        /* 5. 데스크탑 (1200px 이상) */
+        @media (min-width: 1200px) {
+            .content {
+                grid-template-columns: repeat(6, 1fr);
+                /* 최대 6열 */
+            }
+
+            .search-wrapper {
+                width: 300px;
+                /* 검색창 원래 크기 */
+            }
+        }
+
+        /* [추가] 헤더 요소들이 절대 겹치지 않게 하는 고정 설정 */
+        #main-header {
+            display: flex;
+            flex-wrap: nowrap;
+            /* 줄바꿈 방지 */
+            overflow: hidden;
+            /* 영역 이탈 방지 */
+        }
+
+        .header-left,
+        .header-right {
+            flex-shrink: 1;
+            /* 공간 부족 시 유연하게 축소 */
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="main">
+        <div class="header">
+            <header id="main-header">
+                <div class="header-left">
+                    <div class="logo"><a href="Layout.html"><img
+                                src="https://assets.coupangplay.com/images/web_gnb_logo_new.webp" class="MainMenu_logo"
+                                alt="Hallym Play">
+                        </a></div>
+                    <nav class="nav-menu">
+                        <a href="TV.html" class="nav-item">TV</a>
+                        <a href="movies.html" class="nav-item">영화</a>
+
+                    </nav>
+                </div>
+                <div class="header-right">
+                    <div class="search-wrapper">
+                        <input type="text" id="header-search-input" placeholder="제목, 배우, 감독으로 검색"
+                            onkeypress="handleHeaderSearch(event)">
+                        <button type="button" onclick="executeSearch()">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M15.9562 17.0179C14.4799 18.2551 12.5769 19 10.5 19C5.80558 19 2 15.1944 2 10.5C2 5.80558 5.80558 2 10.5 2C15.1944 2 19 5.80558 19 10.5C19 12.5774 18.2547 14.4808 17.017 15.9573L21.0294 19.9697C21.3223 20.2626 21.3223 20.7375 21.0294 21.0304C20.7365 21.3233 20.2616 21.3233 19.9688 21.0304L15.9562 17.0179ZM17.5 10.5C17.5 14.366 14.366 17.5 10.5 17.5C6.63401 17.5 3.5 14.366 3.5 10.5C3.5 6.63401 6.63401 3.5 10.5 3.5C14.366 3.5 17.5 6.63401 17.5 10.5Z"
+                                    fill="white"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="profile-wrapper">
+                        <a href="coupang-mypage.html" class="header-profile-btn">
+                            <div class="header-profile-circle" id="header-profile-initial"></div>
+                        </a>
+                    </div>
+                </div>
+            </header>
+            <div class="main-body">
+                <div class="title">
+                    <span id="search-keyword">"--" 검색 결과</span>
+                </div>
+                <div class="category">
+                    <ul class="category-list">
+                        <!-- <li></li> -->
+                        <li class="category-main">
+                            <div class="category">
+                                <div class="filter-container">
+                                    <a href="" class="filter-item active">전체</a>
+                                    <a href="" class="filter-item">스토어</a>
+                                    <a href="" class="filter-item">하이라이트</a>
+                                    <a href="" class="filter-item">TV & 영화</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="content" id="movie-grid">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = 'a12902a330de59d58fdc411f239ecf96';
+        const IMG_URL = 'https://image.tmdb.org/t/p/w500';
+
+        // 1. 페이지 로드 시 실행
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search');
+
+            if (searchQuery) {
+                document.getElementById('search-keyword').textContent = `"${searchQuery}" 검색 결과`;
+
+                const headerInput = document.getElementById('header-search-input');
+                if (headerInput) {
+                    headerInput.value = searchQuery;
+                }
+                fetchMovies(searchQuery);
+            }
+        };
+
+        // 2. API 데이터 가져오기
+        async function fetchMovies(query) {
+            const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=ko-KR`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                displayMovies(data.results);
+            } catch (error) {
+                console.error("데이터 로딩 실패:", error);
+            }
+        }
+
+        // 3. 화면에 그리기
+        function displayMovies(movies) {
+            const grid = document.getElementById('movie-grid');
+            grid.innerHTML = "";
+
+            if (movies.length === 0) {
+                grid.innerHTML = "<p style='color:gray; padding:20px;'>검색 결과가 없습니다.</p>";
+                return;
+            }
+
+            movies.forEach(movie => {
+                const movieEl = document.createElement('div');
+                movieEl.classList.add('content-container');
+
+                const posterPath = movie.backdrop_path ? IMG_URL + movie.backdrop_path : 'https://via.placeholder.com/500x281?text=No+Image';
+
+                movieEl.innerHTML = `
+                <div class="movie-card" onclick="openModal(${movie.id}, 'movie')">
+                <img src="${posterPath}" alt="${movie.title}">
+                <div style="padding:10px; font-size:14px;">${movie.title}</div>
+                </div>
+            `;
+                grid.appendChild(movieEl);
+            });
+        } // <--- displayMovies는 여기서 끝납니다.
+
+        // 4. [수정됨] 헤더 검색창에서 엔터 키 입력 시
+        function handleHeaderSearch(event) {
+            if (event.key === 'Enter') {
+                executeSearch();
+            }
+        }
+
+        // 5. [수정됨] 실제 검색 실행 함수
+        function executeSearch() {
+            const query = document.getElementById('header-search-input').value;
+            if (query.trim() !== "") {
+                // 현재 페이지 파일명이 searchresults.html 인지 확인하세요.
+                // 만약 파일명이 다르면 아래 이름을 실제 파일명으로 바꾸세요.
+                window.location.href = `searchdetail.html?search=${encodeURIComponent(query)}`;
+            }
+        }
+
+        // 페이지가 열리자마자 실행되는 코드
+                window.addEventListener('DOMContentLoaded', () => {
+            const activeProfileId = localStorage.getItem('coupangActiveProfileId');
+            const profiles = JSON.parse(localStorage.getItem('coupangProfiles'));
+
+            if (profiles && activeProfileId) {
+                const activeProfile = profiles.find(p => p.id == activeProfileId);
+
+                if (activeProfile) {
+                    const initialBox = document.getElementById('header-profile-initial');
+                    if (initialBox) {
+                        const initial = activeProfile.isKid ? "키즈" : activeProfile.name.substring(0, 1);
+                        initialBox.innerText = initial;
+                        initialBox.style.backgroundColor = activeProfile.color;
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- 모달 HTML (modal.js에서 제어) -->
+    <div class="modal" id="movie-modal">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header">
+                <button class="close-btn" onclick="closeModal()">×</button>
+                <h1 class="modal-title" id="modal-title"></h1>
+                <div class="modal-info" id="modal-info"></div>
+            </div>
+            <div class="modal-body">
+                <button class="play-btn" onclick="playVideo()">▶ 재생하기</button>
+
+                <div class="detail-section">
+                    <div class="detail-title">시놉시스</div>
+                    <div class="detail-content" id="modal-overview"></div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-title">출연진</div>
+                    <div class="detail-content" id="modal-cast"></div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-title">제작자</div>
+                    <div class="detail-content" id="modal-director"></div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-title">장르</div>
+                    <div class="genres" id="modal-genres"></div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-title">추가 정보</div>
+                    <div class="detail-content" id="modal-extra"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../modal.js"></script>
+
+</body>
+
+</html>
