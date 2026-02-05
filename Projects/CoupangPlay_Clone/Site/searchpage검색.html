@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠팡플레이</title>
+    <link rel="icon" type="image/png" href="https://assets.coupangplay.com/favicon.ico">
+    <!--bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="../Css/modal.css"> 
+    <link rel="stylesheet" href="../Css/ott.css">
+    <!-- 경로 -->
+    <style>
+        /* ==========================================================================
+    1. 기본 초기화 및 공통 레이아웃
+    ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: 0 solid transparent;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Pretendard, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+                Droid Sans, Helvetica Neue, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* 중앙 정렬을 위한 공통 컨테이너 */
+        .container {
+            width: 100%;
+            max-width: 95%;
+            /* 하단에서 1800px로 정의된 부분과 충돌 방지를 위해 통합 필요시 조정 */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: inherit;
+
+        }
+
+        :root {
+            --footer-white: #d6d6d6;
+            --link-blue: #3c9ceb;
+        }
+
+        /* ==========================================================================
+    2. 헤더 (GNB: Global Navigation Bar)
+    ========================================================================== */
+        /* [2. 헤더 스타일] */
+        #main-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4%;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+            transition: background 0.3s ease;
+        }
+
+        #main-header.scrolled {
+            background: #000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+        }
+
+        .MainMenu_logo {
+            height: 29px;
+            margin-right: 30px;
+        }
+
+
+        .nav-menu {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-menu a {
+            color: #ccc;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            position: relative;
+            transition: 0.2s;
+            display: inline-block;
+        }
+
+        .nav-menu a:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-menu a.active {
+            color: #fff;
+        }
+
+        .nav-menu a.active::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 15%;
+            width: 70%;
+            height: 3px;
+            background-color: #fff;
+            pointer-events: none;
+        }
+
+
+        /* 헤더 우측 섹션 */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .category-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #eee;
+            padding: 12px 10px;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+
+        .category-wrapper {
+            position: relative;
+            font-size: 30px;
+            font-weight: bold;
+            display: flex;
+        }
+
+        .category-wrapper:hover .dropdown-menu {
+            display: grid;
+
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 45px;
+            right: -50px;
+            background-color: #1a1b1d;
+            border-radius: 8px;
+            padding: 25px;
+            width: 520px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            z-index: 2000;
+            font-size: 30px;
+        }
+
+        .dropdown-menu.show {
+            display: grid;
+        }
+
+        .dropdown-menu a {
+            color: #bbb;
+            font-size: 14px;
+            padding: 10px 15px;
+            display: inline-block;
+            width: 100%;
+            border-radius: 8px;
+            transition: 0.1s;
+        }
+
+        .dropdown-menu a:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.15);
+
+        }
+
+        /* ==========================================================================
+    3. 검색 영역 (Search Top)
+    ========================================================================== */
+        .search-top-wrapper {
+            background-color: #1c2024;
+            width: 100%;
+            padding: 80px 0 54px;
+            /* 헤더 높이를 고려한 패딩 */
+        }
+
+        .search-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* 검색 바 입력창 컨테이너 */
+        .search-bar {
+            width: 766px;
+            height: 60px;
+            margin-bottom: 50px;
+
+            display: flex;
+            /* Flexbox 적용 */
+            align-items: center;
+            /* 자식 요소들을 수직 중앙 정렬 */
+            background-color: transparent;
+            border: 2px solid hsla(0, 0%, 100%, .1);
+            border-radius: 8px;
+            padding: 0 18px;
+            /* 양옆 여백 */
+            transition: border-color 0.2s;
+        }
+
+        .search-bar input {
+            flex: 1;
+            /* 버튼을 제외한 나머지 공간을 꽉 채움 */
+            height: 100%;
+            background-color: transparent;
+            border: none;
+            /* 기존 테두리 제거 */
+            color: #fff;
+            font-size: 25px;
+            outline: none;
+            caret-color: #007aff;
+            padding-right: 10px;
+            /* 아이콘과의 간격 */
+        }
+
+        .search-bar input:focus {
+            border-color: #007aff;
+        }
+
+        /* 검색 아이콘(SVG) */
+        .search-bar .img {
+            display: flex;
+            /* SVG 정렬을 위해 */
+            align-items: center;
+            width: 24px;
+            /* 크기 조절 */
+            height: 24px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+            text-decoration: none;
+            /* a태그 밑줄 방지 */
+        }
+
+        .search-bar .img svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .search-bar .img:hover {
+            opacity: 1;
+        }
+
+        /* ==========================================================================
+    4. 카테고리 버튼 영역
+    ========================================================================== */
+        .category-up,
+        .category-down {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .category-up a,
+        .category-down a {
+            padding: 15px 20px;
+            background-color: #2b3036;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .category-up a:hover,
+        .category-down a:hover {
+            background-color: #3f464e;
+        }
+
+        /* ==========================================================================
+    5. 콘텐츠 랭킹 섹션 (지금 뜨는 콘텐츠)
+    ========================================================================== */
+        .search-bottom {
+            padding: 50px 0;
+        }
+
+        .trend-top {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .trend-title {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .trend-title .title {
+            font-size: 30px;
+            font-weight: bold;
+            color: #fff;
+            margin: 0;
+        }
+
+        /* 정보 아이콘 및 툴팁 */
+        .title-mark {
+            cursor: pointer;
+            margin-left: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .title-mark svg {
+            width: 30px;
+            height: 30px;
+            fill: #fff;
+        }
+
+        .info-tooltip {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: -5px;
+            width: 620px;
+            background-color: #272a30;
+            color: hsla(0, 0%, 100%, .65);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-size: 18px;
+            line-height: 1.4;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-tooltip.show {
+            display: block;
+        }
+
+        .tooltip-close {
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        /* 랭킹 카드 레이아웃 */
+        .trend-up,
+        .trend-down {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .rank-card {
+            position: relative;
+            width: 250px;
+            padding-left: 70px;
+            /* 랭킹 숫자가 들어갈 공간 */
+            text-decoration: none;
+        }
+
+        .rank-card .poster img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 랭킹 숫자 스타일 (1~12 공통 및 개별 위치 조정) */
+        [class^="rank-num"] {
+            position: absolute;
+            bottom: -15px;
+            font-size: 110px;
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -6px;
+            color: hsla(0, 0%, 100%, .75);
+            text-shadow: 0 0 4px rgba(0, 0, 0, .85);
+            z-index: 2;
+        }
+
+        /* 각 숫자별 미세 위치 조정 */
+        .rank-num1 {
+            left: 15px;
+        }
+
+        .rank-num2,
+        .rank-num3 {
+            left: -5px;
+        }
+
+        .rank-num4,
+        .rank-num5,
+        .rank-num6 {
+            left: -8px;
+        }
+
+        .rank-num7 {
+            left: -1px;
+        }
+
+        .rank-num8,
+        .rank-num9 {
+            left: -6px;
+        }
+
+        .rank-num10 {
+            left: -53px;
+        }
+
+        .rank-num11 {
+            left: -25px;
+        }
+
+        .rank-num12 {
+            left: -48px;
+        }
+
+
+        /* 기존 HTML에 적힌 <span>×</span> 글자는 화면에서 보이지 않게 처리 */
+        .close-btn span {
+            display: none;
+        }
+
+        .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .detail-title {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .detail-content {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .genre-tag {
+            display: inline-block;
+            background: #333;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-right: 5px;
+            font-size: 13px;
+        }
+
+        /* ==========================================================================
+   반응형 레이아웃 설정
+   ========================================================================== */
+
+        /* 1. 검색창 및 카테고리 버튼 반응형 */
+        @media (max-width: 800px) {
+            .search-bar {
+                width: 90%;
+                /* 검색창 너비를 화면에 맞게 조절 */
+            }
+
+            .category-up,
+            .category-down {
+                flex-wrap: wrap;
+                /* 카테고리 버튼이 많으므로 줄바꿈 허용 */
+                justify-content: center;
+            }
+
+            .category-up a,
+            .category-down a {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+
+        /* 2. 랭킹 카드 레이아웃 (일반 모바일/태블릿) */
+        @media (max-width: 768px) {
+
+            .trend-up,
+            .trend-down {
+                justify-content: space-around;
+                /* 카드 사이 간격 균등 분배 */
+                gap: 20px;
+            }
+
+            .rank-card {
+                width: calc(50% - 40px);
+                /* 기본적으로 2열 배치 */
+                padding-left: 40px;
+                /* 숫자 공간 축소 */
+            }
+
+            [class^="rank-num"] {
+                font-size: 70px;
+                /* 숫자 크기 축소 */
+                bottom: -10px;
+            }
+        }
+
+        /* 3. ★ 핵심: 368px 이하일 때 1열로 변경 ★ */
+        @media (max-width: 368px) {
+            .search-top-wrapper {
+                padding-top: 100px;
+                /* 헤더 겹침 방지 */
+            }
+
+            .trend-up,
+            .trend-down {
+                flex-direction: column;
+                /* 세로 정렬 */
+                align-items: center;
+            }
+
+            .rank-card {
+                width: 80%;
+                /* 화면의 80% 정도 차지 (1열) */
+                margin-bottom: 40px;
+                padding-left: 50px;
+                /* 숫자 위치 확보 */
+            }
+
+            [class^="rank-num"] {
+                font-size: 80px;
+                left: -10px !important;
+                /* 모든 숫자를 왼쪽 정렬 */
+            }
+
+            .trend-title .title {
+                font-size: 22px;
+                /* 제목 크기 축소 */
+            }
+
+            .info-tooltip {
+                width: 280px;
+                /* 툴팁 너비 조절 */
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="full-body">
+        <header id="main-header">
+            <div class="header-left">
+                <div class="logo"><a href="Layout.html"><img
+                            src="https://assets.coupangplay.com/images/web_gnb_logo_new.webp" class="MainMenu_logo"
+                            alt="Hallym Play">
+                    </a></div>
+                <nav class="nav-menu">
+                    <a href="TV.html" class="nav-item">TV</a>
+                    <a href="movies.html" class="nav-item">영화</a>
+
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="profile-wrapper">
+                <a href="coupang-mypage.html" class="header-profile-btn">
+                    <div class="header-profile-circle" id="header-profile-initial"></div>
+                </a>
+            </div>
+        </div>
+            </div>
+    </div>
+    </header>
+    <div class="search-top-wrapper">
+        <div class="container">
+            <div class="search-top">
+                <div class="search-bar">
+                    <input type="text" id="search-input" maxlength="30" placeholder="제목, 장르, 배우로 검색해보세요" onkeypress="handleSearch(event)">
+                    <a class="img" id="search-icon" href="#"><svg viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M15.9562 17.0179C14.4799 18.2551 12.5769 19 10.5 19C5.80558 19 2 15.1944 2 10.5C2 5.80558 5.80558 2 10.5 2C15.1944 2 19 5.80558 19 10.5C19 12.5774 18.2547 14.4808 17.017 15.9573L21.0294 19.9697C21.3223 20.2626 21.3223 20.7375 21.0294 21.0304C20.7365 21.3233 20.2616 21.3233 19.9688 21.0304L15.9562 17.0179ZM17.5 10.5C17.5 14.366 14.366 17.5 10.5 17.5C6.63401 17.5 3.5 14.366 3.5 10.5C3.5 6.63401 6.63401 3.5 10.5 3.5C14.366 3.5 17.5 6.63401 17.5 10.5Z"
+                                fill="white"></path>
+                        </svg></a>
+                </div>
+                <div class="search-bar-category">
+                    <section class="category">
+                        <div class="category-up">
+                        <a href= "kategorie.html?genre=28&type=movie" onclick="goToCategory('28', 'movie'); return false;">액션</a><br>
+                        <a href="kategorie.html?genre=53&type=movie" onclick="goToCategory('53', 'movie'); return false;">스릴러</a><br>
+                        <a href="kategorie.html?genre=16&type=movie" onclick="goToCategory('16', 'movie'); return false;">애니메이션</a><br>
+                        <a href="kategorie.html?genre=878&type=movie" onclick="goToCategory('878', 'movie'); return false;">SF</a><br>
+                        <a href="kategorie.html?genre=27&type=movie" onclick="goToCategory('27', 'movie'); return false;">공포</a><br>
+                        <a href="kategorie.html?genre=18&type=movie" onclick="goToCategory('18', 'movie'); return false;">드라마</a><br>
+                        <a href="kategorie.html?genre=9648&type=movie" onclick="goToCategory('9648', 'movie'); return false;">미스터리</a>
+                        <a href="kategorie.html?genre=35&type=movie" onclick="goToCategory('35', 'movie'); return false;">코미디</a><br>
+                        <a href="kategorie.html?genre=80&type=movie" onclick="goToCategory('80', 'movie'); return false;">범죄</a><br>
+                        <a href="kategorie.html?genre=14&type=movie" onclick="goToCategory('14', 'movie'); return false;">판타지</a><br>
+                        <a href="kategorie.html?genre=36&type=movie" onclick="goToCategory('36', 'movie'); return false;">역사</a><br>
+                        </div>
+                        <div class="category-down">
+                        <a href="kategorie.html?genre=10759&type=tv" onclick="goToCategory('10759', 'tv'); return false;">액션 & 어드벤처</a><br>
+                        <a href="kategorie.html?genre=10762&type=tv" onclick="goToCategory('10762', 'tv'); return false;">키즈</a><br>
+                        <a href="kategorie.html?genre=10749&type=movie" onclick="goToCategory('10749', 'movie'); return false;">로맨스</a><br>
+                        <a href="kategorie.html?genre=12&type=movie" onclick="goToCategory('12', 'movie'); return false;">어드벤처</a><br>
+                        <a href="kategorie.html?genre=10764&type=tv" onclick="goToCategory('10764', 'tv'); return false;">예능</a><br>
+                        <a href="kategorie.html?genre=99&type=movie" onclick="goToCategory('99', 'movie'); return false;">다큐멘터리</a><br>
+                        <a href="kategorie.html?genre=10751&type=movie" onclick="goToCategory('10751', 'movie'); return false;">가족</a><br>
+                        <a href="kategorie.html?genre=10402&type=movie" onclick="goToCategory('10402', 'movie'); return false;">음악</a><br>
+                        <a href="kategorie.html?genre=10752&type=movie" onclick="goToCategory('10752', 'movie'); return false;">전쟁</a><br>
+                        <a href="kategorie.html?genre=37&type=movie" onclick="goToCategory('37', 'movie'); return false;">서부</a>
+                    </section>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="container">
+        <div class="search-bottom">
+            <div class="trend-top">
+                <div class="trend-title">
+                    <p class="title">지금 뜨는 콘텐츠</p>
+                    <div class="title-mark" id="info-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M13.1501 8.15C13.1501 8.78513 12.6352 9.3 12.0001 9.3C11.365 9.3 10.8501 8.78513 10.8501 8.15C10.8501 7.51487 11.365 7 12.0001 7C12.6352 7 13.1501 7.51487 13.1501 8.15Z">
+                            </path>
+                            <path
+                                d="M12.8499 11.25C12.8499 10.7806 12.4693 10.4 11.9999 10.4C11.5305 10.4 11.1499 10.7806 11.1499 11.25V16.5C11.1499 16.9695 11.5305 17.35 11.9999 17.35C12.4693 17.35 12.8499 16.9695 12.8499 16.5V11.25Z">
+                            </path>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM12 20.5C16.6944 20.5 20.5 16.6944 20.5 12C20.5 7.30558 16.6944 3.5 12 3.5C7.30558 3.5 3.5 7.30558 3.5 12C3.5 16.6944 7.30558 20.5 12 20.5Z">
+                            </path>
+                        </svg>
+                        <div id="info-tooltip" class="info-tooltip">
+                            지금 뜨는 콘텐츠는 전일 대비 시청자 수 증가율을 고려하여 제공됩니다. <br>
+                            고객의 편의 및 만족도 향상을 위한 추가적인 요소가 수시로 반영될 수 있습니다.
+                            <div class="tooltip-close">
+                                <svg id="tooltip-close-btn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19.5303 5.53033C19.8232 5.23744 19.8232 4.76256 19.5303
+                                            4.46967C19.2374 4.17678 18.7626 4.17678 18.4697 4.46967L12 10.9393L5.53033
+                                            4.46967C5.23744 4.17678 4.76256 4.17678 4.46967 4.46967C4.17678 4.76256
+                                            4.17678 5.23744 4.46967 5.53033L10.9393 12L4.46967 18.4697C4.17678 18.7626
+                                            4.17678 19.2374 4.46967 19.5303C4.76256 19.8232 5.23744 19.8232 5.53033
+                                            19.5303L12 13.0607L18.4697 19.5303C18.7626 19.8232 19.2374 19.8232 19.5303
+                                            19.5303C19.8232 19.2374 19.8232 18.7626 19.5303 18.4697L13.0607 12L19.5303
+                                            5.53033Z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trend-up" id="trend-up">
+                <a href="" class="rank-card">
+                    <span class="rank-num1">1</span>
+                    <div class="poster">
+                        <img src="https://img.coupangstreaming.com/titles/314e485b-38c8-4518-9efb-8aec97fd69f9/poster/8be81947-92df-4a7a-b623-c28cc3775a34.jpg?imwidth=350&imscalingMode=aspectFit"
+                            alt="">
+                    </div>
+                </a>
+                <a href="" class="rank-card">
+                    <span class="rank-num2">2</span>
+                    <div class="poster">
+                        <img src="https://img.coupangstreaming.com/titles/d3ace231-37c4-4ac0-b8bf-c8033b4218df/poster/05f46d86-4178-4898-ba3a-02584c5de9db.jpg?imwidth=350&imscalingMode=aspectFit"
+                            alt="">
+                    </div>
+                </a>
+                <a href="" class="rank-card">
+                    <span class="rank-num3">3</span>
+                    <div class="poster">
+                        <img src="https://img.coupangstreaming.com/titles/63b3358d-0d00-4111-b4e0-acc42bd2a596/poster/6eb792b5-b529-4046-a343-2d48326dc570.jpg?imwidth=350&imscalingMode=aspectFit"
+                            alt="">
+                    </div>
+                </a>
+                <a href="" class="rank-card">
+                    <span class="rank-num4">4</span>
+                    <div class="poster">
+                        <img src="https://img.coupangstreaming.com/titles/6016062f-902c-4098-b856-9c487cef43e7/poster/fdd2b722-b136-4391-8a3e-07745a70fa16.jpg?imwidth=350&imscalingMode=aspectFit alt="">
+                        </div>
+                    </a>
+                    <a href="" class=" rank-card">
+                        <span class="rank-num5">5</span>
+                        <div class="poster">
+                            <img src="https://img.coupangstreaming.com/titles/4ba38780-0f65-40f3-af3a-60250966460d/poster/0abb9b2f-c405-4333-aa68-cbbc7a1491ef.jpeg?imwidth=350&imscalingMode=aspectFit"
+                                alt="">
+                        </div>
+                </a>
+                <a href="" class="rank-card">
+                    <span class="rank-num6">6</span>
+                    <div class="poster">
+                        <img src="https://img.coupangstreaming.com/titles/10941e64-8c60-4e2e-ad81-ac5955b0f883/poster/daf29763-5704-4de4-a7d7-645afeb121f3.jpg?imwidth=350&imscalingMode=aspectFit"
+                            alt="">
+                    </div>
+                </a>
+            </div>
+
+            <div class="trend-down" id="trend-down">
+                <a href="" class="rank-card">
+                    <span class="rank-num7">7</span>
+                    <div class="poster">
+                        <img src="https://img.coupangstreaming.com/titles/e9fd75fd-0c25-4a6b-8634-14b7f55f4ae1/poster/ecc11910-595f-473b-998a-4f4cf57a1fdf.jpg?imwidth=350&imscalingMode=aspectFit"
+                            alt="">
+                    </div>
+                </a>
+                <a href="" class="rank-card">
+                    <span class="rank-num8">8</span>
+                    <div class="poster">
+                        <img src="https://img.coupangstreaming.com/titles/52dd696b-0bb6-48a0-93b3-dabfd250e481/poster/ddc52593-28ed-4d4e-8140-d4e00f6a6da5.jpg?imwidth=350&imscalingMode=aspectFit"
+                            alt="">
+                    </div>
+                </a>
+                <a href="" class="rank-card">
+                    <span class="rank-num9">9</span>
+                    <div class="poster">
+                        <img src="https://img.coupangstreaming.com/titles/1a71e7b2-025e-40e9-b084-104b66f62a58/undefined/e0cb262d-1940-4eb4-b272-934f99346855.jpg?imwidth=350&imscalingMode=aspectFit"
+                            alt="">
+                    </div>
+                </a>
+                <a href="" class="rank-card">
+                    <span class="rank-num10">10</span>
+                    <div class="poster">
+                        <img src="https://img.coupangstreaming.com/titles/b81784ea-3957-4495-9b73-68b9945ac205/poster/9cba1cc8-d92f-422b-8bd7-4f3aa488140a.jpeg?imwidth=350&imscalingMode=aspectFit"
+                            alt="">
+                    </div>
+                </a>
+                <a href="" class="rank-card">
+                    <span class="rank-num11">11</span>
+                    <div class="poster">
+                        <img src="https://img.coupangstreaming.com/titles/35be4b5d-4c4d-4ab6-ac7d-92d217aaaa5d/poster/f4eb4f51-8886-47cf-9539-70d65ba70cc6.jpg?imwidth=350&imscalingMode=aspectFit"
+                            alt="">
+                    </div>
+                </a>
+                <a href="" class="rank-card">
+                    <span class="rank-num12">12</span>
+                    <div class="poster">
+                        <img src="https://img.coupangstreaming.com/titles/85fc6c47-2ca5-4541-bce2-5ab6e2a5c6cf/poster/5238dcc6-6e77-4feb-a099-56fabe67cb3d.jpg?imwidth=350&imscalingMode=aspectFit"
+                            alt="">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal" id="movie-modal">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header">
+                <button class="close-btn" onclick="closeModal()">×</button>
+                <h1 class="modal-title" id="modal-title"></h1>
+                <div class="modal-info" id="modal-info"></div>
+            </div>
+            <div class="modal-body">
+                <button class="play-btn" onclick="playVideo()">▶ 재생하기</button>
+
+                <div class="detail-section">
+                    <div class="detail-title">시놉시스</div>
+                    <div class="detail-content" id="modal-overview"></div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-title">출연진</div>
+                    <div class="detail-content" id="modal-cast"></div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-title">제작자</div>
+                    <div class="detail-content" id="modal-director"></div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-title">장르</div>
+                    <div class="genres" id="modal-genres"></div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-title">추가 정보</div>
+                    <div class="detail-content" id="modal-extra"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ 모달 로직 JS 파일 -->
+    <script src="../modal.js"></script>
+     <!-- 경로  -->
+
+
+    <script>
+        // 1. TMDB 관련 설정
+        const API_KEY = 'a12902a330de59d58fdc411f239ecf96';
+        const BASE_URL = 'https://api.themoviedb.org/3';
+        const IMG_URL = 'https://image.tmdb.org/t/p/w500'; // 포스터용
+        const BACKDROP_URL = 'https://image.tmdb.org/t/p/original'; // 모달 배경용 (고화질)
+
+        // 2. 인기 영화 데이터를 가져오는 함수
+        async function getTrendingMovies() {
+            try {
+                console.log("인기순 데이터를 불러오기 시작합니다...");
+                const response = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&language=ko-KR&sort_by=popularity.desc&page=1`);
+                const data = await response.json();
+                const movies = data.results.slice(0, 12);
+                renderMovies(movies);
+            } catch (error) {
+                console.error("데이터 로드 중 오류 발생:", error);
+            }
+        }
+
+        // 3. 데이터를 화면에 HTML로 그리는 함수
+        function renderMovies(movies) {
+            const upContainer = document.getElementById('trend-up');
+            const downContainer = document.getElementById('trend-down');
+
+            upContainer.innerHTML = '';
+            downContainer.innerHTML = '';
+
+            movies.forEach((movie, index) => {
+                const rank = index + 1;
+
+                // 중요: href를 #으로 바꾸고, onclick 이벤트에 openModal 함수를 연결합니다.
+                const movieCard = `
+                <a href="javascript:void(0)" onclick="openModal(${movie.id}, 'movie')" class="rank-card">
+                    <span class="rank-num${rank}">${rank}</span>
+                    <div class="poster">
+                        <img src="${movie.poster_path ? IMG_URL + movie.poster_path : 'https://via.placeholder.com/350x525?text=No+Image'}" 
+                             alt="${movie.title}">
+                    </div>
+                </a>
+            `;
+
+                if (rank <= 6) {
+                    upContainer.insertAdjacentHTML('beforeend', movieCard);
+                } else {
+                    downContainer.insertAdjacentHTML('beforeend', movieCard);
+                }
+            });
+        }
+
+        // 6. 검색 기능을 위한 함수 추가
+        async function searchMovies(query) {
+            if (!query || query.trim() === "") {
+                // 검색어가 없으면 다시 인기 영화 목록을 보여줌
+                getTrendingMovies();
+                return;
+            }
+
+            try {
+                console.log(`'${query}' 검색 중...`);
+
+                const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&language=ko-KR&query=${encodeURIComponent(query)}&page=1`);
+                const data = await response.json();
+
+                if (data.results.length === 0) {
+                    alert("검색 결과가 없습니다.");
+                    return;
+                }
+            } catch (error) {
+                console.error("검색 중 오류 발생:", error);
+            }
+        }
+
+        // 7. 이벤트 리스너 연결
+        const searchInput = document.querySelector('.search-bar input');
+        const searchBtn = document.querySelector('.search-bar a.img');
+
+        // 엔터키 입력 시 검색
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value;
+                // 결과 페이지(searchpagecopy.html)로 검색어를 담아서 이동합니다.
+                location.href = `searchdetail.html?search=${encodeURIComponent(query)}`;
+            }
+        });
+
+        // 검색 아이콘 클릭 시 검색
+        searchBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // 중요: a 태그의 기본 링크 기능을 막습니다.
+
+            const searchInput = document.getElementById('search-input');
+            const query = searchInput.value;
+
+            if (query.trim() !== "") {
+                // 엔터키와 동일한 경로로 이동하도록 설정 (파일명 확인 필요: searchresults.html)
+                window.location.href = `searchdetail.html?search=${encodeURIComponent(query)}`;
+            } else {
+                alert("검색어를 입력해주세요.");
+            }
+        });
+        function handleSearch(event) {
+            // 엔터키(13)를 눌렀을 때만 작동
+            if (event.key === 'Enter') {
+                const query = document.getElementById('search-input').value;
+                if (query.trim() !== "") {
+                    // 검색어를 URL 파라미터로 담아서 이동 (예: searchresults.html?search=액션)
+                    window.location.href = `searchresults.html?search=${encodeURIComponent(query)}`;
+                }
+            }
+        }
+        // 페이지 로드 시 실행
+        getTrendingMovies();
+
+                window.addEventListener('DOMContentLoaded', () => {
+            const activeProfileId = localStorage.getItem('coupangActiveProfileId');
+            const profiles = JSON.parse(localStorage.getItem('coupangProfiles'));
+
+            if (profiles && activeProfileId) {
+                const activeProfile = profiles.find(p => p.id == activeProfileId);
+
+                if (activeProfile) {
+                    const initialBox = document.getElementById('header-profile-initial');
+                    if (initialBox) {
+                        const initial = activeProfile.isKid ? "키즈" : activeProfile.name.substring(0, 1);
+                        initialBox.innerText = initial;
+                        initialBox.style.backgroundColor = activeProfile.color;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
