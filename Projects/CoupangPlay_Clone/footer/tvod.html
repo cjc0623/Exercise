@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../Css/ott.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+        }
+
+        :root {
+            --footer-white: #d6d6d6;
+            --link-blue: #3c9ceb;
+        }
+
+        footer {
+            background-color: #000;
+            padding: 60px 4% 80px;
+            text-align: center;
+            font-size: 12px;
+            color: #84868d;
+            border-top: 1px solid #1a1a1a;
+            margin-top: 50px;
+        }
+
+        .footer-logo {
+            margin-bottom: 12px;
+        }
+
+        .footer-top-logo img {
+            height: 30px;
+        }
+
+        .footer-version {
+            font-size: 12px;
+            margin-bottom: 40px;
+            color: var(--footer-white);
+        }
+
+        .footer-sns {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 50px;
+
+        }
+
+        .sns-item {
+            background-color: #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            width: 70px;
+            height: 70px;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .sns-item:hover {
+            background-color: #333;
+        }
+
+        .sns-item svg {
+            fill: #ffffff;
+            color: #ffffff;
+            width: 20px;
+            height: 20px;
+        }
+
+        .footer-info-grid {
+            max-width: 900px;
+            margin: 0 auto 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            text-align: left;
+            gap: 40px;
+            line-height: 1.8;
+            color: var(--footer-white);
+            font-size: 15px;
+        }
+
+        .footer-info-grid a {
+            color: var(--link-blue);
+            text-decoration: underline;
+        }
+
+        /* 이용 약관 바 */
+        .footer-policy-bar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-top: 30px;
+            border-top: 1px solid #1a1a1a;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .footer-policy-bar a {
+            color: var(--link-blue);
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .footer-policy-bar span {
+            color: #333;
+        }
+
+        /* 최하단 링크 */
+        .footer-bottom-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 17px;
+        }
+
+        .footer-bottom-links a {
+            color: var(--footer-white);
+            text-decoration: underline;
+
+        }
+
+        #overflow {
+            background-color: rgb(0, 0, 0);
+            color: white;
+            padding: 50px;
+            width: 100%;
+            height: 1000px;
+            border: 1px solid black;
+            overflow-x: hidden;
+            overflow-y: scroll;
+
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        #overflow::-webkit-scrollbar {
+            display: none;
+        }
+
+        #main-header{
+            background-color: #000;
+        }
+    </style>
+</head>
+<header id="main-header">
+    <div class="header-left">
+        <div class="logo"><a href="../Site/Layout.html"><img
+                    src="https://assets.coupangplay.com/images/web_gnb_logo_new.webp" class="MainMenu_logo"
+                    alt="Coupang Play">
+            </a></div>
+</header>
+
+<body>
+    <div id="overflow">
+        <p class="r_bg">쿠팡플레이 유료서비스 이용약관</p><br>
+        <p class="r_bg">제1조(목적)</p>
+        <p>본 쿠팡플레이 유료서비스 이용약관(이하 "본 약관")은 쿠팡 주식회사(이하 "회사")가 제공하는 쿠팡플레이 유료서비스의 이용과 관련하여 회사와 이용자 간의 권리, 의무 및 책임사항, 기타 필요한
+            사항을 규정함을 목적으로 합니다.</p><br>
+        <p class="r_bg">제2조(정의)</p>
+        <p>① "유료서비스"란 이용자가 회사에 별도의 이용요금을 지급한 후에 이용할 수 있는 쿠팡플레이 서비스를 의미합니다.</p>
+        <p>② "결제"란 이용자가 유료서비스를 이용하기 위하여 각종 지급수단을 통하여 유료서비스에 대한 이용요금을 회사에 지급하는 것을 의미합니다.</p>
+        <p>③ "구매"란 이용자가 결제를 통하여 유료서비스에 대한 이용권한을 취득하는 행위를 의미합니다.</p>
+        <p>④ "쿠팡캐시 등"이란 쿠팡캐시, 쿠페이머니 등 쿠팡페이 주식회사(이하 "쿠팡페이")가 발행∙관리하는 선불식 전자지급수단으로서 회사 및 회사와 계약한 제휴사에서 상품 등을 구매하고 그 대가를
+            지급하는 데 사용할 수 있는 지급수단을 의미합니다.</p>
+        <p>⑤ "앱 마켓"이란 이용자가 모바일콘텐츠 등을 구매 청약하기 전에 모바일콘텐츠 등의 거래를 중개하는 공간을 의미합니다.</p>
+        <p>⑥ "인앱 결제"란 앱을 구동한 상태에서 앱 내에서 이용자가 해당 앱 관련 아이템, 상품, 콘텐츠 등을 구매하는 결제방식을 의미합니다.</p>
+        <p>⑦ "패스"란 쿠팡플레이 내에서 콘텐츠의 제공자, 종류, 내용 등에 따라 콘텐츠가 분류되어 있는 별도 서비스를 의미합니다. 패스 명칭은 패스별로 상이할 수 있습니다.</p><br>
+        <p class="r_bg">제3조(약관의 해석)</p>
+        <p>본 약관의 해석에 관하여는 『전자상거래 등에서의 소비자보호에 관한 법률』, 『약관의 규제에 관한 법률』, 공정거래위원회가 정하는 『전자상거래 등에서의 소비자 보호지침』 등 관련 법령 및 상관례에
+            따릅니다.</p><br>
+        <p class="r_bg">제4조(이용계약의 성립 등)</p>
+        <p>① 유료서비스 이용계약은 본 약관에 동의한 이용자가 이용을 원하는 유료서비스를 주문 및 이용요금을 결제하고, 회사가 주문∙결제정보를 확인한 후 해당 주문을 승낙함으로써 이용자에게 구매 완료가
+            표시된 시점에 성립하며, 이용계약과 관련하여 본 약관에서 규정하지 않은 사항에 대해서는 『쿠팡 이용약관』 제2장이 준용됩니다.</p>
+        <p>② 회사는 이용자의 주문이 다음 각 호에 해당하는 경우에는 승낙하지 않거나 승낙을 유보할 수 있습니다.</p>
+        <ol>
+            <li>이용자의 주문 내용에 허위, 기재누락, 오기가 있는 경우</li>
+            <li>이용자가 타인의 명의 또는 개인정보를 이용하여 주문하는 경우</li>
+            <li>미성년자인 이용자가 청소년보호법 등 관련법령에 의해서 이용이 금지되는 콘텐츠를 주문하는 경우</li>
+            <li>쿠팡 회원 또는 와우 멤버십 자격이 제한 또는 상실된 이용자가 주문한 경우</li>
+            <li>관할청의 처분 등으로 해당 유료서비스의 제공이 중단된 경우</li>
+            <li>기타 주문을 승낙하는 것 또는 해당 유료서비스를 제공하는 것에 회사의 기술상 현저히 어려움이 있다고 판단되는 경우</li>
+            <li>콘텐츠 공급자와의 계약 만료 등의 사유로 회사가 콘텐츠를 제공할 권한을 가지지 않게 된 경우</li>
+            <li>이용자가 『쿠팡플레이 이용 기준』 제11조 제2항 각호의 행위를 하는 경우</li>
+        </ol>
+        <p>③ 이용계약의 성립 후 회사가 제2항 각호의 사유를 발견한 경우 회사는 즉시 계약을 해제 또는 해지할 수 있으며, 계약 해제 또는 해지 시 회사는 이용자가 유료서비스 이용요금을 결제한 날로부터
+            3영업일 이내에 환급하거나 환급에 필요한 조치를 취합니다. 단, 제2항 각호의 사유가 이용자의 책임 있는 사유로 발생한 경우, 회사는 법령이 허용하는 한도 내에서 환급을 거절할 수 있습니다.
+        </p><br>
+        <p class="r_bg">제5조(유료서비스 이용)</p>
+        <p>① 이용자는 유료서비스를 구매하기 전에 반드시 쿠팡플레이 서비스 내 작성된 개별 유료서비스의 상세내용과 거래의 조건(유료서비스 이용에 필요한 최소한의 기술사양 포함)을 정확하게 확인하여야 합니다.
+            구매하려는 유료서비스의 내용과 거래의 조건을 확인하지 않고 구매하여 발생한 모든 손해는 이용자 본인이 부담합니다.</p>
+        <p>② 이용자는 본 약관 및 회사가 서비스 화면에서 공지하는 내용을 준수하여야 하고, 본 약관 및 공지 내용을 위반하거나 이행하지 않아 발생하는 모든 손해에 대하여 책임을 집니다.</p>
+        <p>③ 이용자는 유료서비스 결제와 관련하여 이용자가 입력한 정보 및 그 정보와 관련하여 발생하는 제반 문제에 대한 모든 책임을 부담합니다.</p>
+        <p>④ 유료서비스는 이용자가 쿠팡 회원을 탈퇴하거나 와우 멤버십이 해지된 경우, 기타 사유로 쿠팡플레이 서비스가 중단 또는 서비스 사용 권한을 상실한 경우에는 더 이상 유료서비스(이미 구매한
+            유료서비스 포함)를 이용할 수 없습니다.</p>
+        <p>⑤ 회사는 이용자의 유료서비스 결제 시 해당 결제수단에 대하여 이용자에게 정당한 사용권한이 있는지 확인할 수 있고, 이에 대한 확인이 완료될 때까지 해당 유료서비스의 제공을 개시하지 않거나 중지할
+            수 있습니다.</p>
+        <p>⑥ 회사는 이용자에게 서비스가 안전하게 제공될 수 있도록 각종 설비와 자료를 관리하고, 서비스가 제공 목적에 맞게 이용되고 있는지 여부를 확인합니다. 만약 이용자가 이용 목적을 위반한 것으로
+            확인되면 회사는 그에 대한 소명을 이용자에게 요청할 수 있고, 유료서비스 주문 취소 등 필요한 조치를 할 수 있습니다.</p>
+        <p>⑦ 유료서비스에 대한 구매 여부는 전적으로 이용자 본인의 판단과 책임으로 결정하여야 합니다. 회사는 회사의 고의 또는 중과실이 없는 한 이용자의 구매 결정에 대하여 책임을 부담하지 아니 합니다.
+        </p>
+        <p>⑧ 회사는 본 약관에 따른 결제에 관한 제반업무를 전자금융거래법상 적법한 라이선스를 보유하고 있는 쿠팡페이를 이용하여 처리할 수 있습니다.</p>
+        <p>⑨ 이용자는 각 앱 마켓에서 제공하는 결제 비밀번호 기능 등을 설정하여 부정한 결제가 이루어지지 아니하도록 관리하여야 합니다. 결제 비밀번호 기능 등을 설정하지 아니하여 발생하는 문제에 대해
+            회사는 책임지지 않습니다.</p>
+        <p>⑩ 이용 가능한 유료서비스의 종류, 제공 범위, 제공 방식, 상품별 가격(정기적 자동결제 상품의 이용 요금 포함)은 와우 멤버십 서비스 가입 여부에 따라 달라질 수 있으며, 회사의 정책에 따라
+            변경될 수 있습니다.</p>
+
+    </div>
+
+
+
+
+    <footer>
+        <div class="footer-top-logo">
+            <img src="https://assets.coupangplay.com/images/web_gnb_logo_new.webp" alt="Coupang Play">
+        </div>
+        <br>
+        <div class="footer-version">버전: 1.67.44</div>
+
+        <div class="footer-sns">
+            <a href="https://www.youtube.com/channel/UCjn-VbcIkAeXQKCmLJV8YwQ" target="_blank" rel="noopener noreferrer"
+                class="sns-item"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-youtube" viewBox="0 0 16 16">
+                    <path
+                        d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z" />
+                </svg></a>
+            <a href="https://www.facebook.com/CoupangPlay/" target="_blank" rel="noopener noreferrer"
+                class="sns-item"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-facebook" viewBox="0 0 16 16">
+                    <path
+                        d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+                </svg></a>
+            <a href="https://www.instagram.com/coupangplay/" target="_blank" rel="noopener noreferrer"
+                class="sns-item"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-instagram" viewBox="0 0 16 16">
+                    <path
+                        d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
+                </svg></a>
+            <a href="https://x.com/coupangplay" target="_blank" rel="noopener noreferrer" class="sns-item"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-twitter-x" viewBox="0 0 16 16">
+                    <path
+                        d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                </svg></a>
+        </div>
+
+        <div class="footer-info-grid">
+            <div>
+                쿠팡(주) | 대표이사: 로저스 해롤드 린(Rogers Harold Lynn)<br>
+                서울시 송파구 송파대로 570<br>
+                사업자 등록번호: 120-88-00767<br>
+                <a href="#">통신판매업신고: 2017-서울송파-0680</a>
+            </div>
+            <div>
+                고객센터: 1600-9800<br>
+                대표 메일: <a href="mailto:playrepresent@coupang.com">playrepresent@coupang.com</a><br>
+                제휴 문의: <a href="mailto:playbusiness@coupang.com">playbusiness@coupang.com</a><br>
+                호스팅 서비스 사업자: AWS 코리아
+            </div>
+        </div>
+
+        <div class="footer-policy-bar">
+            <a href="../footer/tac.html">쿠팡플레이 이용 기준</a> <span>|</span>
+            <a href="../footer/tvod.html">쿠팡플레이 유료서비스 이용 약관</a> <span>|</span>
+            <a href="faq.html">자주 묻는 질문</a>
+        </div>
+
+        <div class="footer-bottom-links">
+            <a href="javascript:void(0);" onclick="handleLogout()">로그아웃</a> <span>|</span>
+            <a href="#">와우 멤버십 가입</a>
+        </div>
+    </footer>
+
+    <script>
+        function handleLogout() {
+            if (confirm("로그아웃 하시겠습니까?")) {
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('coupangActiveProfileId');
+
+                window.open("start.html", "_blank");
+                window.open('', '_self').close();
+                location.href = "start.html";
+            }
+        }
+    </script>
+</body>
+
+</html>
