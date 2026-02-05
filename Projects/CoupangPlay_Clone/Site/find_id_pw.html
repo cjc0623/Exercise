@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디 비밀번호 찾기</title>
+    <link rel="stylesheet" href="../Css/find_id_pw.css">
+    <link rel="shortcut icon" href="https://assets.coupangplay.com/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+    <div class="container">
+        <img src="data:image/png;base64,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">
+        <h1>계정 찾기</h1>
+
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="Find_id()">아이디 찾기</button>
+            <button class="tab-btn" onclick="Find_pw()">비밀번호 찾기</button>
+        </div>
+
+        <div class="content-wrapper">
+            <!-- 아이디 찾기 -->
+            <fieldset id="fs_f_id">
+                <p class="form-title">아이디 찾기</p>
+
+                <form class="f_id" onsubmit="event.preventDefault(); submitFindId();">
+                    <div class="form-group">
+                        <label for="f_id_name">이름</label>
+                        <input type="text" id="f_id_name" class="f_id_name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="f_id_tel">연락처</label>
+                        <input type="text" id="f_id_tel" class="f_id_tel" placeholder="010-1234-5678" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">아이디 찾기</button>
+                </form>
+
+                <div id="s_f_id" class="result-box">
+                    <p class="result-text"></p>
+                </div>
+
+                <a href="coupang-login.html" class="back-link">로그인 페이지로 돌아가기</a>
+            </fieldset>
+
+            <!-- 비밀번호 찾기 -->
+            <fieldset id="fs_f_pw" class="hidden">
+                <p class="form-title">비밀번호 찾기</p>
+
+                <form class="f_pw" onsubmit="event.preventDefault(); submitFindPw();">
+                    <div class="form-group">
+                        <label for="f_pw_id">이메일 (아이디)</label>
+                        <input type="email" id="f_pw_id" class="f_pw_id" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="f_pw_name">이름</label>
+                        <input type="text" id="f_pw_name" class="f_pw_name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="f_pw_tel">연락처</label>
+                        <input type="text" id="f_pw_tel" class="f_pw_tel" placeholder="010-1234-5678" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">비밀번호 재설정 요청</button>
+                </form>
+
+                <div id="s_f_pw" class="result-box">
+                    <p class="result-text"></p>
+                </div>
+
+                <a href="coupang-login.html" class="back-link">로그인 페이지로 돌아가기</a>
+            </fieldset>
+        </div>
+    </div>
+
+    <script>
+        function Find_id() {
+            const fsId = document.getElementById("fs_f_id");
+            const fsPw = document.getElementById("fs_f_pw");
+            const tabs = document.querySelectorAll('.tab-btn');
+
+            fsId.classList.remove('hidden');
+            fsPw.classList.add('hidden');
+
+            tabs[0].classList.add('active');
+            tabs[1].classList.remove('active');
+
+            document.getElementById('s_f_id').classList.remove('show');
+        }
+
+        function Find_pw() {
+            const fsId = document.getElementById("fs_f_id");
+            const fsPw = document.getElementById("fs_f_pw");
+            const tabs = document.querySelectorAll('.tab-btn');
+
+            fsId.classList.add('hidden');
+            fsPw.classList.remove('hidden');
+
+            tabs[0].classList.remove('active');
+            tabs[1].classList.add('active');
+
+            document.getElementById('s_f_pw').classList.remove('show');
+        }
+        function cleanNumber(str) {
+            return str ? str.replace(/[^0-9]/g, '') : '';
+        }
+
+        function submitFindId() {
+            const name = document.querySelector('.f_id_name').value;
+            const phone = document.querySelector('.f_id_tel').value;
+            const resultBox = document.getElementById('s_f_id');
+            const resultText = resultBox.querySelector('.result-text');
+
+            const userList = JSON.parse(localStorage.getItem('userList')) || [];
+
+            // 2. 이름과 연락처가 일치하는 사용자 찾기
+            const matchedUser = userList.find(u => u.userName === name && u.userPhone === phone);
+
+            // TODO: 실제 백엔드 API 연동
+            setTimeout(() => {
+                resultBox.classList.add('show');
+                if (matchedUser) {
+                    // 정보를 찾았을 때
+                    resultText.innerHTML = `이름: <strong>${matchedUser.userName}</strong><br>아이디: <strong>${matchedUser.userId}</strong>`;
+                    resultText.style.color = "#333";
+                } else {
+                    // 정보가 없을 때
+                    resultText.textContent = "일치하는 사용자 정보를 찾을 수 없습니다.";
+                    resultText.style.color = "#E52528";
+                }
+            }, 300);
+
+        }
+
+        function submitFindPw() {
+            const email = document.querySelector('.f_pw_id').value;
+            const name = document.querySelector('.f_pw_name').value;
+            const phone = document.querySelector('.f_pw_tel').value;
+            const resultBox = document.getElementById('s_f_pw');
+            const resultText = resultBox.querySelector('.result-text');
+
+            // 1. 회원가입 시 저장된 명단 가져오기
+            const userList = JSON.parse(localStorage.getItem('userList')) || [];
+
+            // 2. 아이디, 이름, 연락처 3개가 모두 일치하는 사용자 찾기
+            const matchedUser = userList.find(u => u.userId === email && u.userName === name && u.userPhone === phone);
+
+
+            // TODO: 실제 백엔드 API 연동
+            setTimeout(() => {
+                resultBox.classList.add('show');
+                if (matchedUser) {
+                    // 정보를 찾았을 때 (실제 쿠팡처럼 재설정 링크 발송 시뮬레이션)
+                    resultText.innerHTML = `<strong>${matchedUser.userId}</strong> 계정을 확인했습니다.<br>이메일로 비밀번호 재설정 링크를 발송했습니다.`;
+                    resultText.style.color = "#333";
+                } else {
+                    // 정보가 없을 때
+                    resultText.textContent = "입력하신 정보와 일치하는 계정이 없습니다.";
+                    resultText.style.color = "#E52528";
+                }
+            }, 300);
+        }
+    </script>
+</body>
+
+</html>
