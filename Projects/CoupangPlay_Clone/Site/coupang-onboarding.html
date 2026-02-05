@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>쿠팡플레이 - 온보딩</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <link rel="shortcut icon" href="https://assets.coupangplay.com/favicon.ico" type="image/x-icon">
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; background-color: #000; color: #fff; font-family: "Pretendard Variable", sans-serif; 
+            display: flex; justify-content: center; align-items: flex-start; 
+            min-height: 100vh; overflow-x: hidden; 
+        }
+        ::-webkit-scrollbar { display: none; }
+
+        .container { width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .screen { 
+            display: none; width: 100%; max-width: 1240px; 
+            flex-direction: column; align-items: center; text-align: center; 
+            margin: 0 auto; padding: 80px 4% 180px; 
+        }
+        .screen.active { display: flex; }
+
+        h1 { font-size: 32px; font-weight: 700; margin-bottom: 40px; margin-top: 40px; }
+        .close-btn { position: fixed; top: 40px; right: 40px; font-size: 36px; cursor: pointer; color: #fff; z-index: 1000; transition: 0.2s; opacity: 0.7; }
+        .close-btn:hover { opacity: 1; }
+
+        /* 로딩 & 웰컴 */
+        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; display: none; flex-direction: column; justify-content: center; align-items: center; }
+        .spinner { width: 50px; height: 50px; border: 4px solid #333; border-top: 4px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        #final-welcome-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 2000; display: none; flex-direction: column; align-items: center; overflow: hidden; }
+        .welcome-header { position: absolute; top: 20%; z-index: 10; text-align: center; width: 100%; }
+        .coupang-logo { width: 180px; margin-bottom: 30px; display: block; margin-left: auto; margin-right: auto; opacity: 1; }
+        .welcome-text { font-size: 22px; color: #fff; font-weight: 500; letter-spacing: -0.5px; }
+        .poster-wall-wrapper { position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; overflow: hidden; mask-image: linear-gradient(to bottom, transparent, black 30%); -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%); }
+        .poster-wall { display: flex; gap: 20px; justify-content: center; width: 100%; }
+        .wall-column { display: flex; flex-direction: column; gap: 20px; width: 18%; animation: scrollUp 20s linear infinite; }
+        .wall-column:nth-child(even) { animation-duration: 25s; margin-top: -150px; }
+        .wall-column:nth-child(odd) { animation-duration: 28s; }
+        .wall-item { width: 100%; aspect-ratio: 2/3; border-radius: 8px; background-size: cover; background-position: center; opacity: 0.5; box-shadow: 0 4px 10px rgba(0,0,0,0.8); }
+        @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+
+        /* Step 1 & 2 스타일 */
+        .profile-list { display: flex; gap: 30px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+        .profile-card { width: 130px; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+        .img-box { width: 130px; height: 130px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid #333; transition: 0.2s; overflow: hidden; background-color: #222; }
+        .profile-card:hover .img-box { border-color: #fff; transform: scale(1.05); }
+        .initial { font-size: 58px; font-weight: 700; color: #fff; }
+        .profile-name { margin-top: 15px; color: #aaa; font-weight: 500; font-size: 16px; }
+        .profile-card:hover .profile-name { color: #fff; }
+        .bg-add { background-color: #1a1a1a; } .plus-icon { font-size: 50px; color: #555; font-weight: 300; }
+
+        .input-area { width: 440px; max-width: 90%; position: relative; margin: 0 auto; }
+        .input-box { background: #1a1a1a; border-radius: 6px; margin-bottom: 12px; position: relative; transition: all 0.3s; }
+        .input-field { width: 100%; background: transparent; border: 1px solid transparent; color: #fff; padding: 18px; font-size: 16px; outline: none; }
+        .input-field:focus { border: 1px solid #777; border-radius: 6px; }
+        
+        .kids-section { display: flex; justify-content: space-between; align-items: center; padding: 18px; background: #1a1a1a; border-radius: 6px; margin-bottom: 12px; position: relative; }
+        .kids-label { display: flex; align-items: center; font-size: 16px; font-weight: 500; }
+        .smile-icon { font-size: 20px; margin-right: 8px; }
+        .info-icon { margin-left: 6px; color: #aaa; cursor: pointer; }
+        .toggle-switch { width: 52px; height: 30px; background: #444; border-radius: 15px; position: relative; cursor: pointer; transition: 0.3s; }
+        .toggle-knob { width: 26px; height: 26px; background: #fff; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; }
+        .toggle-switch.on { background: #0074E9; }
+        .toggle-switch.on .toggle-knob { left: 24px; }
+        
+        .tooltip { position: absolute; top: 70px; left: 0; width: 100%; background: #fff; color: #000; padding: 15px; border-radius: 4px; font-size: 13px; text-align: left; z-index: 20; display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .tooltip::before { content: ""; position: absolute; top: -6px; left: 135px; width: 12px; height: 12px; background: #fff; transform: rotate(45deg); }
+        .tooltip-close { position: absolute; top: 10px; right: 10px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        
+        .dropdown-list { position: absolute; top: 100%; left: 0; width: 100%; background: #252525; max-height: 250px; overflow-y: auto; z-index: 100; display: none; border: 1px solid #333; border-radius: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .dropdown-item { padding: 15px; cursor: pointer; text-align: left; border-bottom: 1px solid #333; font-size: 15px; }
+        .dropdown-item:hover { background: #0074E9; }
+        
+        .check-area { text-align: left; margin-top: 15px; font-size: 14px; color: #aaa; display: flex; align-items: center; width: 100%; }
+        .check-area input { margin-right: 10px; accent-color: #0074E9; cursor: pointer; width: 18px; height: 18px; }
+        .info-text { text-align: left; font-size: 12px; color: #666; margin-top: 15px; line-height: 1.5; }
+
+        /* Step 3 & 4 */
+        .grid-box { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; width: 100%; max-width: 1000px; margin: 0 auto 30px; }
+        .genre-item { border: 1px solid #333; border-radius: 6px; height: 100px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 14px; color: #ccc; transition: 0.2s; background-color: #1a1a1a; }
+        .genre-item:hover, .genre-item.selected { border-color: #fff; background-color: #333; color: #fff; font-weight: 700; }
+        .genre-icon { font-size: 32px; margin-bottom: 8px; }
+
+        #content-slider-area { width: 100%; padding-bottom: 150px; text-align: left; }
+        .category-section { width: 100%; margin-bottom: 60px; position: relative; }
+        .category-title { font-size: 22px; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; padding-left: 5px; }
+        .category-icon-img { width: 28px; height: 28px; margin-right: 10px; object-fit: contain; display: inline-block; }
+        .slider-wrapper { position: relative; width: 100%; display: flex; align-items: center; }
+        .slider-container { display: flex; overflow-x: auto; gap: 15px; padding: 10px 0; scroll-behavior: smooth; width: 100%; -ms-overflow-style: none; scrollbar-width: none; }
+        .slider-container::-webkit-scrollbar { display: none; }
+        .nav-btn { position: absolute; top: 0; width: 60px; height: 100%; background: rgba(0,0,0,0.5); color: #fff; border: none; font-size: 40px; cursor: pointer; z-index: 20; display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+        .nav-btn.prev { left: 0; background: linear-gradient(90deg, #000, transparent); }
+        .nav-btn.next { right: 0; background: linear-gradient(-90deg, #000, transparent); }
+        .slider-wrapper:hover .nav-btn { opacity: 1; }
+
+        .poster-card { min-width: 140px; height: 210px; border-radius: 6px; position: relative; cursor: pointer; background-size: cover; background-position: center; background-color: #222; transition: transform 0.2s; flex-shrink: 0; border: 2px solid transparent; }
+        .poster-card:hover { transform: scale(1.05); z-index: 10; border-color: #fff; }
+        .plus-btn { position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; background: rgba(0,0,0,0.6); border: 1.5px solid #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 16px; color: #fff; font-weight: 300; transition: all 0.2s; }
+        .poster-card.selected { border-color: #0074E9; }
+        .poster-card.selected .plus-btn { background: #0074E9; border-color: #0074E9; content: ""; }
+        .poster-card.selected .plus-btn::before { content: "✔"; font-size: 14px; font-weight: bold; }
+        .poster-card.selected .plus-btn span { display: none; }
+
+        /* Footer & Buttons */
+        .footer-area { width: 100%; max-width: 440px; display: flex; justify-content: space-between; align-items: center; margin: 40px auto 0; position: relative; }
+        .footer-area.fixed-bottom { position: fixed; bottom: 0; left: 0; width: 100%; height: 130px; max-width: 100%; margin: 0; background: linear-gradient(to top, #000 90%, transparent); z-index: 999; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 40px; }
+        .footer-inner { width: 100%; max-width: 1240px; padding: 0 4%; display: flex; justify-content: space-between; align-items: center; height: 56px; position: relative; }
+        .footer-area.step3-footer { width: 100%; max-width: 1000px; padding: 0; position: relative; }
+
+        .progress-bar { position: absolute; top: -30px; left: 0; width: 100%; display: flex; gap: 8px; }
+        .fixed-bottom .progress-bar { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 1240px; padding: 0 4%; }
+        .step3-footer .progress-bar { width: 100%; top: -30px; }
+        
+        .bar { height: 6px; background: #333; flex: 1; border-radius: 3px; }
+        .fixed-bottom .bar { height: 8px; border-radius: 4px; background: #444; }
+        .bar.active { background: #0074E9; } 
+
+        .btn-prev { background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; font-weight: 600; opacity: 0.8; transition: opacity 0.2s; height: 56px; display: flex; align-items: center; }
+        .btn-prev:hover { opacity: 1; }
+        
+        .btn-next-small, .btn-skip, .btn-start { height: 56px; line-height: 56px; box-sizing: border-box; font-size: 16px; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; display: inline-flex; justify-content: center; align-items: center; }
+        .btn-next-small { padding: 0 40px; background: #0074E9; color: white; } 
+        .btn-start { padding: 0 50px; background: #0074E9; color: white; font-size: 18px; } 
+        .btn-skip { background: transparent; border: none; color: #34C5F0; font-size: 18px; font-weight: 600; cursor: pointer; height: 56px; padding: 0 20px; }
+        .btn-skip:hover { opacity: 0.8; }
+        
+        .step4-title { font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 15px; }
+        .step4-desc { font-size: 18px; font-weight: 500; color: #fff; line-height: 1.5; opacity: 0.9; }
+        .relative-footer { position: relative; }
+    </style>
+</head>
+<body onload="init()">
+
+    <div id="loading-screen"><div class="spinner"></div><h2>회원님의 취향을 분석 중입니다...</h2></div>
+
+    <div id="final-welcome-screen">
+        <div class="welcome-header">
+            <img src="https://assets.coupangplay.com/images/logo_coupangplay_footer2.webp" alt="Coupang Play" class="coupang-logo">
+            <div class="welcome-text" id="welcome-user-text">000님을 위한 콘텐츠를 불러오고 있습니다</div>
+        </div>
+        <div class="poster-wall-wrapper"><div class="poster-wall" id="poster-wall"></div></div>
+    </div>
+
+    <div id="screen-1" class="screen active container">
+        <h1>시청할 프로필을 선택해 주세요</h1>
+        <div class="profile-list" id="profile-container-inner"></div>
+    </div>
+
+    <div id="screen-2" class="screen container">
+        <div class="close-btn" onclick="goToStep(1)">✕</div>
+        <h1>프로필 정보를 입력해 주세요</h1>
+        <div class="input-area">
+            <div id="profile-circle" style="width:120px; height:120px; background:#1e88e5; border-radius:50%; margin:0 auto 40px; display:flex; justify-content:center; align-items:center; font-size:50px; font-weight:700;"><span id="initial-preview">?</span></div>
+            <div class="input-box"><input type="text" id="input-name" class="input-field" placeholder="이름 입력" oninput="updateInitial()" autocomplete="off"></div>
+            <div class="kids-section">
+                <div class="kids-label"><span class="smile-icon">☺</span> 키즈 프로필</div>
+                <div class="toggle-switch" id="kids-toggle" onclick="toggleKidsMode()"><div class="toggle-knob"></div></div>
+            </div>
+            <div id="adult-fields">
+                <div class="input-box"><input type="text" id="input-gender" class="input-field" placeholder="(선택) 성별 입력" readonly onclick="toggleDrop('drop-gender')"><div id="drop-gender" class="dropdown-list"><div class="dropdown-item" onclick="setVal('input-gender', '남성', 'drop-gender')">남성</div><div class="dropdown-item" onclick="setVal('input-gender', '여성', 'drop-gender')">여성</div></div></div>
+                <div class="input-box"><input type="text" id="input-birth" class="input-field" placeholder="(선택) 출생년도 입력" readonly onclick="toggleDrop('drop-birth')"><div id="drop-birth" class="dropdown-list"></div></div>
+                <div class="check-area"><input type="checkbox" id="marketing-chk"><label for="marketing-chk">[선택] 마케팅 목적의 개인정보 수집 및 이용 동의</label></div>
+            </div>
+            <div class="footer-area relative-footer" style="justify-content: center;">
+                <div class="progress-bar"><div class="bar active"></div><div class="bar"></div><div class="bar"></div></div>
+                <button id="step2-next-btn" class="btn-next-small" style="width:100%" onclick="handleStep2Btn()">다음</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-3" class="screen container">
+        <div class="close-btn" onclick="goToStep(1)">✕</div>
+        <h1>어떤 장르를 좋아하세요?</h1>
+        <div style="margin-bottom: 30px; font-weight: 500; color: #aaa; font-size: 16px;">좋아하는 장르를 선택해주세요</div>
+        <div class="grid-box" id="genre-grid"></div>
+        <div class="footer-area step3-footer">
+            <div class="progress-bar"><div class="bar active"></div><div class="bar active"></div><div class="bar"></div></div>
+            <button class="btn-prev" onclick="goToStep(2)">뒤로</button> 
+            <button id="step3-btn" class="btn-skip" onclick="handleStep3Btn()">건너 뛰기</button>
+        </div>
+    </div>
+
+    <div id="screen-4" class="screen container" style="justify-content: flex-start; padding-top: 50px;">
+        <div class="close-btn" onclick="goToStep(1)">✕</div>
+        <div style="text-align: center; margin-bottom: 50px;">
+            <h1 class="step4-title">어떤 콘텐츠를 좋아하세요?</h1>
+            <p class="step4-desc">좋아하는 모든 콘텐츠를 알려주세요.<br>비슷한 콘텐츠를 추천해 드려요.</p>
+        </div>
+        <div id="content-slider-area"></div>
+        <div class="footer-area fixed-bottom">
+            <div class="progress-bar"><div class="bar active"></div><div class="bar active"></div><div class="bar active"></div></div>
+            <div class="footer-inner">
+                <button class="btn-prev" onclick="goToStep(3)">뒤로</button> 
+                <button id="final-btn" class="btn-skip" onclick="completeProfile()">건너 뛰기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var myProfiles = []; 
+        var selectedGenres = [];
+        var isKidsMode = false;
+
+        var categoryIcons = {
+            "예능": "https://assets.coupangplay.com/assets/icons/onboarding/variety-outlined.svg", 
+            "한국 TV 프로그램": "https://assets.coupangplay.com/assets/icons/onboarding/tv-outlined.svg", 
+            "외국 TV 프로그램": "https://assets.coupangplay.com/assets/icons/onboarding/tv-int-outlined.svg", 
+            "외국 영화": "https://assets.coupangplay.com/assets/icons/onboarding/movie-int-outlined.svg",
+            "한국 영화": "https://assets.coupangplay.com/assets/icons/onboarding/movie-outlined.svg",
+            "키즈": "https://assets.coupangplay.com/assets/icons/onboarding/kids-outlined.svg",
+            "액션": "https://assets.coupangplay.com/assets/icons/onboarding/action-outlined.svg",
+            "공포": "https://assets.coupangplay.com/assets/icons/onboarding/horror-outlined.svg"
+        };
+        var genreData = [
+            { name: "한국 TV", icon: "📺" }, { name: "외국 TV", icon: "🌍" }, { name: "한국 영화", icon: "🎬" }, { name: "외국 영화", icon: "🎥" },
+            { name: "키즈", icon: "👶" }, { name: "교육", icon: "🎓" }, { name: "스포츠", icon: "⚽" }, { name: "액션", icon: "🔫" },
+            { name: "로맨스", icon: "💕" }, { name: "코미디", icon: "🤣" }, { name: "스릴러", icon: "😱" }, { name: "어드벤처", icon: "🗺️" },
+            { name: "범죄", icon: "🚔" }, { name: "애니", icon: "🦄" }, { name: "예능", icon: "🎤" }, { name: "SF", icon: "👽" },
+            { name: "판타지", icon: "🧙" }, { name: "공포", icon: "👻" }, { name: "다큐", icon: "📹" }, { name: "음악", icon: "🎵" }
+        ];
+        var allContentData = {
+            "예능": [ {title: "나는 SOLO", img: "https://img.coupangstreaming.com/titles/aafafdbe-67d6-4335-a456-0997f00364f9/poster/a786f808-7b8f-486c-8bd2-e40738453dd0.jpeg" }, {title: "무한도전", img: "https://img.coupangstreaming.com/titles/ef8df325-32a7-4bd3-b715-107f29fdd98f/poster/8307df8f-18b9-44a7-b718-1a3dfc5c572b.jpeg" }, {title: "나는 솔로 그후", img: "https://img.coupangstreaming.com/titles/490c0bc8-b0d9-43b8-bbf8-eeba6d65292b/poster/a600ddd7-5d42-4553-ab81-256bbed1c2ee.jpg" }, {title: "대학전쟁", img: "https://img.coupangstreaming.com/titles/2c5c8857-d6c6-40c3-9f27-eef2692d31f3/poster/a8a5ec40-d56a-4864-92e9-885ba29a6d98.jpg" }, {title: "1박2일", img: "https://img.coupangstreaming.com/titles/924bde65-65a0-4798-9d79-dcdaa3b1c6be/poster/8deedc4d-e59b-4d00-a7a4-f88f5b3f804f.jpeg" }, {title: "나 혼자 산다", img: "https://img.coupangstreaming.com/titles/59c6e4ac-58ff-4f79-af9b-d3e4f50410a6/poster/2b23d685-50e9-47a8-acf2-bea52e5d3e3b.jpg" }, {title: "snl", img: "https://img.coupangstreaming.com/titles/fb2bb8b0-a544-4be1-8489-83cb38adad05/poster/e0c6223d-d2c6-4851-bd27-6a0b42ed0bb9.jpg" }, {title: "야구여왕", img: "https://img.coupangstreaming.com/titles/d5d7413e-326b-45ac-bc2e-66ed90a9ad5d/poster/2566d974-7081-4b7e-ad76-20a48cb5d267.jpg"}, {title: "태어난김에세계질주", img:"https://img.coupangstreaming.com/titles/441d6e00-45b5-45a9-8f6c-9b7994d5d350/poster/c6089405-9162-429e-9c1a-532d4dea25d9.jpg"}, {title: "냉장고를 부탁해", img: "https://img.coupangstreaming.com/titles/7a7e750e-ebbe-4bd2-a01a-16336398ec90/poster/231872f4-eebc-4657-b7f2-985c2d8b0ea9.jpg"} ],
+            "한국 TV 프로그램": [ {title: "사랑 후에 오는 것들", img: "https://img.coupangstreaming.com/titles/d5912bd2-5caf-406d-aa25-b0b4c178c65e/poster/2c83cecb-f306-4269-847e-0ae1806d0bec.jpg" }, {title: "미끼", img: "https://img.coupangstreaming.com/titles/18eaf363-e862-4bf0-9f7d-f8f9616034aa/poster/0f29eecc-bdf4-4786-9036-a5b0c5d3ffbc.jpg" }, {title: "거침없이하이킥", img: "https://img.coupangstreaming.com/titles/a8c3def6-1a70-41a7-8f36-f9b5d494937b/poster/cd2e7d3e-0f76-45e1-93cb-9c87c26c5c0a.jpg" }, {title: "어느 날", img: "https://img.coupangstreaming.com/titles/58e65d21-3d65-4110-8d44-abde9a626485/poster/640079f6-aa8b-43e7-9a4c-444b95703a42.jpg" }, {title: "UDP", img: "https://img.coupangstreaming.com/titles/34d62987-de35-4831-833b-20515811dd1d/poster/2c220567-068e-4220-a35c-48b98d766853.jpg" }, {title: "직장인들", img: "https://img.coupangstreaming.com/titles/d2b06b64-60ca-4b06-a2bc-004006d47402/poster/b9ff0f92-84ee-4cdc-a2ec-b55a041603fd.jpg"}, {title: "심야괴담회", img: "https://img.coupangstreaming.com/titles/6f8d8257-7db3-4e42-9b25-dd7f104def74/poster/662e4a69-1ad4-4890-9f2e-925839ca3432.jpg"}, {title: "자매다방", img: "https://img.coupangstreaming.com/titles/0c32d557-b7c2-452f-93cf-efaa9f28a026/poster/2405e417-991c-4343-b113-40613525b080.jpg"}, {title: "태양의후예", img: "https://img.coupangstreaming.com/titles/85fc6c47-2ca5-4541-bce2-5ab6e2a5c6cf/poster/5238dcc6-6e77-4feb-a099-56fabe67cb3d.jpg"}, {title: "모범택시2", img:"https://img.coupangstreaming.com/titles/d2fe49d3-3df6-4a59-b8a6-3ad9cfe2a205/poster/d3eadd01-f1fc-4f6c-a283-f9cb402e2e2d.jpeg"} ],
+            "한국 영화": [ {title: "히든 페이스", img :"https://img.coupangstreaming.com/titles/01bc8f5c-c6ae-4e6f-ae1f-3c66695ebd17/poster/eafd91eb-e173-42d5-aebf-1e9fa6d1f7fb.jpg"}, {title: "히트맨2", img: "https://img.coupangstreaming.com/titles/f0cba6ea-2c5d-4e3c-9565-26ea1bbbc817/poster/79e6dd78-b44b-4cb1-9512-ddaedc50affa.jpg"}, {title: "추격자", img: "https://img.coupangstreaming.com/titles/ef56ea54-43e7-4478-91e8-ab71e3ddf0d7/poster/b20f0f29-40d8-4bb1-b2ec-1f9a2429c974.jpg"}, {title: "연애온도2", img: "https://img.coupangstreaming.com/titles/8a28717c-f486-493f-a121-acfeeeb92e67/poster/3a3dfe55-305e-4dda-af00-62a8e9b51dbe.jpg"}, {title: "동화지만청불", img: "https://img.coupangstreaming.com/titles/88146b5a-4638-4d34-9cd4-956fdbe03d8f/poster/e36c3a9a-e6e9-4447-bf91-f9fe286f47ad.jpg"}, {title: "비상선언", img: "https://img.coupangstreaming.com/titles/f3508855-3072-40ef-8c2e-d26f0e59df8f/poster/5d1b8742-8f3c-4b79-964d-7ef93171e3d1.jpeg"}, {title: "내부자들", img: "https://img.coupangstreaming.com/titles/f272afb9-494b-4924-a46e-b1ce9f884344/poster/2edfb5f7-cec6-4944-aa3b-0907c5a9f673.jpg"}, {title: "아가씨", img: "https://img.coupangstreaming.com/titles/a7825407-0f59-4999-ab5b-c73cf2ee97d6/poster/d687f4f2-8420-4c98-9abb-4578de53ab13.jpg"}, {title: "라디오스타", img: "https://img.coupangstreaming.com/titles/54ad422f-c4eb-4e54-94bc-cc962805eb80/poster/41b3a63a-4477-46c4-a2c8-a3ed405ad4ef.jpg"}, {title: "기생충", img: "https://img.coupangstreaming.com/titles/191ee44c-7f4a-499d-ab9b-3da5c3b1b539/poster/8de316c2-45a0-4041-86d6-33121438b05e.jpeg"}, {title: "UDP", img: "https://img.coupangstreaming.com/titles/34d62987-de35-4831-833b-20515811dd1d/poster/2c220567-068e-4220-a35c-48b98d766853.jpg"} ],
+            "외국 TV 프로그램": [ { title: "프렌즈", img: "https://img.coupangstreaming.com/titles/65c0c0a9-c2eb-4016-ab42-e26f0426fdb6/poster/97c4ec0f-df7d-4d9e-b67f-bb0776d9ebba.jpeg" }, { title: "빅뱅이론", img: "https://img.coupangstreaming.com/titles/49fe496c-f937-4b0b-be03-9d692108e10d/poster/1ecf984b-1024-4e45-ae6c-7ac14d8506f8.jpg" }, { title: "왕좌의 게임", img: "https://img.coupangstreaming.com/titles/86e6143f-ac09-4cd9-a549-f1f4616704e6/undefined/e78a8d23-5360-4254-9e4a-f22ad52c0f92.jpg" }, { title: "해리포터", img: "https://img.coupangstreaming.com/titles/a7d773e1-d241-4e56-9c5e-83fbb2faac93/poster/bf3ace50-18b3-47fc-9338-53b12d890c0c.jpeg" }, { title: "셜록", img: "https://img.coupangstreaming.com/titles/16791ab6-306e-4522-b022-41ce47087354/poster/345c27d9-501c-467e-b727-49ce33862ef9.jpg" }, { title: "모던 패밀리", img: "https://img.coupangstreaming.com/titles/f609f553-7b7b-44c9-951b-b12cb83206d1/poster/6093a75f-46a2-4ed1-a8f2-f8930d93dbd3.jpg"}, { title: "씰팀", img: "https://img.coupangstreaming.com/assets/images/cms/title/e437a035-b5b6-4aa9-a84b-5e19d768c9c3/poster-f9e583c2-3a01-427d-ba8c-91150bfdb219.jpg"}, { title: "하우스", img: "https://img.coupangstreaming.com/titles/e69b3e14-9dfd-483d-b8c5-f35b99e7ee66/undefined/e71711a6-bd43-4779-aa26-d1abf4a0d611.jpg"}, {title: "시카고PD", img: "https://img.coupangstreaming.com/titles/70698021-a40f-4324-a62c-48d03087b71a/poster/bd2d4d46-3de0-4b65-8559-c4d756816be8.jpg"}, {title: "더피트", img: "https://img.coupangstreaming.com/titles/56a158a4-bdfd-4d54-a3d0-e8b0b29d68a8/poster/bf8c28f5-b8ea-4098-987b-417112f528cd.jpg"} ],
+            "외국 영화": [ {title:"쥬라기월드", img:"https://img.coupangstreaming.com/titles/bd901516-2fb5-41ae-9988-6ad137359626/poster/12112f31-3606-426f-a50f-a2f38d5fb44b.jpg"}, {title:"컴패니언", img:"https://img.coupangstreaming.com/titles/be8a88e7-c268-422a-b1d5-e6050cfd0a38/poster/fa9941e8-160d-4b66-a40b-f298559599e0.jpg"}, {title:"메간", img:"https://img.coupangstreaming.com/titles/314e485b-38c8-4518-9efb-8aec97fd69f9/poster/8be81947-92df-4a7a-b623-c28cc3775a34.jpg"}, {title:"슈퍼맨", img:"https://img.coupangstreaming.com/titles/735e9436-3295-4829-aec6-efd3a6f2badd/poster/4b518d72-4089-46fc-b8e1-4329676a5c7f.jpg"}, {title:"미키17", img:"https://img.coupangstreaming.com/titles/c35c6ae7-ce55-4116-917c-55dad16570f4/poster/01e5081b-790d-4991-b0ff-8b9ee9cc4d64.jpg"}, {title:"탑건", img:"https://img.coupangstreaming.com/titles/65dcb74f-2557-498d-b644-5f41c1b71ab4/poster/b979a098-02a0-44d0-9a6f-406bdb63da55.jpg"}, {title:"크레이븐", img:"https://img.coupangstreaming.com/titles/61302524-af84-4413-8a9e-e7b03a19b1a4/poster/55548780-3996-4aa0-ada2-f48460e50504.jpg"}, {title:"노보케인", img:"https://img.coupangstreaming.com/titles/3ab43763-4879-47a5-afce-d52d1b66b23d/poster/b39a9b16-4c33-4785-9f58-3621f1b3a3c6.jpg"}, {title: "이집트왕자", img: "https://img.coupangstreaming.com/titles/8cc28f91-e49b-40e3-a9b1-89feda8396ed/poster/fed020bc-6899-4ee4-9eb2-fc59c70cb3b3.jpg"}, {title: "드래곤길들이기3", img: "https://img.coupangstreaming.com/titles/ae2465aa-df1e-4e3c-bec9-25bf4b0a49c7/poster/3c7c41b8-ae0d-4134-a9ee-5b085c5a7331.jpg"} ],
+            "키즈": [ { title: "에드벤처", img: "https://img.coupangstreaming.com/titles/fc9dfbd3-83fb-4e38-b1a9-ad904088ffe1/poster/f7ba0310-85d3-4e77-bd6f-e0b6792fcc83.jpg" }, { title: "아따맘마", img: "https://img.coupangstreaming.com/titles/6bcdac26-78c0-4a2c-bffe-bce86fb6b364/poster/f234f77a-10b7-442b-8069-427b9bae459e.jpg" }, { title: "해리포터", img: "https://img.coupangstreaming.com/titles/9b26a526-443f-4376-a85f-52037f8e7ffc/poster/1dda2f88-1d69-402f-bc26-99b9934ab18a.jpg" }, { title: "자두", img: "https://img.coupangstreaming.com/titles/212324f9-03df-43bb-9d93-5e50823a5e92/poster/5d295085-d12a-4fe9-a012-80ff966f7d4a.jpg" }, { title: "도라에몽", img: "https://img.coupangstreaming.com/titles/b38b0f3c-3186-460a-a68b-ddfa6a5a9aa9/poster/52b456a3-aee7-49c1-9d52-d98750a7f58e.jpeg" }, { title: "해리포터2", img: "https://img.coupangstreaming.com/titles/e3a770bc-c40f-4637-90d7-188412a3ae76/poster/36ee4322-13de-4216-84f8-cb6a26e5408a.jpg"}, { title: "브래드이발소", img: "https://img.coupangstreaming.com/titles/e3bb6d9e-545b-4307-a7da-68e339db12cd/poster/3b4d043e-6025-4f69-b6b6-310f89f1a1a6.jpg" }, { title: "해리포터6", img: "https://img.coupangstreaming.com/titles/fa141d9b-2d4e-4019-8951-79824bc7c140/poster/8ef156a7-df07-4a97-bb3e-ea2eaab9357b.jpg" }, { title: "해리포터4", img: "https://img.coupangstreaming.com/titles/918de384-1961-4b86-837c-775f49d12c27/poster/fc659826-6b0f-49ed-ab4b-4aa289d85ba7.jpg"}, { title: "해리포터3", img: "https://img.coupangstreaming.com/titles/e9916716-8d5b-4e27-a076-cc14d2ba4fa9/poster/7435895d-bbcd-4d5b-a51e-51be5951693c.jpg"} ],
+            "액션": [ {title:"토리코", img:"https://img.coupangstreaming.com/titles/3de52c5c-37c9-4a88-b7e8-33ada317b283/poster/76b24ec3-4cc7-40dc-9394-226d25c04113.jpeg"}, {title:"소년시대", img:"https://img.coupangstreaming.com/titles/9e7de43f-e421-4df4-8acb-aef5f173f1ba/poster/1702015392952-CoupangPlay_Boyhood_VPoster-E1-2_Svod.jpg"}, {title:"FBI", img:"https://img.coupangstreaming.com/titles/8bab7650-11f4-4b61-b7bc-6e0a2ac82a99/poster/ce5ce094-5359-44aa-9630-11d17bd8c8fc.jpg"}, {title:"강연", img:"https://img.coupangstreaming.com/titles/f9048a3e-4b1a-4dfa-a262-615cbbf519c7/poster/59429866-02f6-41f9-8bf7-c2678e7f7fbb.jpg"}, {title:"더라스트오브어스", img:"https://img.coupangstreaming.com/titles/8c98bca8-67cd-4894-9542-d90d707a553d/undefined/f0bc06d7-c88b-4d04-9880-df8379e3fc7d.jpg"}, {title:"나히아", img:"https://img.coupangstreaming.com/titles/12307cc8-e19d-4354-948b-406ff5003e84/poster/c7b07192-6b8b-4470-8bd7-82054a2c8233.jpeg"}, {title:"하우스오브드래곤", img:"https://img.coupangstreaming.com/titles/a67c35e4-98c2-423e-b46b-abcaeec5f552/undefined/56c16c40-3816-4ef6-9f10-04db57cb43ce.jpg"}, {title:"드래곤볼", img:"https://img.coupangstreaming.com/titles/f46ed23a-f1ba-4d90-9dcd-e7465833d136/poster/018e7593-d6a4-4a03-b2f9-6e366b588ac0.jpeg"}, {title:"스와트", img:"https://img.coupangstreaming.com/titles/d67f500e-213b-4d95-9429-fd16d1ef4f8e/poster/87f10f3f-c1b0-4468-a165-0cc083ad007c.jpeg"}, {title:"밴드오브브라더스", img:"https://img.coupangstreaming.com/titles/18502331-9854-4060-ae1b-7bbe7beafd6d/poster/1cabfedd-108c-45e1-9ffb-bd0be9061943.jpg"} ],
+            "공포": [ {title:"죠스", img:"https://img.coupangstreaming.com/titles/90f71179-aafd-4be4-9bb9-5a93316ab103/undefined/d5ae3353-9b6b-4bca-939c-ed6c1e842df4.jpg"}, {title:"미스트", img:"https://img.coupangstreaming.com/titles/7b51af72-b45e-473b-ad11-d3b6b0b93897/poster/3f76948c-dc2e-40cd-8bb6-20d8c7c0fa25.jpeg"}, {title:"분노의벡키", img:"https://img.coupangstreaming.com/titles/a31f3037-2f29-48d5-8ff5-2b25b89ee141/poster/b7c087bc-b131-45e1-be3f-694a537bacfc.jpg"}, {title:"스마일", img:"https://img.coupangstreaming.com/titles/43dd6a4e-0a1e-4c3e-8520-0c8880f7be2c/poster/2f23415c-e9ce-46af-a286-0c61376d46c9.jpg"}, {title:"월드워Z", img:"https://img.coupangstreaming.com/titles/5a6d5d82-9859-4042-b2e4-889650c760b3/poster/2f3353ff-f63e-44ed-9dd7-fa6a4acabd4c.jpeg"}, {title:"더 원스 후 리브", img:"https://img.coupangstreaming.com/titles/a47436ec-e023-41dd-ae63-36b2c03ef2d7/poster/d986f106-cb66-4d30-bfcf-2c1461dcaeff.jpg"}, {title:"반도", img:"https://img.coupangstreaming.com/titles/79082b99-c63c-4be6-81b2-fc66502f7ee5/poster/970f924a-4d42-403c-b886-490d5b90926d.jpg"}, {title:"나는전설이다", img:"https://img.coupangstreaming.com/titles/d303f3ed-a2f8-4cc7-8951-db9e2024d5a0/poster/fe499424-b591-438d-b229-d368e870d2bd.jpeg"}, {title:"파묘", img:"https://img.coupangstreaming.com/titles/c302b91a-bd20-4aec-85b6-8ded6ee3c60f/poster/753077ec-a14b-46d6-8494-d73101ce0ec1.jpg"}, {title:"더넌2", img:"https://img.coupangstreaming.com/titles/c666232c-bf49-4e67-bc47-5af356250260/undefined/d0b9b1a7-2420-461d-a553-b8416d9ac6c7.jpg"} ]
+        };
+
+        function init() { renderProfileList(); initYears(); renderGenres(); }
+
+        function toggleKidsMode() {
+            var toggle = document.getElementById('kids-toggle');
+            var adultFields = document.getElementById('adult-fields');
+            var nextBtn = document.getElementById('step2-next-btn');
+            var circle = document.getElementById('profile-circle');
+            var preview = document.getElementById('initial-preview');
+            isKidsMode = !isKidsMode;
+            if (isKidsMode) {
+                toggle.classList.add('on'); adultFields.style.display = 'none'; nextBtn.innerText = "저장하기";
+                circle.style.backgroundColor = "#ff5722"; preview.style.fontSize = "24px"; preview.innerText = "키즈";
+            } else {
+                toggle.classList.remove('on'); adultFields.style.display = 'block'; nextBtn.innerText = "다음";
+                circle.style.backgroundColor = "#1e88e5"; preview.style.fontSize = "40px"; updateInitial();
+            }
+        }
+
+        function handleStep2Btn() {
+            var name = document.getElementById('input-name').value;
+            if(!name) { alert("이름을 입력해주세요."); return; }
+            if(isKidsMode) {
+                myProfiles.push({ name: name, color: "#ff5722", isKid: true });
+                alert("키즈 프로필이 생성되었습니다!");
+                resetAndGoHome();
+            } else {
+                goToStep(3);
+            }
+        }
+        
+        function handleStep3Btn() {
+            goToStep4WithLoading();
+        }
+
+        function goToStep4WithLoading() {
+            document.getElementById('loading-screen').style.display = "flex";
+            setTimeout(function () {
+                reorderContentByGenre(); renderSliders();
+                document.getElementById('loading-screen').style.display = "none"; goToStep(4);
+            }, 1500);
+        }
+
+        function completeProfile() {
+            var n = document.getElementById('input-name').value;
+            var c = "#" + Math.floor(Math.random() * 16777215).toString(16);
+            
+            var newProfile = { 
+                id: Date.now(), 
+                name: n, 
+                color: c, 
+                isKid: isKidsMode 
+            };
+            
+            var existingProfiles = JSON.parse(localStorage.getItem('coupangProfiles')) || [];
+            existingProfiles.push(newProfile);
+            localStorage.setItem('coupangProfiles', JSON.stringify(existingProfiles));
+            localStorage.setItem('coupangActiveProfileId', newProfile.id);
+
+            showFinalWelcome(n);
+        }
+
+        function showFinalWelcome(name) {
+            var screen = document.getElementById('final-welcome-screen');
+            var wall = document.getElementById('poster-wall');
+            var text = document.getElementById('welcome-user-text');
+            
+            text.innerText = name + "님을 위한 콘텐츠를 불러오고 있습니다";
+            
+            var allImages = [];
+            for(var key in allContentData) {
+                allContentData[key].forEach(item => allImages.push(item.img));
+            }
+            allImages.sort(() => Math.random() - 0.5);
+            
+            var html = "";
+            for(var i=0; i<6; i++) {
+                html += `<div class="wall-column">`;
+                for(var j=0; j<8; j++) {
+                    var img = allImages[(i*8+j) % allImages.length];
+                    html += `<div class="wall-item" style="background-image:url('${img}')"></div>`;
+                }
+                html += `</div>`;
+            }
+            wall.innerHTML = html;
+            
+            screen.style.display = "flex";
+            
+            setTimeout(function() {
+                location.href = "Layout.html";
+            }, 4000);
+        }
+
+        function resetAndGoHome() {
+            document.getElementById('input-name').value = ""; goToStep(1); renderProfileList();
+            if (isKidsMode) toggleKidsMode(); 
+        }
+
+        function renderProfileList() {
+            var container = document.getElementById('profile-container-inner');
+            var html = "";
+            for (var i = 0; i < myProfiles.length; i++) {
+                var p = myProfiles[i];
+                var displayText = p.isKid ? "키즈" : p.name.substring(0, 1);
+                var fontSize = p.isKid ? "20px" : "54px";
+                html += `<div class="profile-card" onclick="alert('${p.name} 님으로 입장합니다!')"><div class="img-box" style="background-color:${p.color}; border:none;"><span class="initial" style="font-size:${fontSize}">${displayText}</span></div><div class="profile-name">${p.name}</div></div>`;
+            }
+            html += `<div class="profile-card" onclick="goToStep(2)"><div class="img-box bg-add"><span class="plus-icon">+</span></div><div class="profile-name">프로필 추가</div></div>`;
+            container.innerHTML = html;
+        }
+
+        function updateInitial() { if (!isKidsMode) { var n = document.getElementById('input-name').value; document.getElementById('initial-preview').innerText = n ? n.substring(0, 1) : "?"; } }
+        function goToStep(num) { for (var i = 1; i <= 4; i++) document.getElementById('screen-' + i).classList.remove('active'); document.getElementById('screen-' + num).classList.add('active'); }
+        function initYears() { var html = ""; for (var y = 2024; y >= 1950; y--) html += `<div class="dropdown-item" onclick="setVal('input-birth','${y}','drop-birth')">${y}</div>`; document.getElementById('drop-birth').innerHTML = html; }
+        function toggleDrop(id) { var el = document.getElementById(id); el.style.display = (el.style.display === 'block') ? 'none' : 'block'; }
+        function setVal(iid, v, did) { document.getElementById(iid).value = v; document.getElementById(did).style.display = 'none'; }
+        function toggleTooltip() { var t = document.getElementById('kids-tooltip'); t.style.display = (t.style.display === 'block') ? 'none' : 'block'; }
+        
+        function toggleGenre(el, name) { 
+            el.classList.toggle('selected'); 
+            if (selectedGenres.includes(name)) {
+                selectedGenres = selectedGenres.filter(g => g !== name); 
+            } else {
+                selectedGenres.push(name); 
+            }
+            
+            var btn = document.getElementById('step3-btn');
+            if(selectedGenres.length > 0) {
+                btn.innerText = "다음";
+                btn.className = "btn-next-small"; 
+                btn.style.color = "white";
+            } else {
+                btn.innerText = "건너 뛰기";
+                btn.className = "btn-skip"; 
+                btn.style.color = "#0074E9";
+            }
+        }
+        
+        function renderGenres() {
+            var box = document.getElementById('genre-grid');
+            var html = "";
+            for (var i = 0; i < genreData.length; i++) {
+                html += `<div class="genre-item" onclick="toggleGenre(this, '${genreData[i].name}')">
+                            <span class="genre-icon">${genreData[i].icon}</span>
+                            <span>${genreData[i].name}</span>
+                         </div>`;
+            }
+            box.innerHTML = html;
+        }
+
+        function scrollSlider(btn, dir) { var con = btn.parentElement.querySelector('.slider-container'); con.scrollBy({ left: dir * 300, behavior: 'smooth' }); }
+        
+        function reorderContentByGenre() {
+            var sorted = {}; var rest = {};
+            for (var key in allContentData) {
+                var match = false;
+                if ((selectedGenres.includes("코미디")||selectedGenres.includes("예능")) && (key.includes("코미디")||key.includes("예능"))) match=true;
+                if ((selectedGenres.includes("범죄")||selectedGenres.includes("스릴러")) && (key.includes("범죄")||key.includes("스릴러"))) match=true;
+                if (selectedGenres.includes("로맨스") && key.includes("로맨스")) match=true;
+                if (match) sorted[key] = allContentData[key]; else rest[key] = allContentData[key];
+            }
+            window.displayData = Object.keys(sorted).length===0 ? allContentData : {...sorted, ...rest};
+        }
+
+        function toggleContentSelect(el) {
+            el.classList.toggle('selected');
+            var selectedCount = document.querySelectorAll('.poster-card.selected').length;
+            var finalBtn = document.getElementById('final-btn');
+            if(selectedCount > 0) {
+                finalBtn.innerText = "시작하기";
+                finalBtn.className = "btn-start"; 
+            } else {
+                finalBtn.innerText = "건너 뛰기";
+                finalBtn.className = "btn-skip"; 
+            }
+        }
+
+        function renderSliders() {
+            var area = document.getElementById('content-slider-area');
+            var html = "";
+            var data = window.displayData || allContentData;
+            for (var cat in data) {
+                var items = data[cat];
+                var iconSrc = categoryIcons[cat] || "";
+
+                html += `<div class="category-section">
+                            <div class="category-title">
+                                <img src="${iconSrc}" class="category-icon-img" alt=""> 
+                                ${cat}
+                            </div>
+                            <div class="slider-wrapper">
+                                <button class="nav-btn prev" onclick="scrollSlider(this, -1)">‹</button>
+                                <div class="slider-container">`;
+                for (var i = 0; i < items.length; i++) {
+                    html += `<div class="poster-card" onclick="toggleContentSelect(this)" 
+                                  style="background-image: url('${items[i].img}'), linear-gradient(45deg, #222, #444);">
+                                <div class="plus-btn"><span>+</span></div>
+                             </div>`;
+                }
+                html += `</div><button class="nav-btn next" onclick="scrollSlider(this, 1)">›</button></div></div>`;
+            }
+            area.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
