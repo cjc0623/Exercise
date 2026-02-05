@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠팡플레이 - TV</title>
+    <link rel="shortcut icon" href="https://assets.coupangplay.com/favicon.ico" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="../Css/ott.css">
+    <link rel="stylesheet" href="../Css/modal.css">
+</head>
+
+<body>
+    <header id="main-header">
+        <div class="header-left">
+            <div class="logo"><a href="Layout.html"><img
+                        src="https://assets.coupangplay.com/images/web_gnb_logo_new.webp" class="MainMenu_logo"
+                        alt="Coupang Play">
+                </a></div>
+            <nav class="nav-menu">
+                <a href="TV.html" class="nav-item active">TV</a>
+                <a href="movies.html" class="nav-item">영화</a>
+
+            </nav>
+        </div>
+
+        <div class="header-right">
+            <div class="category-wrapper">
+                <button class="category-btn" id="category-trigger">카테고리 ▾</button>
+                <div class="dropdown-menu" id="category-dropdown">
+                    <div>
+                        <a href= "kategorie.html?genre=28&type=movie" onclick="goToCategory('28', 'movie'); return false;">액션</a><br>
+                        <a href="kategorie.html?genre=53&type=movie" onclick="goToCategory('53', 'movie'); return false;">스릴러</a><br>
+                        <a href="kategorie.html?genre=16&type=movie" onclick="goToCategory('16', 'movie'); return false;">애니메이션</a><br>
+                        <a href="kategorie.html?genre=878&type=movie" onclick="goToCategory('878', 'movie'); return false;">SF</a><br>
+                        <a href="kategorie.html?genre=27&type=movie" onclick="goToCategory('27', 'movie'); return false;">공포</a><br>
+                        <a href="kategorie.html?genre=18&type=movie" onclick="goToCategory('18', 'movie'); return false;">드라마</a><br>
+                        <a href="kategorie.html?genre=9648&type=movie" onclick="goToCategory('9648', 'movie'); return false;">미스터리</a>
+                    </div>
+                    <div>
+                        <a href="kategorie.html?genre=10759&type=tv" onclick="goToCategory('10759', 'tv'); return false;">액션 & 어드벤처</a><br>
+                        <a href="kategorie.html?genre=10762&type=tv" onclick="goToCategory('10762', 'tv'); return false;">키즈</a><br>
+                        <a href="kategorie.html?genre=10749&type=movie" onclick="goToCategory('10749', 'movie'); return false;">로맨스</a><br>
+                        <a href="kategorie.html?genre=12&type=movie" onclick="goToCategory('12', 'movie'); return false;">어드벤처</a><br>
+                        <a href="kategorie.html?genre=10764&type=tv" onclick="goToCategory('10764', 'tv'); return false;">예능</a><br>
+                        <a href="kategorie.html?genre=99&type=movie" onclick="goToCategory('99', 'movie'); return false;">다큐멘터리</a><br>
+                        <a href="kategorie.html?genre=10751&type=movie" onclick="goToCategory('10751', 'movie'); return false;">가족</a><br>
+                        
+                    </div>
+                    <div>
+                        <a href="kategorie.html?genre=35&type=movie" onclick="goToCategory('35', 'movie'); return false;">코미디</a><br>
+                        <a href="kategorie.html?genre=80&type=movie" onclick="goToCategory('80', 'movie'); return false;">범죄</a><br>
+                        <a href="kategorie.html?genre=14&type=movie" onclick="goToCategory('14', 'movie'); return false;">판타지</a><br>
+                        <a href="kategorie.html?genre=36&type=movie" onclick="goToCategory('36', 'movie'); return false;">역사</a><br>
+                        <a href="kategorie.html?genre=10402&type=movie" onclick="goToCategory('10402', 'movie'); return false;">음악</a><br>
+                        <a href="kategorie.html?genre=10752&type=movie" onclick="goToCategory('10752', 'movie'); return false;">전쟁</a><br>
+                        <a href="kategorie.html?genre=37&type=movie" onclick="goToCategory('37', 'movie'); return false;">서부</a>
+                    </div>
+                </div>
+            </div>
+            <a href="searchpage검색.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M15.9562 17.0179C14.4799 18.2551 12.5769 19 10.5 19C5.80558 19 2 15.1944 2 10.5C2 5.80558 5.80558 2 10.5 2C15.1944 2 19 5.80558 19 10.5C19 12.5774 18.2547 14.4808 17.017 15.9573L21.0294 19.9697C21.3223 20.2626 21.3223 20.7375 21.0294 21.0304C20.7365 21.3233 20.2616 21.3233 19.9688 21.0304L15.9562 17.0179ZM17.5 10.5C17.5 14.366 14.366 17.5 10.5 17.5C6.63401 17.5 3.5 14.366 3.5 10.5C3.5 6.63401 6.63401 3.5 10.5 3.5C14.366 3.5 17.5 6.63401 17.5 10.5Z"
+                        fill="white"></path>
+                </svg></a>
+
+            <div class="profile-wrapper">
+                <a href="coupang-mypage.html" class="header-profile-btn">
+                    <div class="header-profile-circle" id="header-profile-initial"></div>
+                </a>
+            </div>
+        </div>
+
+
+    </header>
+
+    <div id="api-root"></div>
+
+    <footer>
+
+
+        <div class="footer-top-logo">
+            <img src="https://assets.coupangplay.com/images/web_gnb_logo_new.webp" alt="Coupang Play">
+        </div>
+        <br>
+        <div class="footer-version">버전: 1.67.44</div>
+
+        <div class="footer-sns">
+            <a href="https://www.youtube.com/channel/UCjn-VbcIkAeXQKCmLJV8YwQ" target="_blank" rel="noopener noreferrer"
+                class="sns-item"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-youtube" viewBox="0 0 16 16">
+                    <path
+                        d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z" />
+                </svg></a>
+            <a href="https://www.facebook.com/CoupangPlay/" target="_blank" rel="noopener noreferrer"
+                class="sns-item"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-facebook" viewBox="0 0 16 16">
+                    <path
+                        d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+                </svg></a>
+            <a href="https://www.instagram.com/coupangplay/" target="_blank" rel="noopener noreferrer"
+                class="sns-item"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-instagram" viewBox="0 0 16 16">
+                    <path
+                        d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
+                </svg></a>
+            <a href="https://x.com/coupangplay" target="_blank" rel="noopener noreferrer" class="sns-item"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-twitter-x" viewBox="0 0 16 16">
+                    <path
+                        d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                </svg></a>
+        </div>
+
+        <div class="footer-info-grid">
+            <div>
+                쿠팡(주) | 대표이사: 로저스 해롤드 린(Rogers Harold Lynn)<br>
+                서울시 송파구 송파대로 570<br>
+                사업자 등록번호: 120-88-00767<br>
+                <a href="#">통신판매업신고: 2017-서울송파-0680</a>
+            </div>
+            <div>
+                고객센터: 1600-9800<br>
+                대표 메일: <a href="mailto:playrepresent@coupang.com">playrepresent@coupang.com</a><br>
+                제휴 문의: <a href="mailto:playbusiness@coupang.com">playbusiness@coupang.com</a><br>
+                호스팅 서비스 사업자: AWS 코리아
+            </div>
+        </div>
+
+        <div class="footer-policy-bar">
+            <a href="../footer/tac.html">쿠팡플레이 이용 기준</a> <span>|</span>
+            <a href="../footer/tvod.html">쿠팡플레이 유료서비스 이용 약관</a> <span>|</span>
+            <a href="../footer/faq.html">자주 묻는 질문</a>
+        </div>
+
+        <div class="footer-bottom-links">
+            <a href="javascript:void(0);" onclick="handleLogout()">로그아웃</a> <span>|</span>
+            <a href="#">쿠팡 멤버십 가입</a>
+        </div>
+    </footer>
+
+    <!-- 모달 HTML (modal.js에서 제어) -->
+    <div class="modal" id="movie-modal">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header">
+                <button class="close-btn" onclick="closeModal()">×</button>
+                <h1 class="modal-title" id="modal-title"></h1>
+                <div class="modal-info" id="modal-info"></div>
+            </div>
+            <div class="modal-body">
+                <button class="play-btn" onclick="playVideo()">▶ 재생하기</button>
+
+                <div class="detail-section">
+                    <div class="detail-title">시놉시스</div>
+                    <div class="detail-content" id="modal-overview"></div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-title">출연진</div>
+                    <div class="detail-content" id="modal-cast"></div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-title">제작자</div>
+                    <div class="detail-content" id="modal-director"></div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-title">장르</div>
+                    <div class="genres" id="modal-genres"></div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-title">추가 정보</div>
+                    <div class="detail-content" id="modal-extra"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ 모달 로직 JS 파일 -->
+    <script src="../modal.js"></script>
+
+    <!-- TV 페이지 전용 스크립트 -->
+    <script>
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        // TV 탭 API 통합 스크립트
+        (function () {
+            const API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZjliNTBhYTY0NTE2ZmU3MTYxZGU4MGU4M2U4OWE0NSIsIm5iZiI6MTc2ODQ1NzEwNC45MzcsInN1YiI6IjY5Njg4MzkwMTM1OWNmNzAxY2Y0MDhiYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Z3WWHuczoqdcg2W96oUfJQTTuYe8ImaMYUomoCXBQJA";
+            const IMG_BASE = "https://image.tmdb.org/t/p/w500";
+            const BASE_URL = 'https://api.themoviedb.org/3';
+            const ROOT = document.getElementById('api-root');
+
+            const options = {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: `Bearer ${API_KEY}`
+                }
+            };
+
+            // TV 메인 배너 생성
+            const hero = document.createElement('div');
+            hero.style.cssText = "height: 60vh; background-size: cover; background-position: center top; display: flex; align-items: center; padding: 0 5%; position: relative; margin-bottom: 20px;";
+            ROOT.appendChild(hero);
+
+            fetch('https://api.themoviedb.org/3/tv/popular?language=ko-KR', { headers: { Authorization: `Bearer ${API_KEY}` } })
+                .then(res => res.json())
+                .then(data => {
+                    const top = data.results[0];
+                    hero.style.backgroundImage = `linear-gradient(to right, rgba(0,0,0,0.9) 10%, transparent 70%), linear-gradient(to top, rgba(0,0,0,1), transparent 20%), url(https://image.tmdb.org/t/p/original${top.backdrop_path})`;
+                    hero.innerHTML = `
+                        <div style="position:relative; z-index:10; max-width:550px;">
+                            <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 15px; text-shadow: 2px 2px 10px #000;">${top.name}</h1>
+                            <p style="font-size: 1.1rem; line-height: 1.5; color: #eee; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; opacity: 0.9;">${top.overview}</p>
+                            <button style="background: #0066ff; color: white;border: none;padding: 15px 40px;font-size: 16px;border-radius: 4px;cursor: pointer;margin-bottom: 30px;"onclick="openModal('${top.id}', 'tv')">▶ 상세 정보</button>
+                        </div>
+                    `;
+                });
+
+            // TV 섹션 생성 함수
+            function addTvRow(title, url, isRanked = false) {
+                const rowId = `swiper-${Math.random().toString(36).substr(2, 5)}`;
+                const html = `
+                    <h2 style="padding-left: 5%; font-size: 1.4rem; font-weight: bold; margin: 40px 0 10px;">${title}</h2>
+                    <div class="swiper ${rowId}" style="padding: 10px 5% 40px; overflow: visible;">
+                        <div class="swiper-wrapper"></div>
+                        <div class="swiper-button-next" style="color:white !important; transform: scale(0.7);"></div>
+                        <div class="swiper-button-prev" style="color:white !important; transform: scale(0.7);"></div>
+                    </div>
+                `;
+                ROOT.insertAdjacentHTML('beforeend', html);
+
+                fetch(url, { headers: { Authorization: `Bearer ${API_KEY}` } })
+                    .then(res => res.json())
+                    .then(data => {
+                        const wrapper = document.querySelector(`.${rowId} .swiper-wrapper`);
+                        data.results.forEach((m, index) => {
+                            const slide = document.createElement('div');
+                            slide.className = 'swiper-slide';
+                            slide.style.cssText = "position:relative; transition: transform 0.4s ease; cursor:pointer;";
+
+                            const rank = isRanked ? `
+                                <span style="position: absolute; left: -18px; bottom: -12px; font-size: 85px; font-weight: 900; font-style: italic; color: #fff; z-index: 5; text-shadow: 5px 5px 15px #000; -webkit-text-stroke: 1px rgba(255,255,255,0.3); pointer-events: none; font-family: sans-serif;">
+                                    ${index + 1}
+                                </span>` : '';
+
+                            slide.innerHTML = `
+                            <div class="movie-card" onclick="openModal(${m.id}, 'tv')">    
+                                <div style="border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+                                    <img src="${IMG_BASE}${m.poster_path}" style="width:100%; display: block;">
+                                </div>
+                                ${rank}
+                            </div>
+                            `;
+
+                            slide.onmouseover = () => { slide.style.transform = "scale(1.15)"; slide.style.zIndex = "100"; };
+                            slide.onmouseout = () => { slide.style.transform = "scale(1.0)"; slide.style.zIndex = "1"; };
+
+                            wrapper.appendChild(slide);
+                        });
+
+                        new Swiper(`.${rowId}`, {
+                            slidesPerView: 2.2, spaceBetween: 15, slidesPerGroup: 2,
+                            navigation: { nextEl: `.${rowId} .swiper-button-next`, prevEl: `.${rowId} .swiper-button-prev` },
+                            breakpoints: {
+                                768: { slidesPerView: 5.2, slidesPerGroup: 5 },
+                                1200: { slidesPerView: 6.2, slidesPerGroup: 6 }
+                            }
+                        });
+                    });
+            }
+
+            // TV 섹션 생성
+            addTvRow("이번 주 인기 TV 프로그램 TOP 20", "https://api.themoviedb.org/3/tv/popular?language=ko-KR", true);
+            addTvRow("한국 드라마 & 예능", "https://api.themoviedb.org/3/discover/tv?language=ko-KR&with_origin_country=KR");
+            addTvRow("미국 드라마 & 해외 시리즈", "https://api.themoviedb.org/3/discover/tv?language=ko-KR&with_origin_country=US");
+            addTvRow("애니메이션 시리즈", "https://api.themoviedb.org/3/discover/tv?language=ko-KR&with_genres=16");
+
+        })();
+
+        // 3. 🟢 로그아웃 기능 구현
+        function handleLogout() {
+            if (confirm("로그아웃 하시겠습니까?")) {
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('coupangActiveProfileId');
+
+                window.open("start.html", "_blank");
+                window.open('', '_self').close();
+                location.href = "start.html";
+            }
+        }
+
+        // 페이지가 열리자마자 실행되는 코드
+                window.addEventListener('DOMContentLoaded', () => {
+            const activeProfileId = localStorage.getItem('coupangActiveProfileId');
+            const profiles = JSON.parse(localStorage.getItem('coupangProfiles'));
+
+            if (profiles && activeProfileId) {
+                const activeProfile = profiles.find(p => p.id == activeProfileId);
+
+                if (activeProfile) {
+                    const initialBox = document.getElementById('header-profile-initial');
+                    if (initialBox) {
+                        const initial = activeProfile.isKid ? "키즈" : activeProfile.name.substring(0, 1);
+                        initialBox.innerText = initial;
+                        initialBox.style.backgroundColor = activeProfile.color;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
