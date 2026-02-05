@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>쿠팡플레이 - 로그인/회원가입</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <link rel="shortcut icon" href="https://assets.coupangplay.com/favicon.ico" type="image/x-icon">
+    <style>
+        /* [공통 스타일] */
+        body { text-align: center; padding-top: 60px; font-family: "Pretendard Variable", sans-serif; background-color: white; color: #333; }
+        .login-box { width: 450px; display: inline-block; position: relative; }
+        
+        .logo-img { 
+            width: 450px; margin-bottom: 35px; 
+            display: block; margin-left: auto; margin-right: auto; cursor: pointer;
+        }
+
+        /* 입력 그룹 틀 */
+        .input-group { border: 1px solid #ccc; border-radius: 2px; position: relative; margin-bottom: 10px; background-color: white; }
+        .input-group.focused { border: 1px solid #0074E9; box-shadow: 0 0 0 1px #0074E9; z-index: 5; }
+        .input-group.error { border: 1px solid #E52528 !important; }
+
+        .input-row { display: flex; height: 50px; }
+
+        /* [로그인용] 왼쪽 아이콘 영역 (회색 배경) */
+        .icon-side { width: 50px; background-color: #f7f7f7; border-right: 1px solid #eee; display: flex; justify-content: center; align-items: center; }
+        
+        /* 아이콘 크기 및 색상 설정 (SVG) */
+        .icon-svg { width: 24px; height: 24px; fill: #bbb; } /* 기본 회색 */
+        
+        /* [로그인용] 오른쪽 입력 영역 */
+        .input-side { flex-grow: 1; display: flex; align-items: center; padding: 0 15px; position: relative; }
+        
+        /* [회원가입용] 꽉 찬 입력 영역 */
+        .full-input-side { width: 100%; display: flex; align-items: center; padding: 0 15px; height: 50px; }
+
+        input { border: none; outline: none; font-size: 16px; font-weight: 700; width: 100%; font-family: inherit; color: #333; background: transparent; }
+        input::placeholder { color: #ccc; font-weight: 400; }
+
+        /* [디자인 유지] 자동완성 박스 (X버튼 공간 확보) */
+        #suggest-box { 
+            position: absolute; 
+            top: 49px; 
+            left: -1px; 
+            /* 너비를 줄여서 오른쪽 X버튼 공간(약 40px)을 비워둠 */
+            width: calc(100% - 40px); 
+            background-color: white; 
+            border: 1px solid #ccc; 
+            border-top: 1px solid #f0f0f0; 
+            display: none; 
+            z-index: 100; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+        }
+        .suggest-item { 
+            padding: 0 15px; cursor: pointer; font-size: 13px; height: 40px; 
+            display: flex; align-items: center; border-bottom: 1px solid #f9f9f9; text-align: left;
+        }
+        .suggest-item:hover { background-color: #f7f7f7; }
+        
+        .txt-bold { font-weight: 800; color: #000; }
+        .txt-normal { font-weight: 400; color: #888; margin-left: 2px; }
+
+        .error-text { color: #E52528; font-size: 12px; text-align: left; margin-bottom: 10px; display: none; font-weight: 600; }
+        .main-error { color: #E52528; font-size: 13px; text-align: left; margin-bottom: 10px; min-height: 18px; font-weight: 600; }
+
+        /* 버튼들 */
+        .btn-blue { width: 100%; padding: 16px; background-color: #346aff; color: white; border: none; font-weight: bold; font-size: 17px; cursor: pointer; border-radius: 2px; margin-top: 10px; }
+        .btn-white { width: 100%; padding: 16px; background-color: white; border: 1px solid #ccc; font-weight: bold; font-size: 17px; cursor: pointer; border-radius: 2px; margin-top: 10px; }
+        .line-divider { width: 100%; height: 1px; background-color: #eee; margin: 25px 0; }
+        .find-wrap { text-align: right; margin: 0 0 25px; font-size: 13px; }
+        .find-wrap a { color: #0074E9; text-decoration: none; font-weight: 600; }
+        .footer-text { margin-top: 60px; font-size: 11px; color: #999; }
+
+        /* [핵심] 기능 버튼 (X, 눈) 스타일 */
+        .btn-wrapper { 
+            display: flex; justify-content: center; align-items: center; 
+            width: 30px; height: 100%; margin-left: 5px; cursor: pointer; z-index: 20; 
+        }
+        
+        /* X 버튼 디자인 (회색 원 + 흰색 X) */
+        .circle-bg {
+            width: 20px; height: 20px; background-color: #ccc; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .circle-bg svg { fill: #fff; width: 12px; height: 12px; }
+        .circle-bg:hover { background-color: #bbb; }
+
+        .hidden { display: none; }
+        h2 { margin-bottom: 30px; font-size: 24px; font-weight: 700; color: #141517; }
+    </style>
+</head>
+<body>
+
+    <div class="login-box">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACoCAMAAABt9SM9AAAA9lBMVEX///+TUyf3VS/+xAAxtN6JzC/+wgD3SBf81Mzn2tSNRAT3UiqPSxiNRw6SUSSibk38+viCyhnd8Mjw+Ob/4ZP1+u/Uv7Sr3O73TiPu+Pv17+yRTx+haUbfz8bAnoz3Z0b6m4n4bE+JPQDl9Nb3WjPx6eX/9NyodVaAyRP+z0i4knzJ6fT+13B5y+cWr9z/+ejGqJj+8Mia1uzPuKr+4+Dj8/mrfWKYWjH94tz4d1v7q5z7wLX+6Kr+0139zTv+67ek12Wp2nFMvOH5g2vB45rJ56n5i3b+3YSy3X+EzulgwuOGNAD7saOQzz36lYH/23v7zML+6bC3Y6a0AAAFXElEQVR4nO3ZC1faSBgG4EQQJGTSUOViolSoXAzILQJeW0UXC92u6///MzvfzATQikdtXBv7PqfVcRKwec/M8M1U0wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBabPvez06lYj986z3OwcHB3Z52tVpt//QL1tfX77/hZr+/GTSf+O98c7Y/GLrusObPHiZXc5nBzJqvfvZqtQ/bwd01/kNF0w5LR0fH2kkpye3uBC/Nnp7FEuTLV9VzzmnrF5l6vZ65+Dz/rflpvNVqxUc9nlMv3uq99lOGI2cw1+JcVpbhVIaGa+m6znuslOjZMl0jp263meuWefdaMl24vEymV7h0IXkoLm4kEjElsScDXOWu6qtS/Uq9Sz/eikutVn4Uj0pYnbLIRcRTLvKOiuFSh2nyHqss0vrg6mwWlqnrhgiLh5TmORUor3SyQhe/iqwSIrLEF3E/ZZShvxmR1l+isy+jmn+NRljbBg+JDQeDIaO0eCRDnpVpeUVvaFJodNOysFZWkp/G4xK1CkfiIg8qdna90YzxuBIb1CWHVObi6tsPiquepc6RSGm/NxnJvKaTxps8/TNt8WiYmH45ppvljkjPHIgpVGTq2tKwkifUtUZjKymW+WazK29rUlrUEFGdi4i+8bQyNBHzFNFULOo9au7/b4/7S1IUTUe2/e8en0sDV7eG6iq1t7TlYRWOZZ9o/333nb/wsCg4MbBU3zlv/uDfpzSaVN/+Qvs35/NHd4OPMrHsDC010rhtPrRMe3lYSUd1ltIrhbFqZ7vdbpvWejkPV9VoIh9paPFBtrhINfjQavVf8xlDUzTl2JmhLFhQJjh83DFnaVjp3eBV/xRW0iXR6u6pyuGWh3WtybA+qtuyFNa6DCtYpPp/SlifglftBGHdBKWD+DwMRtZDYf1xI+unsDYSsnKQ5dbSsGjNGqm+CK1Z4YbVFlldd6vd5qMjiz4NW/IjUHwaTl/5KUMSblg0sBKydjhNPBKWJov3SW8iK9JIFFlhh0Xlwo3q2nssrMadCn7ymk8YonDDis0Glhhay8PSGvGZyGT1QFh8kzgLJjUPK6hc+UZ6YW8YvGqcprDsxJPD6sk9NDeNyBzUxB5HxEFsUYtuWbo7UFcpSqrmvYVIcwthqbMGzabN4ViOrA1139lj01As65N8oxGdpDQ50UxPtr3y0BcB6YachymmLopI5dBydGthZMlClGah2CaKz0B57td9bIGnQnQUmfO+uQFtpAcp204NmG6VPc2hIxujmKqkOoznIs9oqMUG25WUb9FRzmwjXSj96zhrl2JP7ciEYrHbdrZ9+mjpwAdWK78ZeLuHf64K5eAyl//RdYvx7WGHDm1MwzBMOryRo86nPpcZBr/bWjyiSdNBaYGyEnvqPVmUxp5QlM7W9/hoEo0CXqMDLQpFMA0xjLyypTosI1i9PEP1uS5f1OYjSxyUUlbiOEvLxuYnpU8MKx6hQouvQgPGTI6xgVrpc1sG9TBj6M/u8l1DdNUcz2DfVVi7h6VkgUsmd9RtdjMhnZ3yLxQWHb7PwqpnMnUe1qi1QKQVmbGlObmO53Vyzrwn5Re9op9avMne7sgupyL+40eVDmvH4/HOycJL27fXzZvTqqZVq1U68vvMZYOL9AP/1sgvEFVERDY8L3WnzvolfUorQsv8C4QXFh08RGgevgTCeobwwtqkFR7T8Ek2RwtHge9UaGGJ0iEfxjv9vuiIJpSweu+/cpBFaSjvFG+996xC1HjncxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOCd+Q96oJAhiIK0zgAAAABJRU5ErkJggg==" alt="Coupang" class="logo-img" onclick="switchView('login')">
+
+        <div id="login-view">
+            <form onsubmit="return handleLogin();">
+                
+                <div class="input-group" id="login-id-group">
+                    <div class="input-row">
+                        <div class="icon-side">
+                            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        </div>
+                        <div class="input-side">
+                            <input type="text" id="loginId" placeholder="아이디(이메일)" 
+                                onfocus="setFocus('login-id-group')" 
+                                onblur="removeFocus('login-id-group')" 
+                                oninput="checkInput()" 
+                                autocomplete="off">
+                            
+                            <div class="btn-wrapper" onclick="clearVal('loginId')" id="login-clear-btn" style="display:flex;">
+                                <div class="circle-bg">
+                                    <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                                </div>
+                            </div>
+                            
+                            <div id="suggest-box"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-text" id="login-id-error"></div>
+
+                <div class="input-group" id="login-pw-group">
+                    <div class="input-row">
+                        <div class="icon-side">
+                            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                        </div>
+                        <div class="input-side">
+                            <input type="password" id="loginPw" placeholder="비밀번호" onfocus="setFocus('login-pw-group')" onblur="removeFocus('login-pw-group')">
+                            
+                            <div class="btn-wrapper" onclick="togglePassword('loginPw', 'eye-icon')">
+                                <svg id="eye-icon" class="icon-svg" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-text" id="login-pw-error">비밀번호를 입력해주세요.</div>
+
+                <div class="find-wrap"><a href="find_id_pw.html">아이디 · 비밀번호 찾기 ></a></div>
+                <div id="login-main-error" class="main-error"></div>
+                
+                <button type="submit" class="btn-blue">로그인</button>
+                <div class="line-divider"></div>
+                <button type="button" class="btn-white" onclick="switchView('signup')">회원가입</button>
+            </form>
+        </div>
+
+        <div id="signup-view" class="hidden">
+            <h2>회원가입</h2>
+            <form onsubmit="return handleSignup();">
+                <div class="input-group" id="signup-id-group">
+                    <div class="full-input-side">
+                        <input type="text" id="newId" placeholder="아이디(이메일)" onfocus="setFocus('signup-id-group')" onblur="removeFocus('signup-id-group')">
+                    </div>
+                </div>
+                <div class="error-text" id="signup-id-error"></div>
+
+                <div class="input-group" id="signup-name-group">
+                    <div class="full-input-side">
+                        <input type="text" id="newName" placeholder="이름" onfocus="setFocus('signup-name-group')" onblur="removeFocus('signup-name-group')">
+                    </div>
+                </div>
+                <div class="error-text" id="signup-name-error">이름을 입력해주세요.</div>
+
+                <div class="input-group" id="signup-phone-group">
+                    <div class="full-input-side">
+                        <input type="text" id="newPhone" placeholder="휴대폰 번호" onfocus="setFocus('signup-phone-group')" onblur="removeFocus('signup-phone-group')">
+                    </div>
+                </div>
+                <div class="error-text" id="signup-phone-error">휴대폰 번호를 입력해주세요.</div>
+
+                <div class="input-group" id="signup-pw-group">
+                    <div class="full-input-side">
+                        <input type="password" id="newPw" placeholder="비밀번호 (6자리 이상)" onfocus="setFocus('signup-pw-group')" onblur="removeFocus('signup-pw-group')">
+                    </div>
+                </div>
+                <div class="error-text" id="signup-pw-error"></div>
+
+                <div class="input-group" id="signup-pw2-group">
+                    <div class="full-input-side">
+                        <input type="password" id="newPw2" placeholder="비밀번호 확인" onfocus="setFocus('signup-pw2-group')" onblur="removeFocus('signup-pw2-group')">
+                    </div>
+                </div>
+                <div class="error-text" id="signup-pw2-error">비밀번호가 일치하지 않습니다.</div>
+
+                <button type="submit" class="btn-blue">동의하고 가입하기</button>
+                <button type="button" class="btn-white" onclick="switchView('login')">취소</button>
+            </form>
+        </div>
+
+        <div class="footer-text">©Coupang Corp. All rights reserved.</div>
+    </div>
+
+    <script>
+        function switchView(viewName) {
+            var loginView = document.getElementById('login-view');
+            var signupView = document.getElementById('signup-view');
+            var mainError = document.getElementById('login-main-error');
+            mainError.innerText = "";
+            document.querySelectorAll('.input-group').forEach(el => el.classList.remove('error'));
+            document.querySelectorAll('.error-text').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('input').forEach(el => el.value = "");
+
+            if(viewName === 'signup') {
+                loginView.classList.add('hidden');
+                signupView.classList.remove('hidden');
+            } else {
+                signupView.classList.add('hidden');
+                loginView.classList.remove('hidden');
+            }
+        }
+
+        function setFocus(groupId) {
+            document.getElementById(groupId).classList.add('focused');
+            document.getElementById(groupId).classList.remove('error');
+        }
+        function removeFocus(groupId) {
+            document.getElementById(groupId).classList.remove('focused');
+            if(groupId === 'login-id-group') setTimeout(() => { document.getElementById('suggest-box').style.display = "none"; }, 200);
+        }
+
+        /* [수정] checkInput: X 버튼 제어 로직 삭제 (항상 표시), 자동완성만 제어 */
+        var domains = ["naver.com", "hanmail.net", "nate.com", "gmail.com", "daum.net"];
+        
+        function checkInput() {
+            var val = document.getElementById('loginId').value;
+            var box = document.getElementById('suggest-box');
+
+            // X 버튼은 항상 표시되므로 여기서 display 조작 안 함
+
+            if (val.includes('@')) {
+                var parts = val.split('@');
+                var userId = parts[0];
+                var userDomain = parts[1];
+                
+                if(!userId) { box.style.display = "none"; return; }
+
+                var html = domains.filter(d => d.startsWith(userDomain))
+                    .map(d => `<div class="suggest-item" onclick="selectEmail('${userId}@${d}')">
+                        <span class="txt-bold">${userId}</span><span class="txt-normal">@${d}</span>
+                    </div>`).join('');
+                
+                if(html) {
+                    box.innerHTML = html;
+                    box.style.display = "block";
+                } else {
+                    box.style.display = "none";
+                }
+            } else { 
+                box.style.display = "none"; 
+            }
+        }
+        
+        function selectEmail(fullEmail) {
+            document.getElementById('loginId').value = fullEmail;
+            document.getElementById('suggest-box').style.display = "none";
+            document.getElementById('loginPw').focus();
+        }
+        
+        function clearVal(id) {
+            document.getElementById(id).value = "";
+            document.getElementById(id).focus();
+            document.getElementById('suggest-box').style.display = "none";
+         
+        }
+        
+        function togglePassword(id, iconId) {
+            var pw = document.getElementById(id);
+            var svg = document.getElementById(iconId);
+            if (pw.type === "password") {
+                pw.type = "text"; 
+                if(svg) { svg.style.fill = "#346aff"; } 
+            } else { 
+                pw.type = "password"; 
+                if(svg) { svg.style.fill = "#bbb"; } 
+            }
+        }
+
+        /* 로그인 로직 */
+        function handleLogin() {
+            var id = document.getElementById('loginId').value;
+            var pw = document.getElementById('loginPw').value;
+            var idGroup = document.getElementById('login-id-group');
+            var pwGroup = document.getElementById('login-pw-group');
+            var idError = document.getElementById('login-id-error');
+            var pwError = document.getElementById('login-pw-error');
+            var mainError = document.getElementById('login-main-error');
+
+            idGroup.classList.remove('error'); pwGroup.classList.remove('error');
+            idError.style.display = 'none'; pwError.style.display = 'none'; mainError.innerText = "";
+
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (id === "") {
+                idGroup.classList.add('error'); idError.innerText = "아이디(이메일)를 입력해주세요.";
+                idError.style.display = 'block'; return false;
+            }
+            if (!emailPattern.test(id)) {
+                idGroup.classList.add('error'); idError.innerText = "아이디는 이메일 형식으로 입력해주세요.";
+                idError.style.display = 'block'; return false;
+            }
+            if (pw === "") {
+                pwGroup.classList.add('error'); pwError.style.display = 'block'; return false;
+            }
+
+            var userList = JSON.parse(localStorage.getItem('userList')) || [];
+            var matchedUser = userList.find(u => u.userId === id && u.userPw === pw);
+
+            if (matchedUser || (id === "test@naver.com" && pw === "12345678")) {
+                localStorage.setItem('currentUser', JSON.stringify(matchedUser || {userId: id, userName: "테스터"}));
+                location.href = "coupang-onboarding.html"; 
+                return false;
+            } else {
+                mainError.innerText = "아이디 또는 비밀번호를 잘못 입력했습니다.";
+                idGroup.classList.add('error'); pwGroup.classList.add('error');
+                return false;
+            }
+        }
+
+        /* 회원가입 로직 */
+        function handleSignup() {
+            var id = document.getElementById('newId').value;
+            var name = document.getElementById('newName').value;
+            var phone = document.getElementById('newPhone').value;
+            var pw = document.getElementById('newPw').value;
+            var pw2 = document.getElementById('newPw2').value;
+
+            var idGroup = document.getElementById('signup-id-group');
+            var nameGroup = document.getElementById('signup-name-group');
+            var phoneGroup = document.getElementById('signup-phone-group');
+            var pwGroup = document.getElementById('signup-pw-group');
+            var pw2Group = document.getElementById('signup-pw2-group');
+
+            var idError = document.getElementById('signup-id-error');
+            var nameError = document.getElementById('signup-name-error');
+            var phoneError = document.getElementById('signup-phone-error');
+            var pwError = document.getElementById('signup-pw-error');
+            var pw2Error = document.getElementById('signup-pw2-error');
+
+            [idGroup, nameGroup, phoneGroup, pwGroup, pw2Group].forEach(el => el.classList.remove('error'));
+            [idError, nameError, phoneError, pwError, pw2Error].forEach(el => el.style.display = 'none');
+
+            var isValid = true;
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if(!id) { idGroup.classList.add('error'); idError.innerText="아이디를 입력해주세요."; idError.style.display='block'; isValid=false; }
+            else if(!emailPattern.test(id)) { idGroup.classList.add('error'); idError.innerText="이메일 형식이 올바르지 않습니다."; idError.style.display='block'; isValid=false; }
+            if(!name) { nameGroup.classList.add('error'); nameError.style.display='block'; isValid=false; }
+            if(!phone) { phoneGroup.classList.add('error'); phoneError.style.display='block'; isValid=false; }
+            if(!pw || pw.length < 6) { pwGroup.classList.add('error'); pwError.innerText="비밀번호는 6자리 이상이어야 합니다."; pwError.style.display='block'; isValid=false; }
+            if(pw !== pw2) { pw2Group.classList.add('error'); pw2Error.style.display='block'; isValid=false; }
+
+            if(!isValid) return false;
+
+            var userList = JSON.parse(localStorage.getItem('userList')) || [];
+            if(userList.find(u => u.userId === id)) {
+                idGroup.classList.add('error'); idError.innerText="이미 가입된 아이디입니다."; idError.style.display='block';
+                return false;
+            }
+
+            userList.push({ userId: id, userPw: pw, userName: name, userPhone: phone });
+            localStorage.setItem('userList', JSON.stringify(userList));
+            
+            alert("회원가입이 완료되었습니다! 로그인 해주세요.");
+            switchView('login');
+            document.getElementById('loginId').value = id;
+            return false;
+        }
+    </script>
+</body>
+</html>
