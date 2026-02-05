@@ -1,0 +1,454 @@
+      /* [2. 헤더 스타일] */
+      #main-header {
+          position: fixed;
+          top: 0;
+          width: 100%;
+          height: 70px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 4%;
+          z-index: 1000;
+          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+          transition: background 0.3s ease;
+      }
+
+      #main-header.scrolled {
+          background: #000;
+      }
+
+      .header-left {
+          display: flex;
+          align-items: center;
+      }
+
+      .logo a {
+          display: flex;
+          align-items: center;
+      }
+
+      .MainMenu_logo {
+          height: 29px;
+          margin-right: 30px;
+      }
+
+
+      .nav-menu {
+          display: flex;
+          gap: 8px;
+      }
+
+      .nav-menu a {
+          color: #ccc;
+          font-size: 16px;
+          font-weight: 500;
+          padding: 8px 16px;
+          border-radius: 8px;
+          position: relative;
+          transition: 0.2s;
+          display: inline-block;
+          text-decoration: none;
+      }
+
+      .nav-menu a:hover {
+          color: #fff;
+          background-color: rgba(255, 255, 255, 0.15);
+      }
+
+      .nav-menu a.active {
+          color: #fff;
+      }
+
+      /* [1. 기본 스타일 리셋] */
+      body,
+      html {
+          background: #000;
+          padding: 0;
+          margin: 0;
+          color: #fff;
+          font-family: Pretendard, sans-serif;
+      }
+
+      * {
+          box-sizing: border-box;
+      }
+
+      a {
+          text-decoration: none;
+          color: inherit;
+          cursor: pointer;
+      }
+
+      /* [3. 본문 레이아웃 및 간격 조정] */
+      .main-body {
+          padding: 100px 2% 0;
+      }
+
+      .title {
+          margin-bottom: 12px;
+      }
+
+      .title span {
+          font-size: 32px;
+          font-weight: 700;
+          line-height: 42px;
+      }
+
+      .category a span {
+          font-size: 20px;
+          font-weight: 700;
+      }
+
+      /* [4. 드롭다운 카테고리 설정] */
+      .category-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+      }
+
+      /* 추천순 메뉴를 감싸는 부모 */
+      .category-main {
+          position: relative;
+          /* 자식인 list-container의 기준점이 됨 */
+          display: inline-block;
+          padding-bottom: 15px;
+          /* 이미지와의 간격 */
+      }
+
+      .category-main>a {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 14px;
+          color: #fff;
+          padding: 5px 0;
+      }
+
+      /* 드롭다운 박스: 이미지 위에 뜨게 설정 */
+      .list-container {
+          display: none;
+          /* 기본 숨김 */
+          position: absolute;
+          top: 25px;
+          /* '추천순' 글자 바로 아래 */
+          left: 0;
+          background: #282c34;
+          /* 쿠팡플레이 특유의 어두운 회색 */
+          padding: 10px 6px;
+          border-radius: 12px;
+          z-index: 100;
+          /* 이미지보다 위에 뜨도록 함 */
+          min-width: 200px;
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+      }
+
+      /* 호버 시 메뉴 보이기 */
+      .category-main:hover .list-container {
+          display: block;
+      }
+
+      .list-container:hover .list-container {
+          display: block;
+      }
+
+      .lists {
+          padding: 10px 50px 10px 20px;
+          font-size: 18px;
+          transition: background 0.2s;
+          border-radius: 12px;
+      }
+
+      .lists:hover {
+          background: rgba(255, 255, 255, 0.1);
+      }
+
+      .lists a {
+          color: #eee;
+          width: 100%;
+          display: block;
+      }
+
+      /* [5. 콘텐츠 그리드] */
+      .content {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          gap: 15px;
+          width: 100%;
+      }
+
+      .content-container {
+          width: 100%;
+          overflow: hidden;
+          border-radius: 6px;
+          transition: transform 0.3s ease;
+      }
+
+      .content-container:hover {
+          transform: scale(1.05);
+          z-index: 10;
+      }
+
+      .content-container img {
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          object-fit: cover;
+          display: block;
+      }
+      /* [헤더 스타일 수정 및 반응형 최적화] */
+        #main-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4%;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+            transition: background 0.3s ease;
+        }
+
+        /* 로고 크기 반응형 조절 */
+        .MainMenu_logo {
+            height: 24px;
+            /* 기본 크기를 살짝 줄임 */
+            margin-right: 15px;
+            /* 간격 축소 */
+        }
+
+        /* 메뉴 간격 조절 */
+        .nav-menu {
+            display: flex;
+            gap: 4px;
+            /* 간격을 좁게 설정 */
+        }
+
+        .nav-menu a {
+            font-size: 14px;
+            /* 글자 크기 조정 */
+            padding: 6px 10px;
+        }
+
+        /* 우측 섹션 간격 조절 */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            /* 간격을 30px -> 15px로 축소 */
+        }
+
+        /* --- 모바일/작은 화면 대응 (너비 480px 이하) --- */
+        @media (max-width: 480px) {
+            #main-header {
+                height: 60px;
+                /* 헤더 높이 축소 */
+                padding: 0 3%;
+            }
+
+            .MainMenu_logo {
+                height: 20px;
+                /* 로고 더 작게 */
+                margin-right: 8px;
+            }
+
+            .nav-menu a {
+                font-size: 13px;
+                padding: 4px 6px;
+            }
+
+            .header-right {
+                gap: 10px;
+                /* 우측 아이콘들 간격 최소화 */
+            }
+
+            /* 프로필 아이콘 크기 조절 */
+            .profile-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+        }
+
+        /* =================================================
+   1. 기본 (모바일 < 368px)
+   ================================================= */
+        .content {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 12px;
+        }
+
+        .main-body {
+            padding: 80px 12px 0;
+        }
+
+        /* =================================================
+   2. 368px 이상 (소형 모바일)
+   ================================================= */
+        @media (min-width: 368px) {
+            .content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* =================================================
+   3. 520px 이상 (대형 모바일)
+   ================================================= */
+        @media (min-width: 520px) {
+            .content {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* =================================================
+   4. 768px 이상 (태블릿)
+   ================================================= */
+        @media (min-width: 768px) {
+            .content {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        /* =================================================
+   5. 1200px 이상 (데스크탑)
+   ================================================= */
+        @media (min-width: 1200px) {
+            .content {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        /* ===== 태블릿 이하 (≤ 768px) ===== */
+        @media (max-width: 768px) {
+            .nav-menu .nav-item {
+                font-size: 14px;
+                margin-right: 14px;
+            }
+
+            .category-btn {
+                font-size: 13px;
+                padding: 5px 10px;
+            }
+
+            .header-right svg {
+                width: 22px;
+                height: 22px;
+            }
+        }
+
+        /* ===== 소형 모바일 (≤ 480px) ===== */
+        @media (max-width: 480px) {
+            #main-header {
+                height: 56px;
+            }
+
+            .nav-menu .nav-item {
+                font-size: 13px;
+                margin-right: 10px;
+            }
+
+            .category-btn {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+
+            .header-right svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        /* 카테고리 드롭다운 기본 스타일 (데스크탑 - 3열 유지) */
+        #category-dropdown {
+            display: none;
+            /* 기본은 숨김 (JS로 active 토글) */
+            justify-content: space-between;
+            padding: 20px;
+            background-color: rgba(20, 20, 20, 0.95);
+            min-width: 450px;
+            /* 적절한 너비 설정 */
+        }
+
+        /* active 클래스가 붙었을 때 display를 flex로 변경 */
+        #category-dropdown.active {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #category-dropdown>div {
+            flex: 1 1 30%;
+            /* 기본 3열 (33.33% 근처) */
+            min-width: 120px;
+            margin-bottom: 10px;
+        }
+
+        /* ===== 폰 화면 너비 대응 (768px 이하 또는 480px 이하 권장) ===== */
+        @media (max-width: 768px) {
+            #category-dropdown {
+                min-width: 280px;
+                /* 모바일에서 너비 축소 */
+                padding: 15px;
+            }
+
+            #category-dropdown>div {
+                flex: 1 1 45%;
+                /* 2열로 배치 (50% 미만 설정) */
+                font-size: 14px;
+            }
+        }
+
+        /* 아주 작은 화면 (360px 이하)에서 1열로 하고 싶다면 추가 */
+        @media (max-width: 360px) {
+            #category-dropdown>div {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* 550px 이하 모바일 대응 */
+        @media (max-width: 550px) {
+            #category-dropdown {
+                /* 화면 너비에 맞춰 드롭다운 크기 조절 */
+                position: fixed;
+                /* 혹은 absolute, 부모 요소에 따라 조절 */
+                top: 60px;
+                /* 헤더 높이에 맞춰 조정 */
+                left: 5%;
+                right: 5%;
+                width: 90%;
+                /* 양옆 여백을 두고 꽉 차게 설정 */
+                min-width: unset;
+                /* 기존 min-width 해제 */
+
+                /* 2열 레이아웃 강제 적용 */
+                display: none;
+                /* 기본은 숨김 */
+                flex-wrap: wrap;
+                padding: 15px 10px;
+                gap: 10px 0;
+                /* 상하 간격 */
+            }
+
+            #category-dropdown.active {
+                display: flex;
+                /* 활성화 시 flex로 변경 */
+            }
+
+            /* 내부의 각 열(div)을 2열 구조로 변경 */
+            #category-dropdown>div {
+                flex: 0 0 50%;
+                /* 정확히 절반씩 차지 */
+                text-align: center;
+                /* 모바일에서는 중앙 정렬이 깔끔함 */
+                margin-bottom: 5px;
+            }
+
+            /* 링크 스타일 세밀 조정 */
+            #category-dropdown a {
+                font-size: 10px;
+                padding: 3px 0;
+                display: block;
+                /* 클릭 영역 확대 */
+            }
+        }
