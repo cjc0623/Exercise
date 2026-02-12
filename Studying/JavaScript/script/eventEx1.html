@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 예시</title>
+    <style>
+        div {
+            height: 100px;
+            width: 25%;
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        // 16번의 루프를 돌면서 다음과 같이 코드를 완성하세요.
+        // 동적으로 div를 각각 생성하고, background를 red로 설정하세요
+        // 이후 생성된 div는 body 하위에 추가되도록 등록(append) 시키세요
+        // 결과는 페이지가 로딩되면, 전체가 빨강색으로 도배되어야 합니다.
+
+        for (let i = 0; i < 16; i++) {
+            let div = document.createElement('div');
+
+            div.style.backgroundColor = 'red';
+            document.body.appendChild(div);
+        }
+        // random 함수를 정의하세요.. 파라미터를 받아서, 해당 숫자범위만큼의 
+        // 랜덤값을 리턴하도록 정의하세요
+        function random(number) {
+            return Math.random() * number;
+        }
+
+        function bgchange() {
+            let rdmColor = "rgb(" + random(255) + "," + random(255) + "," + random(255) + ")";
+            return rdmColor;
+        }
+
+        // 모든 div 요소의 리스트를 divs 라는 const 변수에 담으세요.
+
+        const divs = document.querySelectorAll('div');
+        // console.log(divs);
+        // 이벤트를 등록하고 이를 핸들러에 연결
+        for (let i = 0; i < divs.length; i++) {
+            divs[i].addEventListener("click",
+            (e)=>{e.target.style.backgroundColor = bgchange();});
+
+            // divs[i].onclick = (e) => {
+            //     console.log(e.target);
+            //     e.target.style.backgroundColor = bgchange();
+            // }
+        }
+
+    </script>
+</body>
+
+</html>

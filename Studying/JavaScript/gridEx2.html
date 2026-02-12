@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            /* 자동으로 컬럼을 생성해서 div 와 매칭시키기 */
+            display: grid;
+            /* 컬럼 생성 */
+            grid-template-columns: auto auto auto;
+            background-color: aquamarine;
+            padding : 5px;
+            gap: 5px;
+        }
+        .container div{
+            background-color: white;
+            padding: 10px;
+            padding: 10px;
+            font-size: 30px;
+        }
+        .item1{
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+    Grid Layout : 행과 열로 구성된 그리드 기반 레이아웃임
+    이 역시 반응형을 위해 개발된 것으로, 배치가 쉬운 특징이 있음
+    -->
+    <h1>Css Grid Layout</h1>
+    <p>아래는 그리드를 이용한 배치임</p>
+
+    <div class="container">
+        <!-- item 속성(css) : Css에서 item별로 병합을 할 수 있드로고 정의 할 수 있음-->
+        <div class="item1">1</div>
+        <div class="item2">2</div>
+        <div class="item3">3</div>
+        <div class="item4">4</div>
+        <div class="item5">5</div>
+    </div>
+</body>
+
+</html>

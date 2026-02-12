@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="" id="loginbtn" onclick="newLoginWindow()" style="text-decoration: none;" target="_blank">
+        로그인
+    </a>
+    <!-- <a href="" id="loginbtn" onclick="home()" style="text-decoration: none;" target="_blank">
+        홈으로 가기
+    </a> -->
+    <button onclick="home()">
+        홈으로 가기
+    </button>
+
+    <script>
+        function home() {
+            location.href = 'history.html';
+
+            // 루프백 주소 : 인터넷이 연경되지 않아도, 모든 컴퓨터에
+            // 자동으로 생성되는 가상 ip
+            // localhost 라고도 함
+            // location.host 
+        }
+
+        function newLoginWindow() {
+            const width = 500;
+            const height = 800;
+            const left = (screen.width / 2) - (width / 2);
+            const top = (screen.height / 2) - (height / 2);
+
+            window.open('login.html', 'newwin', `width = ${width}, height = ${height}, top = ${top}, left = ${left}`);
+
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+
+        header{
+            background-color: rgb(60, 82, 60);
+            padding: 50px;
+            text-align: center;
+            font-size: 20px;
+            color:beige;
+        }
+
+        nav{
+            float: left;
+            width: 30%;
+            height: 300px;
+            padding: 10%;
+        }
+
+        nav ul{
+            list-style: none;
+            padding: 0;
+        }
+
+        article{
+            float: left;
+            padding: 20px;
+            width: 70%;
+            background-color: azure;
+            height: 300px;
+        }
+
+        section::after{
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        footer{
+            background-color: rgb(74, 167, 248);
+            padding: 10px;
+            text-align: center;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>CSS Layout</h2>
+    <p>레이아웃을 적용해서 기본적인 페이지의 형태를 구성하는데 목적이 있음.</p>
+    <p>여러 형태의 구현법이 있지만 지금은 가장 기본적인 float 형태의 구성임</p>
+
+    <!-- header 정의 -->
+    <header>
+        <h2>가상의 웹사이트</h2>
+    </header>
+
+    <section>
+        <!-- 네비게이션 영역으로 정의 -->
+        <nav>
+            <ul>
+                <li>
+                    <a href="#">영국사이트</a>
+                </li>
+                <li>
+                    <a href="#">미국사이트</a>
+                </li>
+                <li>
+                    <a href="#">프랑스사이트</a>
+                </li>
+            </ul>
+        </nav>
+
+        <article>
+            <h2>London</h2>
+            <p>
+                영국의 수도...
+                영국의 수도...
+                영국의 수도...
+                영국의 수도...
+                영국의 수도...
+            </p>
+        </article>
+    </section>
+
+    <footer>
+        <p>사이트의 저작권등의 페이지 내용...</p>
+    </footer>
+</body>
+
+</html>

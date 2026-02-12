@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 간단한 반응형 flex 구현 -->
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        .flex-container{
+            display: flex;
+            flex-direction: row;
+        }
+        .flex-item{
+            background-color: aqua;
+            padding: 10px;
+            font-size: 30px;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* 미디어 쿼리 : 접근되는 device의 해상도를 확인 후 어떻게 전개할건지를 나타내는
+        반응형 웹의 속성 */
+        @media(max-width : 600px){
+            .flex-container{
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>반응형 flex</h2>
+    <p>
+        이페이지에 접근한 device가 600px 이하인 경우<br>
+        가로에서 세로로 전환되도록 함
+    </p>
+    <div class="flex-container">
+        <div class="flex-item">1</div>
+        <div class="flex-item">2</div>
+        <div class="flex-item">3</div>
+    </div>
+</body>
+</html>

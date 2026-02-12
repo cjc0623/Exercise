@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script>
+        let num = Math.floor(Math.random() * 128);
+        let charactor = String.fromCharCode(num);
+        console.log("생성된 숫자: %d, 코드 : %s", num, charactor);
+        //문자열 치환자 : %s, %d, %f, %o, %c
+        // %s : 문자열 출력
+        // %d : 정수 숫자 출력
+        // %f : 소수점이 있는 숫자 출력
+        // %o : 객체(object)를 하이퍼링크 형태로 출력
+        // %c : 출력되는 로그에 CSS 스타일을 입힘
+
+        if (num > 32 && num < 48) {
+            console.log("숫자 이전 특수문자");
+            
+        } else if (num > 47 && num < 58) {
+            console.log("숫자");
+        } else if (num > 57 && num < 65) {
+            console.log("숫자 이후 특수문자");
+        } else if (num > 64 && num < 91) {
+            console.log("대문자 알파벳");
+        } else if (num > 90 && num < 97) {
+            console.log("대문자 알파벳 이후 특수문자");
+        } else if (num > 96 && num < 123) {
+            console.log("소문자");
+        } else if (num > 122 && num < 127) {
+            console.log("소문자 이후 특수문자");
+        }
+    </script>
+    <script>
+        let char = String.fromCharCode(Math.floor(Math.random() * 128));
+    </script>
+</head>
+
+<body>
+   <p id="print"></p>
+   <script>
+    let res;
+    if(char < '0'){
+        res = '숫자 이전의 특문 입니다 :' + char;
+    }else if(char >= '0' && char <='9'){
+        res = '숫자 입니다 : ' + char;
+    }else if(char > '9' && char <'A'){
+        res = '숫자와 영문자 사이의 특문 입니다 : ' + char;
+    }else if(char >= 'A' && char <='Z'){
+        res = '영대문자 입니다 : ' + char;
+    }else if(char >= 'a' && char <='z'){
+        res = '영소문자 입니다 : ' + char;
+    }else{
+        res = '영문자 이후의 특문 입니다 :' +char;
+    }
+    document.getElementById('print').innerHTML=res;
+
+
+    // 문서에 직접 코딩을 할때는 아래처럼 합니다.
+    document.write('<hr>');
+
+    const n = prompt('숫자 입력');
+    // 결과를 담을 문자열 선언
+    let tree = '';
+
+    // 받은 수만큼 반복하는 outer for 시작
+    for(let i = 1; i<=n; i++){
+        // 별모양을 만들 변수 선언.. 처음엔 공백이 들어가야 하므로..
+        let star='';
+        for(let j = 1; j<= n-i; j++){
+            // 공백 추가
+            star += ' ';
+        }  
+        // 별 추가
+        for(let k = 1; k<=2*i-1; k++){
+            star += '*';
+        }
+        // tree 만들기
+        tree += star + '\n';
+    }
+    console.log(tree);
+   </script>
+</body>
+
+</html>

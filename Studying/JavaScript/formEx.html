@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form 태그 알아보기</title>
+    <style>
+        form.form-example{
+            display: table;
+        }
+        div.form-example{
+            display: table-row;
+        }
+        label, input{
+            display: table-cell;
+            margin-bottom: 10px;
+        }
+        label{
+            padding-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- form 태그는 클라이언트의 입력 정보를 서버로 보내는 역할을 합니다.
+    때문에 모든 서버로 전송할 데이터는 반드시 form 내부에 위치하거나, 스크립트를 이용하더라도
+    form 객체의 속성을 이용해야 전송이 되어집니다.
+    대표적인 속성으로는 action(입력 정보가 전달될 서버 페이지), method(전송방식 default get, post)
+    autocomplete(입력 요소의 자동 완성여부), enctype(메서드가 post인 경우 데이터의 mimetype을 나타냄)
+    이중 application/x-www-form-uriencoded가 기본값
+    multipart/form-data : <input type="file"> 이라는 폼 입력 요소가 존재하는 경우, 즉 파일 전송시에 선택됨
+    등이 있음 -->
+
+    <h1>form 알아보기</h1>
+    <form action="" class="form-example">
+        <!-- 모든 입력 개체는 input으로 시작, 몇개는 제외..-->
+    <div class="form-example">
+            <label for="name">이름 입력</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-example">
+            <label for="email">메일 입력</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-example">
+            <input type="submit">
+        </div>
+    </form>
+</body>
+</html>

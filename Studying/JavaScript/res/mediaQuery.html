@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{margin: 0; padding: 0;}
+
+        #wrap{
+            height: 500px;
+            margin: 0 auto;
+            border: 4px solid #000;
+        }
+        @media all and (min-width : 320px){
+            /* 모든 기기면서 크기가 320 이상인 경우에 적용하는 구문을 정의 */
+            #wrap{
+                width: 30%;
+                background-color: antiquewhite;
+
+            }
+        }
+        /* 768 이상인 경우를 선언해보세요... */
+        @media all and (min-width : 768px){
+            #wrap{
+                width: 60%;
+                background-color: aquamarine;
+            }
+
+        }
+        /* 1024 이상인 경우를 선언해보세요... */
+        @media all and (min-width : 1024px){
+            #wrap{
+                width: 90%;
+                background-color: aqua;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <!-- 미디어 쿼리 : 페이지에 접속하는 디바이스의 크기를 조건으로 질의(Query)
+    해서, 특정 해상도에서 어떻게 표현해 줄지를 결정해주는 요소임.
+    @media 라는 키워드로 사용
+    [only or not] 옵션으로 미디어 쿼리를 지원하는 브라우저에만 해석하게 해주는 키워드
+    not은 다음에 오는 키워드는 부정하도록 처리함 ex) not tv 는 Tv를 제외한 모든 미디어를 뜻함
+    
+    잘 쓰이지는 않음
+
+    //대표적 기기로는 screen이 있음 컴퓨터나 핸드폰을 의미
+    [and or,] : and는 앞뒤 조건을 모두 검사해서 true 시에만 해석하라는 의미
+    ,(콤마) 는 or의 의미
+
+    []표시내부의 선언문은 옵셔널임. 해도 그만 안해도 그만
+
+    내부 속성으로는 여러가지가 있으나, 대표적으로 width,thight 및 min-width, max-width 등을
+    가장 많이 사용함
+
+    ex) @media(min0width : 320px){실행문....}
+        @media(min-width : 320px) and (max-width : 768px){ 실행문... }
+    -->
+    <div id="wrap"></div>
+</body>
+</html>

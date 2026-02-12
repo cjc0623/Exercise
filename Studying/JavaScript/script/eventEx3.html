@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body onload="alert('문서가 로드 완료됨');">
+    <!-- focus, blur 이벤트..
+    focus : 특정 UI에 포커싱이 될때 발생되는 이벤트임
+    blur : 위와 반대로 focus를 잃을 때 발생되는 이벤트임 -->
+
+    <input type="text" id="id" vlaue="sample text" placeholder="id 입력해" onfocus="chgBg()">
+    <button type="button" onclick="blr();">클릭하면 blur 시킴.</button>
+
+    <hr>
+    <!-- key 이벤트를 알아봅니다. 이벤트 객체를 이용해서 어떤 키가 입력되었는지 확인 후
+    이를 이용한 이벤트 핸들링 입니다. -->
+
+    <!-- popovertarget 속성은 이벤트 버블링 없이 발생된 이벤트 객체를 지정하는 속성입니다. -->
+    <button popovertarget="mydiv">div 내용 보여주기</button>
+    <div id="mydiv" popover="manual">
+        h 키를 입력하면 이 내용은 사라집니다.
+    </div>
+
+    <hr>
+    <!-- change 이벤트 : select 등의 요소에서 선택된 값이 변경되었을 떄 발생되는 이벤트입니다. -->
+    <label>
+        아래중 하나 선택하세요.
+        <select class="ice-cream" name="ice-cream">
+            <option value="">--선택--</option>
+            <option value="chocolate">chocolate</option>
+            <option value="vanilar">vanilar</option>
+            <option value="berry">berry</option>
+        </select>
+    </label>
+    <div class="result"></div>
+
+    <hr>
+    <!-- load 이벤트 : 문서나 id, class, image 등이 로드되었을 때 발생되는 이벤트입니다.
+    이것을 이용해서 로드된 이후에 이벤트 핸들러를 작성해서 후곳 작업등을 이용할 수 있음 -->
+    <img
+        id="image"
+        src="../imgs/다운로드.jpeg"
+        alt=""
+        width="100px"
+    >
+
+    <div><button id="bt">Reload</button></div>
+
+
+    <script>
+        //이미지 객체에 onload 이벤트를 적용해서 후속 작업을 처리합니다.
+        const image = document.getElementById("image");
+        // onload() 는 전역 이벤트 메서드라 직접 적용하는 것이 가능
+        image.onload = ()=>{
+            document.body.appendChild(document.createElement('div')).textContent = '로드됨';
+        }
+
+        document.querySelector("#bt").addEventListener('click', reload);
+        function reload(){
+            image.src = "../imgs/다운로드.jpeg";
+        }
+
+        const sel = document.querySelector(".ice-cream");
+        const res = document.querySelector(".result");
+
+        // 이벤트 연결 및 핸들러 정의
+        sel.addEventListener('change',(event)=>{
+            res.textContent = `당신은 ${event.target.value} 를 좋아하는군요`;
+        });
+
+
+
+        const mydiv = document.getElementById('mydiv');
+        document.addEventListener('keydown',(event)=>{
+            if(event.key === 'h'){
+                mydiv.hidePopover();
+            }
+        });
+
+
+        const textBox = document.querySelector("#id");
+        function chgBg(){
+            // alert('포커싱 되었네요.');
+            // 박스의 bgcolor을 lightGray로, value 값을 "" 으로 만드세요.
+
+            textBox.style.backgroundColor = 'lightgray';
+            textBox.value = "";
+
+        }
+        
+        function blr(){
+            // blur() 를 이용해서 포커스가 3초후에 빠지도록 하세요...
+            // 박스.blur() 호출하면 됨
+            
+            textBox.focus(); 
+            console.log("3초 대기 시작...");
+
+            setTimeout(() =>{
+                textBox.blur();
+            }, 3000);
+            
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            display: grid;
+            grid-template-areas: 
+                "header header"
+                "menu content"
+                "footer footer";
+            /* 적용된 컬럼과 로우의 갯수를 설정 */
+            grid-template-columns: 1fr 3fr;
+            /* cell 사이의 공백지정 */
+            gap: 3px;
+            background-color:bisque;
+            padding: 5px;
+        }
+        .container div{
+            background-color: white;
+            padding: 10px;
+        }
+        .container div.header{
+            grid-area: header;
+            text-align: center;
+        }
+        .container div.menu{
+            grid-area: menu;
+        }
+        .container div.content{
+            grid-area: content;
+        }
+        .container div.footer{
+            grid-area: footer;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+    Grid Layout : 행과 열로 구성된 그리드 기반 레이아웃임
+    이 역시 반응형을 위해 개발된 것으로, 배치가 쉬운 특징이 있음
+    -->
+    <h1>Css Frid Layout</h1>
+    <p>아래는 그리드를 이용한 배치임</p>
+
+    <div class="container">
+        <div class="header">
+            <h2>My Header</h2>
+        </div>
+        <div class="menu">
+            <a href="$">Link1</a><br>
+            <a href="$">Link2</a><br>
+            <a href="$">Link3</a>
+        </div>
+        <!-- main 컨텐츠 영역 -->
+        <div class="content">
+            <h3>Lorem ipsum</h3>dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+            tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
+            exerci
+            tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure
+            dolor in
+            hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at
+            vero eros
+            et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te
+            feugait
+            nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod
+            mazim
+            placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit
+            eorum
+            claritatem.
+
+        </div>
+        <div class="footer">
+            <h4>Footer</h4>
+        </div>
+    </div>
+</body>
+
+</html>

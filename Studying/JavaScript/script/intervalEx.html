@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=`, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .go {
+            color: green;
+        }
+
+        .stop {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="my_box">
+        <h3>Hello World</h3>
+    </div>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+
+    <script>
+        // interval ID 변수.. 이게 있어야 clear 를 시킬 수 있음
+        let intervalId;
+
+        function changeColor() {
+            if (!intervalId) {
+                intervalId = setInterval(flashText, 1000); // 1초에 한번씩 flashText 함수 호출
+            }
+        }
+
+        // 작업을 수행할 함수 정의..
+        function flashText() {
+            // 변경될 요소를 찾아서 클래스 변경
+            const element = document.getElementById('my_box');
+            element.className = element.className == "go" ? "stop" : "go";
+        }
+        function stopchangeColor(){
+            // interval을 clear 시킨다
+            clearInterval(intervalId);
+            intervalId = null;
+        }
+
+        // 이벤트 등록
+        document.getElementById('start').addEventListener('click', changeColor);
+        document.getElementById('stop').addEventListener('click', stopchangeColor);
+    </script>
+</body>
+
+</html>

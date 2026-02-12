@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input[type="image"]{
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <form action="login.jsp" method="post">
+        <label>ID : <input type="text" name="id" id="user_id" size="10"></label>
+        <label>PW : <input type="password" name="pw" id="pw" size="10" placeholder="숫자영문자조합8자이상"></label>
+
+        <!-- image 요소를 input 으로 사용함..-->
+        <input
+            type="image"
+            id="image" 
+            alt="login"
+            src="imgs/KakaoTalk_20251230_164813802.png"
+            width="200px"    
+        >
+        <br>
+        <p>컬러 선택 :</p>
+        <div>
+            <input type="color" id="foreground" name="foreground" value="#e55634">
+            <label for="foreground">foreground color</label>
+        </div>
+        <p>Audio Setting</p>
+        <div>
+            <input type="range" id="vol" name="vol" min="0" max="11">
+            <label for="vol">Volume</label>
+        </div>
+
+        <label for="site-search">Search Site</label>
+        <input type="search" id="ss" name="q">
+        <button>Search</button>
+
+        <!-- select 요소.. 라디오 버튼처럼 목록중의 하나를 선택하도록 하는 요소임 -->
+        <div>
+            <p>좋아하는 동물 선택하기</p>
+            <select name="pets" id="pet-select">
+                <!-- 각 목록은 option 이라는 자식 태그로 구성함. 이때 선택된
+                목록의 값이 서버로 가야하므로, value 속성의 값으로 지정함 -->
+                <option value="">--옵션을 선택하세요</option>
+                <option value="dog">강아지</option>
+                <option value="dog">고양이</option>
+                <option value="dog">앵무새</option>
+            </select>
+        </div>
+    </form>
+</body>
+</html>

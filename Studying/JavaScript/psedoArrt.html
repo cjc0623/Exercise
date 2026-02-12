@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        /* 내용의 첫번째 라인에 이펙트를 줌. 가상요소 사용 */
+        p::first-letter{
+            color:red;
+            font-variant : small-caps;
+            font-size : 20px;
+        }
+        p::first-line{
+            color: blue;
+            font-variant: small-caps;
+        }
+        h2::before{
+            content: url("images (1).png");
+        }
+        ::selection{
+            color: red;
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <!--
+    가상 클래스 : 특정 요소에 :hover 처럼 :를 사용해서 가상의 속성 클래스를 사용하는것
+    가상 요소 : ::을 이용해서 요소를 사용하는것..
+    위 두개는 선언법에서 차이가 남 매우 많은 요소와 클래스가 있으니 필요시 문서를 참조함-->
+    <h2>가상 요소를 사용하는 예시</h2>
+    <p>
+        sfdlkglkgkmegwgisdosdndg<br>
+        kamsekvadmlvkadvklgdalkvgmda<br>
+        ndjkvngdjklanvgkalenlkaagnlajeg<br>
+        aegjvaaaneqgieeiqmfasf
+    </p>
+</body>
+</html>

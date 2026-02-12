@@ -1,0 +1,42 @@
+/* ctrl+/, css 주석 */
+/* 먼저 문서 전체에 적용되는 스타일을 지정할게요. */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+/* id 요소를 정의시에는 #id명으로 선언 */
+#container{
+    width: 480px;
+    /* 마진주기 */
+    margin: 40px auto;
+}
+h1{
+    font-size: 2em;
+    margin: 10px;
+}
+fieldset{
+    padding: 15px;
+}
+fieldset legend{
+    font-weight: bold;
+}
+ul{
+    list-style: none;
+    padding-left: 0;
+}
+li{
+    margin: 10px;
+}
+#product input[type="number"]{
+    margin-left: 10px;
+    width: 30px;
+}
+#shipping li label{
+    width: 80px;
+    float: left;
+    text-align:left;
+}
+#shipping li input[type="text"],input[type="email"],input[type="tel"]{
+    width: 300px;
+}

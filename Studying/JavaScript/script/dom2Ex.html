@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            display : block;
+            background-color: red;
+            width : 200px;
+            height: 10px;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Dom 요소 탐색 : 다음과 같은 속성을 이용해서 DOM Tree 를 탐색할 수 있다.
+    속성이 많으니 대표적인 것 몇개만 나열함..
+
+    parnetNode : 부모 노드 탐색,
+    childNodes : 하위의 모든 노드 객체를 NodeList 로 리턴함
+    children : 하위 모든 노드를 HTMLCollection으로 리턴함.
+    firstChild : 직계 자식중 첫번째 노드 리턴
+    lastChild : 직계중 마지막 노드 리턴
+    hasChildNode() : 자식 노드 존재를 boolean으로 리턴함
+    children.length : 자식 노드의 수 리턴
+    previousSibling : 같은 부모를 가진 노드 중 이전 노드 반환
+    nextSibling : 같은 부모를 가진 노드 중 다음 요소 리턴 -->
+
+    <!-- DOM 요소의 속성을 조정하는 메서드 알아보기
+    hsaAttribute(attr) : 지정한 속성을 가지고 있는지 검사
+    getAttribute(attr) : 지정한 속성을 get
+    setAttribute(attr, value) : 지정한 속성에 balue 값 세팅
+    removeAttribute(attr) : 지정된 속성 삭제
+    .attribute : 속성들을 배열로 리턴.. -->
+
+    <!-- 속성에 대한 변경이나, 값을 추출 하도록 하는 속성 정리
+    element.id :  id 속성의 밧을 get or set함..만약 id가 존재하지 않으면, 속성을 생성하고 값을 설정
+    elementer.sttle.property : css 속성의 나타냄-->
+
+
+    <!-- 노드 조회.. HTML 태그로 찾고,특정 노드의 하위 노드(text node) 등을 찾는 기능
+    nodeName : 노드의 이름을 문자열로 리턴..
+    요소노드는 Tab 이름의 영대문자로 리턴, Text node는 #text로, 문서는 #document 로 리턴함
+    nodeValue : 특정 노드에 첫번째 하위 텍스트 노드의 값(text)의 값을 set/get 하는 기능
+    nodeType : 특정 노드의 타입 조회.. 수정이 불가능함..
+    순서는 아래와 같음..
+    1.요소노드, 2.속성노드, 3.텍스트노드, 4.주석노드, 5.문서노드-->
+
+    <!-- node에 접근해서 속성을 이용한 write..
+    innerHTML : 태그 사이의 값을 get or set 하는 속성
+    outerHTML : 전체 태그 값을 가져옴..
+    document.write('값') : 값으로 전달된 내용을 문서에 씀
+    textContent : 요소의 text 컨텐츠에 내용을 쓰는 속성 -->
+
+    <!-- DOM 추가 삭제
+    createElement(Tag Name) 를 사용해서 동적으로 요소 노드를 생성할 수 있음.
+    내용을 담고 있는 TextNode 를 createTextNode() 를 이용해서 생성하고 내용을 추가함
+    appendChild() 등의 메서드를 이용해서 TextNode 를 생성하 요소 노드의 자식으로 추가시킴
+    
+    createElement(tagName)
+    createTextNode(text)
+    appendChild(node) : node 를 마지막 자식 노드로 dom 트리에 추가
+    removeChild(node) : node 삭제
+    .remove() : 호출된 메서드의 노드 삭제 -->
+
+
+
+    <div id = "test">div 입니다</div>
+
+    <ul>
+        <li id = "one" class = "red">Seoul</li>
+        <li id = "two" class = "red">London</li>
+        <li id = "three" class = "red">New York</li>
+        <li id = "four">Tokyo</li>
+    </ul>
+
+
+
+
+    <h1>nodeName 속성</h1>
+    <p id = "document"></p>
+    <p id = "html"></p>
+    <p id = "heading">nodevalue 속성</p>
+    <p id = "text1">텍스트</p>
+
+    <form>
+        id : <input type = "text"><br>
+        Pw : <input type = "password" name = "input">
+    </form>
+
+    <ul id = "lang">
+        <li class = "html">
+            html
+        </li>
+        <li class = "css">
+            css
+        </li>
+        <li class = "script">
+            script
+        </li>
+    </ul>
+</body>
+</html>

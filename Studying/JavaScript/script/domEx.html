@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노드의 속성 알아내기</title>
+</head>
+<body>
+    <p id = "demo"></p>
+    <p class = 'democls1'></p>
+    <p class = "democls"></p>
+
+    <a name = "html">HTML</a>
+    <a name = "css">Css</a>
+    <a name = "script">Script</a>
+    <!-- 하나의 문서내에는 하나의 클래스를 적용해서 디자인 하는 경우가 많음
+     이때 querySelector를 이용해서 다중의 노드를 찾은 후 접근하는 방법을 알아봄 -->
+
+
+    <h2>이건 헤딩 내용입니다.</h2>
+
+    <h2>속성 노드 이용해보기</h2>
+    ><img id = "img"src="../imgs/다운로드.jpeg" width="160" height ="129">
+    <!-- html의 속성 값을 변경해보자.. 이때 속성은 속성객체노드를 
+    이용해서 값을 대입하는 형태를 사용함  -->
+
+    <!-- CSS 변경해보기 -->
+        <!-- node<.css.속성 = value -->
+    <h1 id ="h1">헤딩1 내용</h1>
+    <button onclick = "document.getElementById('h1').style.visibility='hidden'">버튼</button>
+    <script>
+
+        // 이미지 노드 get 해보세요.
+        document.getElementById("img").src = "../imgs/images.png";
+
+        const cls1 = document.querySelector(".democls1");
+        cls1.style.color = 'blue';
+
+        console.log(document.title);
+        // 태그를 이용한 노드 얻어내기..
+        document.anchors.length;
+
+
+
+        const para = document.getElementById('demo'); // id가 demo인 노드를 문서에서 찾아서 리턴
+        // DOM 속성인 innerHTML을 이용해서 p 태그의 값 set
+        para.innerHTML = 'hi ther';
+
+        const ps = document.getElementsByTagName('p');
+        console.log(ps);
+
+        // querySelector('클래스 ID 등...')을 이용해서 노드 찾기
+        // const clsNode = document.querySelector(".democls");
+        // clsNode.innerHTML = '쿼리셀레터를 이용한 노드 찾기'
+
+        // const nodes = document.querySelectorAll(".democls");
+        // nodes[1].innerHTML = "두번째 node의 text set";
+
+    </script>
+</body>
+</html>

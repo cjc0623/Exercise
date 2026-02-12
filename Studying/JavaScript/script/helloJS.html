@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 스크립트 선언문 -->
+     <script src="../js/myScript.js"></script>
+    <script>
+        // 주석
+        /* 
+        블락 주석 
+        */
+        function myfunction(){ //함수 body... 실행문
+            // alert('호출됨');
+            document.getElementById('cha').innerHTML = 'dddd';
+        }
+    </script>
+</head>
+<body>
+    <h1>First JavaScript</h1>
+    <button type="button" onclick="document.getElementById('demo').innerHTML = Date()">Click Me</button>
+    <p id="demo">날짜</p>
+
+    <button type="button" onClick="document.getElementById('style').style.display = 'none'">Style Change</button>
+    <button type="button" onClick="document.getElementById('style').style.display = 'block'">Style Change</button>
+    <p id="style">나의 스타일을 변경해보세요</p>
+
+    <button type="button" onClick="myfunction()">값 변경</button>
+    <p id="cha">값이 변경됩니다.</p>
+
+    <button type="button" onclick="urfun('최현민')">Greeting</button>
+
+    <script>
+        let gen = prompt('성별코드 입력 ');
+
+        if(gen % 2 == 0){
+            alert('당신은 여성 이군요')
+        }else{
+            alert('당신은 남성 이군요')
+        }
+
+
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/order.css">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <!-- 모든 입력(elements)를 이용해서 망고를 판매하는 주문 페이지를 작성해 볼게요 -->
+    <!-- 컨테이너 생성하기-->
+    <div id="container">
+        <h1>망고 주문하기</h1>
+        <form method="get">
+            <fieldset>
+                <legend>상품선택</legend>
+                <h4>주문할 상품을 선택해 주세요</h4>
+
+                <ul id="product">
+                    <li>
+                        <label>
+                            <input type="checkbox" name="g3k">선물용 3kg
+                            <input type="number" min="0" max="5" name="g3cnt">개 <small>(최대 5개)</small>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" name="g5k">선물용 5kg
+                            <input type="number" min="0" max="3" name="g5cnt">개 <small>(최대 3개)</small>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" name="m3k">가정용 3kg
+                            <input type="number" min="0" max="5" name="m3cnt">개 <small>(최대 5개)</small>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" name="m5k">가정용 5kg
+                            <input type="number" min="0" max="3" name="m5cnt">개 <small>(최대 3개)</small>
+                        </label>
+                    </li>
+                </ul>
+                <h4>포장선택</h4>
+
+                <ul>
+                    <li>
+                        <label>
+                            <input type="radio" value="yes" name="gift">선물 포장
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" value="no" name="gift">선물 포장 안함
+                        </label>
+                    </li>
+
+                </ul>
+
+            </fieldset>
+            <fieldset>
+                <legend>배송 정보</legend>
+                <ul id="shipping">
+                    <li>
+                        <label for="user-name">이름 </label>
+                        <input type="text" id="user-name">
+                    </li>
+                    <li>
+                        <label for="addr">배송 주소</label>
+                        <input type="text" id="addr">
+                    </li>
+                    <li>
+                        <label for="mail">이메일</label>
+                        <input type="email" id="mail">
+                    </li>
+                    <li>
+                        <label for="phone">연락처</label>
+                        <input type="tel" id="phone">
+                    </li>
+                    <li>
+                        <label for="d-day">배송 지정</label>
+                        <input type="date" id="d-day"> <small>(주문일로부터 최소 3일 이후)</small>
+                    </li>
+                    <li>
+                        <label for="memo">메모</label>
+                        <textarea id="memo" cols="40" rows="4"></textarea>
+                    </li>
+                </ul>
+            </fieldset>
+            <!-- hidden은 사용자에겐 보여지지 않지만, 내부적으로 key와 value를 서버에
+            전송할 수 있는 기능을 수행합니다. -->
+            <input type="hidden" name="class" value="bootcamp"><br>
+            <input type="file" id="file" name="file">
+            <input type="image" name="image" value="image">
+            <div>
+                <input type="submit" value="주문하기">
+                <button>취소</button>
+                
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

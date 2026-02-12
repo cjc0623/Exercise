@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- img tag : 이미지 요소를 표현할 때 사용하는 태그
+    대표적 속성으로는 src(경로), class(디자인적용), alt(설명) 등이 있고
+    디자인 제어는 CSS로 주로 함-->
+    
+    <h3>이미지를 표현해보자</h3>
+    <img
+        src="imgs/images.png"
+        alt="프로파일 이미지"
+        width="300"
+        height="300"
+    >
+
+
+
+
+    <center>가운데 정렬 : 하지만 <i>CSS</i> 로 제어 하길 강력히 권고함</center>
+    <dl><!-- 어떤 것에 대한 설명을 나타낼 때 사용함. dt의 자식 요소를 가지고 표기한
+        용어와 dd의 요소로 설명함-->
+        <dt>
+            HTML
+        </dt>
+        <dd>
+            Hyper Text Mark Up 의 준말로 웹문서의 구조를 표현하는 언어
+        </dd>
+    </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 요소(elements)의 종류와 특징 알아보기-->
+    <!-- 리스트를 만들어 보자.. UL, OL > LI-->
+    <h2 id="intro">부트캠프 과목 소개</h2>
+        <p>아래와 같이 구성됨</p>
+        <ul><!-- unordered list-->
+            <li>html</li>
+            <li>css</li>
+            <li>script</li>
+            <li>java</li>
+        </ul>
+        <p>아래는 순서 항목입니다</p>
+        <ol>
+            <li>html</li>
+            <li>css</li>
+            <li>script</li>
+            <li>java</li>
+        </ol>
+        <hr>
+        <!-- a tag : 하이퍼링크를 마크업 하는 태그.. 외부 문서나, 내부의 문서로 이동하도록
+        제어할 수 있음-->
+        <!-- 대표적인 속성으로는 href임 이 값으로 외부링크, 전화번호, 메일주소 등으로
+        넣을 수 있음-->
+        <p>저에게 연락하기 위해 다음중 하나를 선택하세요</p>
+        <ul>
+            <li>
+                <a href="https://www.google.com">Wesite</a>
+            </li>
+            <li>
+                <a href="cart/mypage.html">Mypage</a>
+            </li>
+            <li>
+                <a href="mailto:cjc0623@naver.com">Mail</a>
+            </li>
+        </ul>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p>문서의 특정 영역으로 링크를 잡는 방법</p>
+        <a href="#intro" target="_blank">과목소개</a>보기
+        <p>
+            <!-- 새창에 대한 제어 속성 : target : _blank, _self-->
+            <a href = "history/his.html#tag">hisotry의 h2 태그로 링크하기</a>
+        </p>
+        <hr>
+        <!-- address : 특정 링크, 연락처 등을 논리형태로 그룹핑 하는데 사용됨
+        내부요소로는 링크 등의 하위 요소로 구성함-->
+        <address>
+            아래 연락처 중 하나로 연락 하세요.<br>
+            <a href="#">somedomain.com</a><br>
+            <a href="mailto:cjc0623@naver.com">someone mail</a><br>
+            아래 주소로 연락해도됨<br>
+            춘천시 <b>한림대학교</b><br>
+        </address>
+
+        <!-- blockquote : 인용부호 사용시-->
+        <div>
+            <blockquote>
+                <p>
+                    오늘 할 일은 내일로 미루지 말라.
+                </p>
+            </blockquote>
+                <p>
+                    -누구누구-
+                </p>
+        </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            border: 2px solid rgb(120, 100, 30);
+            width: 50%;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            border-collapse: collapse;
+        }
+        caption{
+            caption-side: bottom;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 2.0rem;
+        }
+        thead, tfoot{
+            background-color: rgb(252, 238, 220);
+        }
+        th, td{
+            border: 1px solid black;
+            padding: 8px, 10px;
+            font-weight: bold;
+        }
+        td:last-of-type{/*모든 마지막 td를 선택하는 선택자*/
+            text-align: center;
+        }
+        tfoot th{/*tfoot 안에 있는 th를 선택하는 선택자*/
+            text-align: right;
+        }
+        tfoot td{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- table : 표를 생성하는 요소임..
+    자식으로는 tr > td가 있고, 제목을 표현하는 caption, 컬럼명을 나타내는 thead,
+    내용을 나타내는 tbody의 논리적 태그도 존재함. 각각의 태그의 자식으로는 th(컬럼명), td를 가짐-->
+    <table>
+        <caption>Front End 과정 구성</caption>
+        <!-- 컬럼명을 나타내도록 논리 태그 구성 -->
+         <thead>
+            <tr>
+                <th scope="col">
+                    과목명
+                </th>
+                <th scope="col">
+                    소요일
+                </th>
+                <th scope="col">
+                    시간
+                </th>
+            </tr>
+         </thead>
+
+         <tbody>
+            <tr>
+                <th scope="row">HTML</th>
+                <td>2일</td>
+                <td>16h</td>
+            </tr>
+            <tr>
+                <th scope="row">CSS</th>
+                <td>2일</td>
+                <td>16h</td>
+            </tr>
+            <tr>
+                <th scope="row">Script</th>
+                <td>4일</td>
+                <td>32h</td>
+            </tr>
+         </tbody>
+         <tfoot>
+            <tr>
+                <th scope="row" colspan="2">
+                    총소요일수
+                </th>
+                <td>
+                    8일
+                </td>
+                
+            </tr>
+         </tfoot>
+    </table>
+</body>
+</html>

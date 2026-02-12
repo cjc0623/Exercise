@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flat Design</title>
+    <link rel="stylesheet" type="text/css" href="">
+    <link rel="stylesheet" type="text/css" href="">
+    <link rel="shortcut icon" href="imgs/favicon/favicon.ico">
+    <script src="js/jquery.min.js"></script>
+
+    <style>
+        #wrap {
+            display: flex;
+            flex-flow: column nowrap;
+            width: 80%;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        /* 선과 패딩의 모든 값을 영역으로 지정되도록 박스 모델로 선언합니다. */
+        #wrap section {
+            box-sizing: border-box;
+        }
+
+        /* 테블릿용 미디어 쿼리 */
+        @media all and (min-width=768px) {
+            #wrap {
+                flex-flow: row nowrap;
+            }
+        }
+
+        /* PC 용 */
+        @media all and (min-width=960px) {
+            #wrap{
+                position: relative;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+
+    </div>
+</body>
+
+</html>

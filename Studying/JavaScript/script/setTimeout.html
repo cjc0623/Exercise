@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button onclick="delayMsg();">3초뒤 메세지 표시</button>
+    <button onclick="clearMsg();">메세지 표시전에 취소하기</button>
+    
+    <div id="output" style="padding: 0,5rem 0"></div>
+    <script>
+        // 아래에 각각의 함수를 정의 하고 이벤트가 핸들링 되도록 만드세요.
+        // timeout id 생성
+
+        let tId;
+
+        // div에 전달된 값을 input 시킬 함수 정의
+        function inputDiv(msg){
+            document.querySelector("#output").textContent = msg;
+        }
+
+        // timeout  실행 함수 정의
+        function delayMsg(){
+            inputDiv('');
+            tId = setTimeout(inputDiv, 3000, '3초는 생각보다 길어요'); // 3번째 파라미터가 메세지임
+        }
+
+        function clearMsg(){
+            clearTimeout(tId);
+            console.log('취소');
+        }
+    </script>
+</body>
+</html>

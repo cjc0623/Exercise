@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div.relative {
+            position: relative;
+            border: 1px solid midnightblue;
+            width: 400px;
+            height: 200px;
+        }
+
+        div.absolute {
+            position: absolute;
+            top: 80px;
+            right: 0;
+            border: 1px solid blue;
+            width: 200px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 위치속성(position) : static(기본), relative(상대값), fixed(고정),
+    절대값(aboslute): 얘는 position으로 지정된 가장 가까운 조상 요소에 상대적으로 위치가 지정됨.
+    하지만 절대 위치 지정 요소가 위치 지정된 상위 요소가 없는 경우 body를 사용해서 스크롤시 함께 이동함.
+    다른 요소와 겹쳐질 수 있음.-->
+    <h2>상대값 기준의 배치</h2>
+    <p>ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</p>
+
+    <div class="relative">
+        상대값 기준으로 30px 들여짐
+    </div>
+
+    <h2>절대값 예시</h2>
+    <div class="relative">
+        이 div는 상대값임
+        <div class="absolute">
+            이 div는 절대값임
+        </div>
+    </div>
+
+</body>
+
+</html>
